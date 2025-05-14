@@ -29,3 +29,7 @@ https://tailwindflex.com/@prashant/glowing-gradient-border
 https://bg.ibelick.com/
 https://ui.indie-starter.dev/docs/eye-catching-buttons#variant-2---shiny-background
 https://ui.indie-starter.dev/docs
+
+set up coolify and vps for hosting (best option):
+https://www.reddit.com/r/nextjs/comments/1inc6wf/what_is_my_best_option_for_hosting_my_webapp/
+https://coolify.io/docs/get-started/installation
