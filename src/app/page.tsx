@@ -20,6 +20,8 @@ import {
 
 import { Calendar } from "@/components/calendar";
 
+// maybe db push this all rather than arrays but then again im lazy and what isn't broke we don't fix
+
 const carouselList = [
   {
     feature: "TECHNICAL WORKSHOPS",
@@ -51,7 +53,7 @@ const carouselList = [
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col w-screen animated-background bg-gradient-to-r  absolute inset-0 -z-10 h-screen  items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
+      <div className="flex flex-col w-screen animated-background bg-gradient-to-r  absolute inset-0 -z-10 h-screen  items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFD100_100%)]">
         <Navbar/>
         
         <div className="flex flex-row gap-x-[10vw] p-20">
@@ -62,7 +64,7 @@ export default function Home() {
             <div className="text-white font-[subheading-font] text-2xl my-5">mission statement :D</div>
 
             <div className="relative group cursor-pointer">
-                <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-dark-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                 
                 <div className="relative px-7 py-6 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
                   <div className="space-y-2">
@@ -74,6 +76,7 @@ export default function Home() {
           </div>
 
           <div className="">
+            {/* replace bc ucf no like pegasus */}
             <Image 
               className="object-contain w-90" 
               src="/IEEE-Pegasus-Icon.png" 
@@ -120,8 +123,11 @@ export default function Home() {
           
         </div>
 
+        {/* add flyer and gbm stuff */}
 
-        <div className="flex flex-col mt-80 w-10/12">
+        <div className="my-52"></div>
+
+        <div className="flex flex-col w-10/12">
           <div className="font-[body-font] text-[var(--ieee-bright-yellow)] text-6xl text-center my-10">UPCOMING EVENTS</div>
 
           <div className="">
