@@ -34,7 +34,7 @@ const Timer: React.FC = () => {
   }, []);
 
   return (
-      <div className="max-w-lg mx-auto bg-white drop-shadow-lg  rounded-lg overflow-hidden">
+      <div className="max-w-lg mx-auto bg-white drop-shadow-lg  rounded-lg overflow-hidden hover:scale-102 transition">
         <div className="p-4">
           <h2 className="text-3xl font-[heading-font]">NEXT GENERAL BODY MEETING</h2>
           <p className="mt-2 text-lg text-[var(--ieee-grey)]">

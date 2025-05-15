@@ -112,7 +112,7 @@ export default function Home() {
             {carouselList.map((item, index) => (
               <CarouselItem key={index} className="flex md:basis-1/2 lg:basis-1/3 justify-center items-center">
                 <div className="p-1">
-                  <Card className="w-70 h-70">
+                  <Card className="w-70 h-70 hover:scale-102 transition">
                     <CardContent className="flex flex-col aspect-square justify-start">
                       <Image 
                         className="object-cover w-fit h-fit" 

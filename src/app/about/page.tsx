@@ -52,7 +52,7 @@ const chartConfig = {
 export default function About() {
 
     interface ChartData {
-        month: string;
+        month: keyof typeof monthOrder;
         technical: number;
         interpersonal: number;
 
@@ -79,6 +79,23 @@ export default function About() {
           person: string; 
         };
     }
+
+    const months = ['January', 'March', 'February', 'May', 'June','April'];
+
+    const monthOrder = {
+    January: 0,
+    February: 1,
+    March: 2,
+    April: 3,
+    May: 4,
+    June: 5,
+    July: 6,
+    August: 7,
+    September: 8,
+    October: 9,
+    November: 10,
+    December: 11
+    };
 
     const [chartData, setChartData] = useState<ChartData[]>([]);
 
@@ -129,11 +146,16 @@ export default function About() {
         });
       
         const transformedData: ChartData[] = Object.keys(groupedData).map((month) => ({
-          month,
+          month: month as keyof typeof monthOrder,
           technical: groupedData[month].technical,
           interpersonal: groupedData[month].interpersonal,
         }));
-      
+        
+        transformedData.sort((a, b) => {
+            return monthOrder[a.month] - monthOrder[b.month];
+
+        });
+
         setChartData(transformedData);
     };
 
