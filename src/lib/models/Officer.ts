@@ -11,6 +11,9 @@ const officerSchema = new mongoose.Schema({
   type: {
     type: String, required:false 
   },
+  role: {
+    type: String, required:false 
+  },
   major: {
     type: String, required:false 
   },
