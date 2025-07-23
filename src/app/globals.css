@@ -5,6 +5,9 @@
 
 /* Tints of 100%, 80%, 60%, 40%, and 20% are also acceptable */
 :root {
+  --primary: oklch(0.216 0.006 56.043);
+  --background: oklch(1 0 0);
+
   --ieee-black: 	#000000;
   --ieee-grey: #75787B;
   --ieee-light-grey: rgba(117, 120, 123, 0.5);
@@ -185,3 +188,4 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+

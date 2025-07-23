@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import Link from "next/link";
+
+import Autoplay from "embla-carousel-autoplay";
 
 import { Timer } from "@/components/timer";
 
@@ -44,12 +47,12 @@ const carouselList = [
   
   {
     feature: "PROFESSIONAL DEVELOPMENT WORKSHOPS",
-    photo: "/larry.png",
+    photo: "/lockheedmartin.png",
   },
 
   {
     feature: "COMMUNITY SERVICE EVENTS",
-    photo: "/larry.png",
+    photo: "/firstlegoleague.png",
   }
 
 ]
@@ -106,6 +109,11 @@ export default function Home() {
           opts={{
             align: "center",
           }}
+          plugins={[
+            Autoplay({
+              delay: 2000,
+            }),
+          ]}
           className="w-3/4"
         >
           <CarouselContent>
@@ -115,7 +123,7 @@ export default function Home() {
                   <Card className="w-70 h-70 hover:scale-102 transition">
                     <CardContent className="flex flex-col aspect-square justify-start">
                       <Image 
-                        className="object-cover w-fit h-fit" 
+                        className="object-cover w-fit h-50" 
                         src={item.photo}
                         alt="Photo" 
                         width={2000} 
@@ -131,8 +139,8 @@ export default function Home() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          {/* <CarouselPrevious /> */}
+          {/* <CarouselNext /> */}
         </Carousel>
 
 
