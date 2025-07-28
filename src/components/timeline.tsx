@@ -1,3 +1,12 @@
+export default function timeline() { 
+    return(
+        <div>
+
+            hi
+        </div>
+
+    );
+};
 // "use client";
 
 // import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';

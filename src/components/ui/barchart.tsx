@@ -1,3 +1,13 @@
+export default function barchart() { 
+    return(
+        <div>
+
+            hi
+        </div>
+
+    );
+};
+
 // import { Bar, BarChart } from "recharts"
  
 // import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
