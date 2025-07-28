@@ -111,7 +111,7 @@ const fetchChartData = async () => {
 
         const monthIndex = eventDate.getMonth();
 
-        let chartData: ChartData = {
+        const chartData: ChartData = {
             general: 0,
             technical: 0,
             prodev: 0,
