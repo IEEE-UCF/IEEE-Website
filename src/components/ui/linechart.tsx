@@ -1,9 +1,7 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 import { useState, useEffect } from "react";
@@ -35,6 +33,21 @@ const chartConfig = {
   }
 
 } satisfies ChartConfig
+
+interface EventData {
+  _id: string; 
+  committee: string;
+  title: string;
+  time: Date;
+  address: string;
+  description?: string;
+  flyer?: string;
+  rsvp?: string;
+  photos?: {
+    type?: string;
+    [key: string]: any; 
+  };
+}
 
 export function Linechart() {
     const monthOrder = {
@@ -86,7 +99,7 @@ export function Linechart() {
             }
         } = {};
         
-        events.data.forEach((event: any) => {
+        events.data.forEach((event: EventData) => {
             const eventDate = new Date(event.time);
             const month = eventDate.toLocaleString("default", { month: "long" }); 
 

@@ -22,6 +22,21 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
+interface EventData {
+  _id: string; 
+  committee: string;
+  title: string;
+  time: Date;
+  address: string;
+  description?: string;
+  flyer?: string;
+  rsvp?: string;
+  photos?: {
+    type?: string;
+    [key: string]: any; 
+  };
+}
+
 export const description = "An area chart with a legend"
 
 export function Areachart() {
@@ -53,20 +68,20 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-const monthOrder = {
-    January: 0,
-    February: 1,
-    March: 2,
-    April: 3,
-    May: 4,
-    June: 5,
-    July: 6,
-    August: 7,
-    September: 8,
-    October: 9,
-    November: 10,
-    December: 11
-};
+// const monthOrder = {
+//     January: 0,
+//     February: 1,
+//     March: 2,
+//     April: 3,
+//     May: 4,
+//     June: 5,
+//     July: 6,
+//     August: 7,
+//     September: 8,
+//     October: 9,
+//     November: 10,
+//     December: 11
+// };
 
 interface ChartData {
     general: number;
@@ -78,7 +93,7 @@ interface ChartData {
 
 }
 
-let chartHashTable: ChartData[] = Array.from({ length: 12 });
+const chartHashTable: ChartData[] = Array.from({ length: 12 });
 
 const [chartData, setChartData] = useState<ChartData[]>([]);
 
@@ -91,7 +106,7 @@ const fetchChartData = async () => {
     const res = await fetch("/api/events", {method: "GET"});
     const events = await res.json();
 
-    events.data.forEach((event: any) => {
+    events.data.forEach((event: EventData) => {
         const eventDate = new Date(event.time);
 
         const monthIndex = eventDate.getMonth();

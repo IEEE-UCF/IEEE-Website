@@ -4,32 +4,10 @@
 import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import Link from "next/link";
-import { Timeline } from "@/components/timeline";
-import { Linechart } from "@/components/ui/linechart";
-import Sidebar from "@/components/sidebar";
 
 import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react"
 import { Calendar1 } from "lucide-react"
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-
 
 export default function EventsPage() { 
 
@@ -49,11 +27,11 @@ export default function EventsPage() {
     
     }
 
-    let eventHashTable: Event[][] = Array.from({length: 12}, () => []);
+    const eventHashTable: Event[][] = Array.from({length: 12}, () => []);
 
     const [eventData, setEventData] = useState<Event[][]>([]);
 
-    let [currentEvent, setCurrentEvent] = useState<Event | null>(null);
+    const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
 
     useEffect( () => {
         fetchTimelineData();
@@ -73,7 +51,7 @@ export default function EventsPage() {
             const newDate = eventDate.toLocaleString("default", {month: "long", day: "numeric", hour: "numeric", minute: "numeric"});
 
             
-            let newEvent: Event = {
+            const newEvent: Event = {
                 eventName: event.title,
                 eventDate: newDate,
                 eventDesc: event.description,
@@ -185,8 +163,11 @@ export default function EventsPage() {
                     
                     <div className="flex flex-col max-h-200 overflow-y-auto p-6">
                         {eventData.map((monthEvents, monthIdx) => 
-                            monthEvents.map((item, index) => (
-                                <div className="hover:scale-102 transition hover:opacity-90">
+                            monthEvents.map((item, itemIdx) => (
+                                <div
+                                    className="hover:scale-102 transition hover:opacity-90"
+                                    key={`${monthIdx}-${itemIdx}-${item.eventName}`}
+                                >
                                     <button onClick={() => setCurrentEvent(item)} className="flex flex-row p-3">
                                         <Image
                                             className="object-cover rounded-2xl w-60 h-60"

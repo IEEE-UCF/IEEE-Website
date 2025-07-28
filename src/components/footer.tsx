@@ -3,8 +3,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
-import { Github, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Github, Instagram, Linkedin } from 'lucide-react';
 
 const socials: { title: string; href: string; icon: React.ReactNode }[] = [
     { title: "linkedin", href: "", icon: <Linkedin className="w-5 h-5 text-white" /> },

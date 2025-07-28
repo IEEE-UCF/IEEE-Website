@@ -17,7 +17,7 @@ export async function GET() {
     const officers = await db.collection('Officers').find({}).toArray();
     return NextResponse.json({ success: true, data: officers });
   
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: 'Failed to fetch officers' }, { status: 500 });
   }
 
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     const newOfficer = await Officer.create(body);
     return NextResponse.json({ success: true, data: newOfficer }, { status: 201 });
   
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: 'Failed to create officer' }, { status: 400 });
   }
 

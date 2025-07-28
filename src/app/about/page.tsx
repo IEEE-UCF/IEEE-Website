@@ -12,10 +12,6 @@ import { SiLinkedin } from "react-icons/si";
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card"
 
 import {
@@ -26,7 +22,6 @@ import {
 } from "@/components/ui/accordion"
 
 import { Linechart } from "@/components/ui/linechart";
-import { Barchart } from "@/components/ui/barchart";
 
 
 export default function About() {

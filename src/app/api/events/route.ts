@@ -1,5 +1,4 @@
 import { dbConnect } from '@/lib/mongodb';
-import { Event } from '@/lib/models/Event'; 
 import { NextResponse } from 'next/server';
 import { MongoClient } from "mongodb";
 
@@ -17,7 +16,7 @@ export async function GET() {
     const events = await db.collection('Events').find({}).toArray();
     return NextResponse.json({ success: true, data: events });
   
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
   }
 
