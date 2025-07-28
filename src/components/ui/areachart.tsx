@@ -33,7 +33,7 @@ interface EventData {
   rsvp?: string;
   photos?: {
     type?: string;
-    [key: string]: any; 
+    [key: string]: unknown; 
   };
 }
 

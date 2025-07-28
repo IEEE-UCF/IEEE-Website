@@ -9,6 +9,22 @@ import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react"
 import { Calendar1 } from "lucide-react"
 
+
+interface EventData {
+  _id: string; 
+  committee: string;
+  title: string;
+  time: Date;
+  address: string;
+  description: string;
+  flyer: string;
+  rsvp?: string;
+  photos?: {
+    type?: string;
+    [key: string]: unknown; 
+  };
+}
+
 export default function EventsPage() { 
 
     /*
@@ -42,7 +58,7 @@ export default function EventsPage() {
         const res = await fetch("/api/events", {method: "GET"});
         const events = await res.json();
 
-        events.data.forEach((event: any) => {
+        events.data.forEach((event: EventData) => {
             const eventDate = new Date(event.time);
 
             const currentMonth = (new Date()).getMonth();
