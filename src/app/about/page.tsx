@@ -89,7 +89,7 @@ export default function About() {
                 <div className="flex flex-row my-20 p-40 justify-end absolute z-3 w-screen">
                     <div className="flex flex-col items-end justify-end self-end text-right gap-y-5">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">WHAT IS IEEE?</div>
-                        <div className="font-[subheading-font] text-white text-xl w-3/4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</div>
+                        <div className="font-[subheading-font] text-white text-xl w-3/4">IEEE at UCF is the student branch of the world’s largest professional organization for electrical and electronics engineers. We're a community of students passionate about circuits, computing, robotics, embedded systems, and everything in between. Through hands-on projects, professional development, and outreach, we help each other grow into the engineers and innovators of tomorrow.</div>
                         
                 
                         <div className="relative group cursor-pointer">
@@ -124,7 +124,7 @@ export default function About() {
                         <div className="font-[body-font] text-[var(--ieee-bright-yellow)] text-3xl">IEEE UCF IN A NUTSHELL</div>
                         <Accordion type="single" collapsible>
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="text-lg">AWARDS AND ACCOMPLISHMENTS</AccordionTrigger>
+                                <AccordionTrigger className="text-lg cursor-pointer">AWARDS AND ACCOMPLISHMENTS</AccordionTrigger>
                                 <AccordionContent>
                                     {Object.entries(
                                         awards.reduce((acc, award) => {
@@ -151,31 +151,31 @@ export default function About() {
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-2">
-                                <AccordionTrigger className="text-lg">TECHNICAL DEVELOPMENT</AccordionTrigger>
+                                <AccordionTrigger className="text-lg cursor-pointer">TECHNICAL DEVELOPMENT</AccordionTrigger>
                                 <AccordionContent>
                                     Lorem ipsum dolor sit amet consectetur adipiscing elit. Amet consectetur adipiscing elit quisque faucibus ex sapien. Quisque faucibus ex sapien vitae pellentesque sem placerat. Vitae pellentesque sem placerat in id cursus mi.
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-3">
-                                <AccordionTrigger className="text-lg">SOUTHEASTCON HARDWARE TEAM</AccordionTrigger>
+                                <AccordionTrigger className="text-lg cursor-pointer">SOUTHEASTCON HARDWARE TEAM</AccordionTrigger>
                                 <AccordionContent>
                                     Lorem ipsum dolor sit amet consectetur adipiscing elit. Amet consectetur adipiscing elit quisque faucibus ex sapien. Quisque faucibus ex sapien vitae pellentesque sem placerat. Vitae pellentesque sem placerat in id cursus mi.
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-4">
-                                <AccordionTrigger className="text-lg">COMMUNITY SERVICE</AccordionTrigger>
+                                <AccordionTrigger className="text-lg cursor-pointer">COMMUNITY SERVICE</AccordionTrigger>
                                 <AccordionContent>
                                     Lorem ipsum dolor sit amet consectetur adipiscing elit. Amet consectetur adipiscing elit quisque faucibus ex sapien. Quisque faucibus ex sapien vitae pellentesque sem placerat. Vitae pellentesque sem placerat in id cursus mi.
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-5">
-                                <AccordionTrigger className="text-lg">SOCIAL EVENTS</AccordionTrigger>
+                                <AccordionTrigger className="text-lg cursor-pointer">SOCIAL EVENTS</AccordionTrigger>
                                 <AccordionContent>
                                     Lorem ipsum dolor sit amet consectetur adipiscing elit. Amet consectetur adipiscing elit quisque faucibus ex sapien. Quisque faucibus ex sapien vitae pellentesque sem placerat. Vitae pellentesque sem placerat in id cursus mi.
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-6">
-                                <AccordionTrigger className="text-lg">PROFESSIONAL DEVELOPMENT</AccordionTrigger>
+                                <AccordionTrigger className="text-lg cursor-pointer">PROFESSIONAL DEVELOPMENT</AccordionTrigger>
                                 <AccordionContent>
                                     Lorem ipsum dolor sit amet consectetur adipiscing elit. Amet consectetur adipiscing elit quisque faucibus ex sapien. Quisque faucibus ex sapien vitae pellentesque sem placerat. Vitae pellentesque sem placerat in id cursus mi.
                                 </AccordionContent>
@@ -186,7 +186,7 @@ export default function About() {
 
                 {/* rawdogging this linechart lol */}
                 {/* it's fucking broken (never coding on an airplane again) */}
-                <Linechart/>
+                <Linechart/> 
                 {/* <Barchart/> */}
              
 

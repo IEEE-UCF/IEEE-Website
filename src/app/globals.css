@@ -1,9 +1,9 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
 @import "tw-animate-css";
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Tints of 100%, 80%, 60%, 40%, and 20% are also acceptable */
 :root {
   --primary: oklch(0.216 0.006 56.043);
   --background: oklch(1 0 0);
@@ -89,6 +89,39 @@ body {
         background-position: 100% 50%;
     }
 }
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  30% {
+    width: 100%; /* Type the full word */
+  }
+  80% {
+    width: 100%; /* Pause with full text visible */
+  }
+  100% {
+    width: 0;    /* Delete the word */
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    border-color: white;
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 0.15em solid white;
+  animation: typing 8.5s steps(40) infinite, blink 0.7s infinite;
+  width: fit-content;
+}
+
 
 @theme inline {
   --radius-sm: 	calc(var(--radius) - 4px);

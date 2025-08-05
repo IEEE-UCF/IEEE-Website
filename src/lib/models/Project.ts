@@ -9,12 +9,28 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
+  lead: {
     type: String,
     required: true,
   },
-  photos: {
-    type: [String], // Array of strings (e.g., URLs or file paths)
+  overview: {
+    type: String,
+    required: true,
+  },
+  hardware: {
+    type: [String],
+    required: true,
+  },
+  software: {
+    type: [String],
+    required: true,
+  },
+  skills: {
+    type: [String],
+    required: true,
+  },
+  photo: {
+    type: String, // Array of strings (e.g., URLs or file paths)
     required: false,
   },
 });

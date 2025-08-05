@@ -43,8 +43,6 @@ export default function EventsPage() {
     
     }
 
-    const eventHashTable: Event[][] = Array.from({length: 12}, () => []);
-
     const [eventData, setEventData] = useState<Event[][]>([]);
 
     const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
@@ -57,6 +55,9 @@ export default function EventsPage() {
     const fetchTimelineData = async () => {
         const res = await fetch("/api/events", {method: "GET"});
         const events = await res.json();
+
+        const eventHashTable: Event[][] = Array.from({length: 12}, () => []);
+
 
         events.data.forEach((event: EventData) => {
             const eventDate = new Date(event.time);
@@ -181,10 +182,10 @@ export default function EventsPage() {
                         {eventData.map((monthEvents, monthIdx) => 
                             monthEvents.map((item, itemIdx) => (
                                 <div
-                                    className="hover:scale-102 transition hover:opacity-90"
+                                    className="hover:scale-102 transition hover:opacity-80"
                                     key={`${monthIdx}-${itemIdx}-${item.eventName}`}
                                 >
-                                    <button onClick={() => setCurrentEvent(item)} className="flex flex-row p-3">
+                                    <button onClick={() => setCurrentEvent(item)} className="flex flex-row p-3 cursor-pointer ">
                                         <Image
                                             className="object-cover rounded-2xl w-60 h-60"
                                             src={item.eventFlyer ? item.eventFlyer : "/larry.png"}

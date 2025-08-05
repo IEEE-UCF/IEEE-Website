@@ -21,7 +21,6 @@ import {
 
 import { Calendar } from "@/components/calendar";
 
-// maybe db push this all rather than arrays but then again im lazy and what isn't broke we don't fix
 
 const carouselList = [
   {
@@ -50,12 +49,12 @@ const carouselList = [
   }
 
 ]
-
 export default function Home() {
   return (
+
     <div className="flex flex-col max-w-screen overflow-hidden">
       <div className="flex flex-col w-full animated-background bg-gradient-to-r  absolute inset-0 -z-10 h-[120vh] items-center [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
-        <div className="px-5">
+        <div className="px-5 w-full">
           <Navbar/>
           
           <div className="flex flex-row gap-x-[10vw] p-20">
@@ -63,7 +62,14 @@ export default function Home() {
 
               <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-9xl">IEEE UCF</div>
               <div className="font-[body-font] text-white text-6xl">STUDENT CHAPTER</div>
-              <div className="text-white font-[subheading-font] text-2xl my-5">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</div>
+              <div className="text-white font-[subheading-font] text-2xl my-5">
+                <div className="typewriter">
+                  Lorem ipsum dolor sit amet consectetur 
+                </div>
+                
+              </div>
+
+              
 
               <div className="relative group cursor-pointer">
                   <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
@@ -93,6 +99,8 @@ export default function Home() {
 
             </div>
 
+            
+            
           </div>
         </div>
 
@@ -112,7 +120,7 @@ export default function Home() {
         >
           <CarouselContent>
             {carouselList.map((item, index) => (
-              <CarouselItem key={index} className="flex md:basis-1/2 lg:basis-1/3 justify-center items-center">
+              <CarouselItem key={index} className="flex md:basis-1/2 lg:basis-1/3 justify-center items-center cursor-pointer">
                 <div className="p-1">
                   <Card className="w-70 h-70 hover:scale-102 transition">
                     <CardContent className="flex flex-col aspect-square justify-start">
@@ -141,7 +149,7 @@ export default function Home() {
           
         </div>
 
-        {/* add flyer and gbm stuff */}
+        {/* todo add flyer and gbm stuff */}
 
         <div className="my-64"></div>
 

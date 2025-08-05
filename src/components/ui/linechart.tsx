@@ -182,9 +182,9 @@ export function Linechart() {
               tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
-              wrapperStyle={{ top: -70, left: -70 }} // shifts the tooltip 40px to the right
+              cursor={true}
+              content={<ChartTooltipContent indicator="dot" className="opacity-83" />}
+              wrapperStyle={{ top: -100, left: -100}} // shifts the tooltip 40px to the right 
             />
             <Area
               dataKey="general"
@@ -193,7 +193,6 @@ export function Linechart() {
               fillOpacity={1.0}
               stroke="#ffc72c"
               stackId="a"
-
             />
             <Area
               dataKey="technical"
@@ -202,6 +201,7 @@ export function Linechart() {
               fillOpacity={1.0}
               stroke="#4e4637"
               stackId="a"
+              
             />
             <Area
               dataKey="prodev"

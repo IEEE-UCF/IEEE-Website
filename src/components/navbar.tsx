@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
   };
   
   return (
-    <div className="relative flex items-center justify-between h-32 w-full p-5">
+    <div className="relative flex items-center justify-between h-40 w-full p-5">
       <div className="flex w-full justify-between m-6">
         <div className="flex justify-start items-center">
           <Link href={"/"} className="text-white font-[subheading-font] flex-row flex align-middle justify-center items-center gap-x-5 text-2xl hover:text-[var(--ieee-dark-yellow)] transition">
@@ -52,7 +52,9 @@ const Navbar: React.FC = () => {
             {route.title !== "CONNECT" && route.title}
             </Link>
         ))}
+
         </div>
+        {/* <Image className="object-contain" src="/stupidieeemasterbrand.png" alt="IEEE UCF Logo" width={70} height={70} /> */}
       </div>
 
       
@@ -86,8 +88,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
             {route.title}
           </Link>
         ))}
-        
-      </div>
+        </div>
     </div>
   );
 };
