@@ -56,10 +56,12 @@ export default function ProjectsPage() {
                     <Navbar />
                 </div>
                 <div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
-                <div className="flex flex-row my-20 p-40 absolute z-3 w-screen">
-                    <div className="flex flex-col items-left text-left gap-y-5">
+                <div className="flex flex-row my-30 p-40 absolute z-3 w-screen">
+                    <div className="flex flex-col items-left text-left gap-y-5 float">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">PROJECTS</div>
-                        <div className="font-[subheading-font] text-white text-xl w-3/4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a</div>
+                        <div className="font-[body-font] text-white text-2xl w-3/4">
+                        Tackle real-world challenges by joining or leading IEEE UCF’s hands-on projects. Members of all skill levels and backgrounds can get involved to develop technical experience, collaborate with others, and push the boundaries of engineering. 
+                        </div>
                     </div>
                 </div>
                 <div className="bg-black h-full w-full">
@@ -74,11 +76,11 @@ export default function ProjectsPage() {
             </div>
 
         
-<div className="justify-between flex flex-row flex-wrap py-20 px-3">
+<div className="justify-center flex flex-row flex-wrap py-20 px-3">
   {projectData.map((project) => (
     <div
       key={project._id}
-      className="flex flex-col h-fit w-130 hover:scale-102 transition p-3"
+      className="flex flex-col h-fit w-1/3 hover:scale-102 transition p-3"
     >
       <div className="relative group cursor-pointer">
         <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-300 group-hover:duration-200"></div>
@@ -118,7 +120,7 @@ export default function ProjectsPage() {
                 ? project.software?.map((skill, skillIndex) => (
                     <div
                       key={`sw-${skillIndex}`}
-                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-light-grey)] text-sm"
+                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-dark-grey)] text-sm"
                     >
                       {skill}
                     </div>
@@ -170,7 +172,7 @@ export default function ProjectsPage() {
 
                     <div className="mb-6">
                         <Image
-                        className="w-full h-70 rounded-lg mb-4 object-cover"
+                        className="w-full h-100 rounded-lg mb-4 object-cover"
                         src={selectedProject.photo ? selectedProject.photo : "/larry.png"}
                         alt={selectedProject.name}
                         width={600}
@@ -211,7 +213,7 @@ export default function ProjectsPage() {
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.software?.length ? (
                       selectedProject.software.map((item, itemIndex) => (
-                        <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-light-grey)] rounded-md text-sm">
+                        <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-dark-grey)] rounded-md text-sm">
                           {item}
                         </div>
                       ))

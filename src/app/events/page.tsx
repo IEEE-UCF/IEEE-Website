@@ -45,6 +45,14 @@ export default function EventsPage() {
 
     const [eventData, setEventData] = useState<Event[][]>([]);
 
+    const monthNames = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"
+    ];
+
+    const currentMonthName = monthNames[new Date().getMonth()];
+    const [currentMonth, setCurrentMonth] = useState(currentMonthName);
+
     const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
 
     useEffect( () => {
@@ -54,10 +62,9 @@ export default function EventsPage() {
 
     const fetchTimelineData = async () => {
         const res = await fetch("/api/events", {method: "GET"});
+
         const events = await res.json();
-
         const eventHashTable: Event[][] = Array.from({length: 12}, () => []);
-
 
         events.data.forEach((event: EventData) => {
             const eventDate = new Date(event.time);
@@ -77,7 +84,7 @@ export default function EventsPage() {
                 eventFlyer: event.flyer
             }
 
-            if(currentMonth) {
+            if(eventMonth>=currentMonth) {
                 eventHashTable[eventMonth].push(newEvent);
 
             }
@@ -99,26 +106,34 @@ export default function EventsPage() {
 
                 <div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r   inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
 
-                <div className="flex flex-row my-20 p-40 justify-center absolute z-3 w-screen">
-                    <div className="flex flex-col items-center justify-center self-center text-left gap-y-5">
+                <div className="flex flex-row my-30 p-40 justify-end absolute z-3 w-screen">
+                    <div className="flex flex-col items-end justify-end self-end text-right gap-y-5 float">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">UPCOMING EVENTS</div>
-                        <div className="font-[subheading-font] text-white text-xl w-3/4">rawdogging this rn i done fucked up, this is actually a mess LOL killing myself</div>
+                        <div className="font-[body-font] text-white text-2xl w-3/4">
+                            Experience IEEE UCF's exciting lineup of events this
+                            <span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]"> {currentMonth} </span>
+                            and beyond. From technical workshops to career-building sessions to social gatherings to community service opportunities, there is unlimited opportunity to expand networks and grow skills.
+                        </div>
                        
                 
                     </div>
                 </div>
-
+                
                 <div className="bg-black h-full w-full">
                     <Image
-                        className="absolute h-full w-full object-cover z-0 opacity-50"
-                        src="/mtronpti.png"
+                        className="absolute h-full w-full object-cover z-0 opacity-70"
+                        src="/gbmgif.gif"
                         alt="Events Photo"
                         width={2000}
                         height={2000}
                     />
+
                 </div>
                 
+                
             </div>
+
+            
             
             {/* workshops lmao */}
             <div className="bg-black w-full h-fit flex flex-col p-10 items-center">

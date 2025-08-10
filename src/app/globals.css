@@ -10,7 +10,7 @@
 
   --ieee-black: 	#000000;
   --ieee-grey: #75787B;
-  --ieee-light-grey: rgba(117, 120, 123, 0.5);
+  --ieee-dark-grey: #2d2d2d;
   --ieee-dark-yellow: #FFC72C;
   --ieee-bright-yellow: #FFD100;
   --ieee-white: #ffffff;
@@ -50,33 +50,191 @@
 }
 
 @font-face {
+  font-family: display-font;
+  src: url(/fonts/OpenSans-ExtraBold.ttf); 
+
+}
+@font-face {
+  font-family: display-italic-font;
+  src: url(/fonts/OpenSans-ExtraBoldItalic.ttf); 
+
+}
+
+@font-face {
   font-family: heading-font;
   src: url(/fonts/OpenSans-Bold.ttf); 
+
+}
+@font-face {
+  font-family: heading-italic-font;
+  src: url(/fonts/OpenSans-BoldItalic.ttf); 
 
 }
 
 @font-face {
   font-family: subheading-font;
-  src: url(/fonts/OpenSans-Light.ttf); 
+  src: url(/fonts/OpenSans-Medium.ttf); 
+
+}
+@font-face {
+  font-family: subheading-italic-font;
+  src: url(/fonts/OpenSans-MediumItalic.ttf); 
 
 }
 
 @font-face {
   font-family: body-font;
-  src: url(/fonts/OpenSans-Medium.ttf); 
+  src: url(/fonts/OpenSans-Light.ttf); 
 
 }
+@font-face {
+  font-family: body-italic-font;
+  src: url(/fonts/OpenSans-LightItalic.ttf); 
+
+}
+
 
 body {
   background: var(--color-stone-100);
 }
 
+.animated-border {
+  rotate: 'rotate 10s linear infinite';
+  animation: chase-border 3s ease infinite;
+}
+
+@keyframes chase-border {
+  0% {
+    transform: rotate(0deg) scale(10);
+  }
+  100% {
+    transform: rotate(-360deg) scale(10);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 17px;
+}
+
+/* background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+/* color of the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: var(--ieee-grey);
+  border-radius: 8px;
+  border: 4px solid #2d2d2d;   /* matches track */
+}
+
+/* thumb hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #919599; 
+  border-radius: 8px;
+  transition: background-color 1s ease;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
 .animated-background {
     background-size: 400%;
 
-    -webkit-animation: animation 7s ease infinite;
-    -moz-animation: animation 7s ease infinite;
-    animation: animation 7s ease infinite;
+    -webkit-animation: animation 8s ease infinite;
+    -moz-animation: animation 8s ease infinite;
+    animation: animation 8s ease infinite;
+}
+
+.particles-container {
+  position: relative; /* Allows absolute positioning of particles */
+  width: 100%;
+  height: 100vh; /* Or a specific height for the container */
+  overflow: hidden; /* Hides particles outside the container */
+}
+
+.particle {
+  position: absolute;
+  background-color: var(--ieee-bright-yellow); /* Example: white with transparency */
+  border-radius: 50%; /* Makes particles circular */
+  opacity: 0; /* Initially hidden */
+  animation: float-up-down 5s ease-in-out infinite alternate; /* Apply animation */
+}
+
+/* Example particle sizes and positions */
+.particle:nth-child(1) {
+  width: 10px;
+  height: 12px;
+  top: 5%;
+  left: 50%;
+  animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+  width: 15px;
+  height: 17px;
+  top: 10%;
+  left: 20%;
+  animation-delay: 1s;
+}
+
+.particle:nth-child(3) {
+  width: 8px;
+  height: 10px;
+  top: 7%;
+  left: 80%;
+  animation-delay: 6s;
+}
+
+.particle:nth-child(4) {
+  width: 16px;
+  height: 18px;
+  top: 8%;
+  left: 60%;
+  animation-delay: 5s;
+}
+
+.particle:nth-child(5) {
+  width: 14px;
+  height: 16px;
+  top: 14%;
+  left: 10%;
+  animation-delay: 4s;
+}
+
+.particle:nth-child(6) {
+  width: 10px;
+  height: 12px;
+  top: 5%;
+  left: 40%;
+  animation-delay: 3s;
+}
+
+
+/* Define the keyframe animation */
+@keyframes float-up-down {
+  0% {
+    transform: translateY(0);
+    opacity: 0; /* Start hidden */
+  }
+  50% {
+    transform: translateY(-20px); /* Move up */
+    opacity: 1; /* Fully visible */
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0; /* Return to original position and hide */
+  }
 }
 
 @keyframes animation {

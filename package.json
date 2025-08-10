@@ -23,6 +23,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.510.0",
+    "luxon": "^3.7.1",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.3",
     "next": "15.3.2",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.6",
+    "@types/luxon": "^3.7.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

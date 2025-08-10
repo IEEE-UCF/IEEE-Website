@@ -10,56 +10,76 @@ const Timer: React.FC = () => {
     seconds: 0,
   });
 
+  interface Timer {
+    _id: string; 
+    title: string; 
+    time: Date; 
+       
+    }
+
+
   useEffect(() => {
-    const countDownDate = new Date("Aug 18, 2025 00:00:00").getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-
-      if (distance < 0) {
-        clearInterval(interval);
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
-
-    return () => clearInterval(interval);
+    fetchTimer();
   }, []);
 
+    const fetchTimer = async () => {
+      const res = await fetch("/api/times?title=GBM", { method: "GET" });
+      const timerRes = await res.json(); 
+
+
+      const timerData = timerRes.data?.[0];
+
+
+      const countDownDate = new Date(timerData.time).getTime();
+
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        if (distance < 0) {
+          clearInterval(interval);
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        setTimeLeft({ days, hours, minutes, seconds });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    };
+
+
   return (
-      <div className="max-w-lg mx-auto bg-white drop-shadow-lg  rounded-lg overflow-hidden hover:scale-102 transition">
+      <div className="max-w-lg mx-auto bg-white drop-shadow-lg rounded-lg overflow-hidden">
         <div className="p-4">
-          <h2 className="text-3xl font-[heading-font]">NEXT GENERAL BODY MEETING</h2>
-          <p className="mt-2 text-lg text-[var(--ieee-grey)]">
-            Join IEEE UCF for the upcoming GBM in HEC 101! The special guest speaker will be Larry.
+          <h2 className="text-[25px] font-[subheading-font]">NEXT GENERAL BODY MEETING</h2>
+          <p className="mt-2 text-xl font-[body-font]">
+            Join IEEE UCF for the upcoming GBM in HEC 101!
           </p>
         </div>
 
         <div className="py-4 px-6">
-          <div className="flex flex-wrap gap-4 justify-center items-center">
-            <div className="rounded-lg px-4 py-2 bg-[var(--ieee-bright-yellow)]">
+          <div className="flex flex-wrap gap-1 justify-center items-center">
+            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
                 {timeLeft.days}d
               </div>
             </div>
-            <div className="rounded-lg px-4 py-2 bg-[var(--ieee-bright-yellow)]">
+            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
                 {timeLeft.hours}h
               </div>
             </div>
-            <div className="rounded-lg px-4 py-2 bg-[var(--ieee-bright-yellow)]">
+            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
                 {timeLeft.minutes}m
               </div>
             </div>
-            <div className="rounded-lg px-4 py-2 bg-[var(--ieee-bright-yellow)]">
+            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
                 {timeLeft.seconds}s
               </div>
