@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import Link from "next/link";
-
-import { useState, useEffect } from 'react';
 
 type MailToProps = {
     email: string;

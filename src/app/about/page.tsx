@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -35,7 +35,7 @@ export default function About() {
 
     const [officers, setOfficers] = useState<Officer[]>([]);
     const [awards, setAwards] = useState<Award[]>([]);
-    let [isFlipped, setIsFlipped] = useState<boolean>(true);
+    const [isFlipped, setIsFlipped] = useState<boolean>(true);
 
     useEffect(() => {
         fetchOfficers();
@@ -269,7 +269,7 @@ export default function About() {
                                         Community involvement is a core value for IEEE UCF.
                                     </div>  
                                     <div className="text-white text-lg font-[body-font] py-2">
-                                        Our Service Committee enriches the entirety of Orlando, Florida by hosting events that share our passion for engineering and inspire others to explore its possibilities. We expose local elementary, middle, and high school students to electrical and computer engineering through volunteering at UCF's annual STEM Day, FIRST Robotics events, summer camps, and more. Additionally, we support local non-profits, like food pantries, through donations and volunteer work.
+                                        Our Service Committee enriches the entirety of Orlando, Florida by hosting events that share our passion for engineering and inspire others to explore its possibilities. We expose local elementary, middle, and high school students to electrical and computer engineering through volunteering at UCF&rsquo;s annual STEM Day, FIRST Robotics events, summer camps, and more. Additionally, we support local non-profits, like food pantries, through donations and volunteer work.
                                     </div>  
                                     <div className="flex flex-row">
                                         <Image

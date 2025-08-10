@@ -10,14 +10,6 @@ const Timer: React.FC = () => {
     seconds: 0,
   });
 
-  interface Timer {
-    _id: string; 
-    title: string; 
-    time: Date; 
-       
-    }
-
-
   useEffect(() => {
     fetchTimer();
   }, []);

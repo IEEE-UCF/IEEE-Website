@@ -51,7 +51,7 @@ export default function EventsPage() {
     ];
 
     const currentMonthName = monthNames[new Date().getMonth()];
-    const [currentMonth, setCurrentMonth] = useState(currentMonthName);
+    const [currentMonth] = useState(currentMonthName);
 
     const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
 
@@ -110,7 +110,7 @@ export default function EventsPage() {
                     <div className="flex flex-col items-end justify-end self-end text-right gap-y-5 float">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">UPCOMING EVENTS</div>
                         <div className="font-[body-font] text-white text-2xl w-3/4">
-                            Experience IEEE UCF's exciting lineup of events this
+                            Experience IEEE UCF&rsquo;s exciting lineup of events this
                             <span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]"> {currentMonth} </span>
                             and beyond. From technical workshops to career-building sessions to social gatherings to community service opportunities, there is unlimited opportunity to expand networks and grow skills.
                         </div>

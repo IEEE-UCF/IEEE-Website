@@ -7,14 +7,14 @@ import Image from "next/image";
 
 import { Github, Instagram, Linkedin, Youtube, Facebook } from 'lucide-react';
 
-const socials: { title: string; href: string; icon: React.ReactNode }[] = [
-    { title: "instagram", href: "https://www.instagram.com/ieeeucf/?hl=en", icon: <Instagram className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-    { title: "linkedin", href: "https://www.linkedin.com/company/ieee-ucf/", icon: <Linkedin className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-    { title: "youtube", href: "https://www.youtube.com/@ieeeucf2287", icon: <Youtube className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-    { title: "facebook", href: "https://www.facebook.com/ieeeatucf/", icon: <Facebook className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-    { title: "github", href: "https://github.com/IEEE-UCF", icon: <Github className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
+// const socials: { title: string; href: string; icon: React.ReactNode }[] = [
+//     { title: "instagram", href: "https://www.instagram.com/ieeeucf/?hl=en", icon: <Instagram className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
+//     { title: "linkedin", href: "https://www.linkedin.com/company/ieee-ucf/", icon: <Linkedin className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
+//     { title: "youtube", href: "https://www.youtube.com/@ieeeucf2287", icon: <Youtube className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
+//     { title: "facebook", href: "https://www.facebook.com/ieeeatucf/", icon: <Facebook className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
+//     { title: "github", href: "https://github.com/IEEE-UCF", icon: <Github className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
     
-]; 
+// ]; 
 
 const Footer: React.FC = () => {
     return (
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
                      
                 </div>
                 <div className="flex flex-row gap-x-4 items-center">
-                    © Copyright 2025 IEEE – All rights reserved. A public charity, IEEE is the world's largest technical professional organization dedicated to advancing technology for the benefit of humanity.
+                    © Copyright 2025 IEEE – All rights reserved. A public charity, IEEE is the world&rsquo;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
                 </div>
                 <div className="flex flex-row gap-x-4 items-center">
                     Made with blood, sweat, and tears.
