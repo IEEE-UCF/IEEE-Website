@@ -3,8 +3,6 @@ import { Footer } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
 
-import { useState, useEffect } from 'react';
-
 import { Card, CardContent } from "@/components/ui/card"
 
 export default function ConnectPage() { 
