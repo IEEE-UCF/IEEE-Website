@@ -81,7 +81,7 @@ export default function About() {
                                 <div className="animated-border pointer-events-none absolute inset-0 z-0 rounded-2xl bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] animate-spin-slow"></div>
                                 
                                 <button
-                                className="relative z-10 w-195 h-50 p-5 rounded-2xl backdrop-blur-sm border border-white bg-[#0c0a09] text-white cursor-pointer"
+                                className="relative z-10 w-195 h-50 p-5 rounded-2xl backdrop-blur-sm m-0.5 bg-[#0c0a09] text-white cursor-pointer"
                                 onClick={() => setIsFlipped(!isFlipped)}
                                 >
                                 {isFlipped ? (
@@ -115,41 +115,6 @@ export default function About() {
                                 </button>
                             </div>
                             </div>
-
-
-{/* non vibe coded version lol */}
-{/* 
-                        <button className="backdrop-blur-sm w-195 p-5 h-50 rounded-2xl border-1 border-white cursor-pointer hover:scale-102 transition-transform hover:opacity-80 opacity-100" onClick={() => setIsFlipped(!isFlipped)}>
-                            
-                            {isFlipped ? 
-                                (<div className="text-white">
-                                    <div className="font-[subheading-italic-font] text-[var(--ieee-bright-yellow)] text-2xl">We are the innovators of tomorrow.</div>
-                                    <div className=" font-[body-font] text-xl">Located at the University of Central Florida, our IEEE student chapter is one of the largest in the nation and boasts over 300 active members. We foster technical experience through a collaborative environment, ultimately paving the way for successful careers in diverse engineering fields.</div>
-                                </div>) 
-                                : 
-                                (<div className="">
-                                    <div className="font-[subheading-italic-font] text-white text-2xl">Want to see our full story?</div>
-                                    <div className="my-6"></div>
-                                    <div className="place-self-center w-fit hover:scale-110 transition-transform hover:text-[var(--ieee-bright-yellow)] text-white text-2xl font-[heading-font]">
-                                        <div className="relative group cursor-pointer">
-                                        <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                                    
-                                        <div className="relative px-8 py-7 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
-                                            <div className="space-y-2">
-                                                <Link href = "https://www.youtube.com/watch?v=JyjVBBVm0g4">
-                                                    <p className="">WATCH VIDEO</p>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    </div>
-                                    
-                                </div>)
-                        
-                            }
-                            
-                        </button> */}
-                
                     </div>
                 </div>
 

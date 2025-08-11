@@ -143,7 +143,7 @@ export default function EventsPage() {
                             {currentEvent ? (
                                 <div className="flex flex-col">
                                     <Image
-                                        className="object-cover rounded-3xl h-3/4"
+                                        className="object-cover rounded-3xl h-8/12"
                                         src={currentEvent.eventFlyer ? currentEvent.eventFlyer : "/larry.png"}
                                         alt="Photo"
                                         width={2000}
@@ -194,40 +194,60 @@ export default function EventsPage() {
                     
                     
                     <div className="flex flex-col max-h-200 overflow-y-auto p-6">
-                        {eventData.map((monthEvents, monthIdx) => 
+                        {eventData.map((monthEvents, monthIdx) =>
                             monthEvents.map((item, itemIdx) => (
+                            <div
+                                className="hover:scale-102 transition hover:opacity-80 hover:z-100"
+                                key={`${monthIdx}-${itemIdx}-${item.eventName}`}
+                            >
                                 <div
-                                    className="hover:scale-102 transition hover:opacity-80"
-                                    key={`${monthIdx}-${itemIdx}-${item.eventName}`}
+                                className="group relative w-fit overflow-hidden rounded-2xl p-[2px] bg-transparent cursor-pointer transition-transform hover:scale-102"
+                                onMouseEnter={(e) => {
+                                    const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
+                                    if (el) el.style.animationPlayState = 'running';
+                                }}
+                                onMouseLeave={(e) => {
+                                    const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
+                                    if (el) el.style.animationPlayState = 'paused';
+                                }}
                                 >
-                                    <button onClick={() => setCurrentEvent(item)} className="flex flex-row p-3 cursor-pointer ">
-                                        <Image
-                                            className="object-cover rounded-2xl w-60 h-60"
-                                            src={item.eventFlyer ? item.eventFlyer : "/larry.png"}
-                                            alt="Photo"
-                                            width={2000}
-                                            height={2000}
-                                        />
+                                <div
+                                    className="animated-border pointer-events-none absolute inset-0 z-0 rounded-2xl bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 animate-spin"
+                                    style={{ animationPlayState: 'paused', animationDuration: '6s' }}
+                                />
 
-                                        <div className="m-5 flex flex-col justify-center">
-                                            <div className="flex flex-col justify-between gap-y-2">
-                                                <div className="text-left font-bold text-lg text-white">
-                                                    {item.eventName}
-                                                </div>
-                                                <div className="flex text-left gap-x-2 text-md text-white">
-                                                    {item.eventDate}
-                                                </div>
-                                                <div className="flex text-left text-md text-white">
-                                                    {item.eventAddress}
-                                                </div>
-                                            </div>
+                                <button
+                                    onClick={() => setCurrentEvent(item)}
+                                    className="relative z-10 flex flex-row p-3 cursor-pointer bg-black rounded-2xl m-0.5"
+                                >
+                                    <Image
+                                    className="object-cover rounded-2xl w-60 h-60"
+                                    src={item.eventFlyer ? item.eventFlyer : "/larry.png"}
+                                    alt="Photo"
+                                    width={2000}
+                                    height={2000}
+                                    />
+
+                                    <div className="m-5 flex flex-col justify-center">
+                                    <div className="flex flex-col justify-between gap-y-2">
+                                        <div className="text-left font-bold text-lg text-white">
+                                        {item.eventName}
                                         </div>
-                                   
-                                    </button>
+                                        <div className="flex text-left gap-x-2 text-md text-white">
+                                        {item.eventDate}
+                                        </div>
+                                        <div className="flex text-left text-md text-white">
+                                        {item.eventAddress}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </button>
                                 </div>
+                            </div>
                             ))
                         )}
-                    </div>
+                        </div>
+
                 </div>
 
             </div>
