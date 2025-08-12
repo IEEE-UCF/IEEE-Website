@@ -143,7 +143,7 @@ export default function EventsPage() {
                             {currentEvent ? (
                                 <div className="flex flex-col">
                                     <Image
-                                        className="object-cover rounded-3xl h-10/12 w-screen"
+                                        className="object-cover rounded-3xl w-screen"
                                         src={currentEvent.eventFlyer ? currentEvent.eventFlyer : "/larry.png"}
                                         alt="Photo"
                                         width={2000}
