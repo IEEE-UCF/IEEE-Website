@@ -138,7 +138,7 @@ export default function EventsPage() {
             {/* workshops lmao */}
             <div className="bg-black w-full h-screen flex flex-col p-10 items-center">
                 {/* <Sidebar/> */}
-                <div className="flex flex-row h-[400]">
+                <div className="flex flex-row">
                     <div className="flex w-3/4">
                             {currentEvent ? (
                                 <div className="flex flex-col">
