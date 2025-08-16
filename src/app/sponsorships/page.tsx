@@ -17,6 +17,7 @@ const MailTo: React.FC<MailToProps> = ({ email, subject = "", body = "", childre
     );
 };
 
+// finish this later
 // const ContactUs = () => {
 //     return (
 //         <form onSubmit={} >
@@ -43,18 +44,20 @@ export default function SponsorshipsPage() {
                 <div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r   inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
 
                 <div className="flex flex-row my-20 p-40 justify-center absolute z-3 w-screen">
-                    <div className="flex flex-col items-center justify-center self-center text-center gap-y-5">
+                    <div className="flex flex-col items-center justify-center self-center text-center gap-y-5 float">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">SPONSORSHIPS</div>
-                        <div className="font-[subheading-font] text-white text-xl w-3/4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.</div>
+                        <div className="font-[body-font] text-white text-2xl w-3/4">
+                        Without sponsors, nothing would be possible for IEEE UCF. To inquire about supporting IEEE UCF, view the sponsorship package below or click the button to send a direct email.
+                        </div>
 
                         <div className="relative group cursor-pointer">
                             <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                                     
                             <div className="relative px-10 py-7 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
-                                <div className="space-y-2 text-white font-bold">
+                                <div className="space-y-2 text-white font-bold text-2xl">
                                     <MailTo email="ieee.ucf@gmail.com" subject="Sponsorship Inquiry" body="Hello IEEE at UCF,">INQUIRE ABOUT SPONSORING</MailTo>
                                 </div>
-                                 
+                                {/* fill out later */}
                                 {/* <button className="space-y-2 text-white font-bold" onClick={() => setContactForm(!contactUsForm)}>
                                     INQUIRE ABOUT SPONSORING
                                    

@@ -146,7 +146,7 @@ export default function EventsPage() {
                                         <div className="relative  h-full bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
                                             <div className="flex flex-row h-full rounded-2xl p-10 gap-x-10">
                                                     <Image
-                                                        className="object-cover rounded-2xl w-[60vh] h-100vh"
+                                                        className="object-cover rounded-2xl w-[50vh] h-100vh"
                                                         src={currentEvent.eventFlyer ? currentEvent.eventFlyer : "/larry.png"}
                                                         alt="Photo"
                                                         width={2000}
@@ -206,7 +206,7 @@ export default function EventsPage() {
                                 key={`${monthIdx}-${itemIdx}-${item.eventName}`}
                             >
                                 <div
-                                className="group relative w-fit overflow-hidden rounded-2xl p-[2px] bg-transparent cursor-pointer transition-transform hover:scale-102"
+                                className="group relative w-full overflow-hidden rounded-2xl p-[3px] bg-transparent cursor-pointer transition-transform hover:scale-102"
                                 onMouseEnter={(e) => {
                                     const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
                                     if (el) el.style.animationPlayState = 'running';
@@ -223,18 +223,18 @@ export default function EventsPage() {
 
                                 <button
                                     onClick={() => setCurrentEvent(item)}
-                                    className="relative z-10 flex flex-row p-3 cursor-pointer bg-black rounded-2xl m-0.5"
+                                    className="relative z-10 flex flex-row cursor-pointer bg-black rounded-2xl w-full"
                                 >
-                                    <Image
+                                    {/* <Image
                                     className="object-cover rounded-2xl w-60 h-60"
                                     src={item.eventFlyer ? item.eventFlyer : "/larry.png"}
                                     alt="Photo"
                                     width={2000}
                                     height={2000}
-                                    />
+                                    /> */}
 
                                     <div className="m-5 flex flex-col justify-center">
-                                    <div className="flex flex-col justify-between gap-y-2">
+                                    <div className="flex flex-col justify-between">
                                         <div className="text-left font-bold text-lg text-white">
                                         {item.eventName}
                                         </div>

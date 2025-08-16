@@ -17,10 +17,10 @@ export default function ConnectPage() {
 
                 <div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r   inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
 
-                <div className="flex flex-row my-20 p-40 justify-end absolute z-3 w-screen">
+                <div className="flex flex-row my-20 p-40 justify-end absolute z-3 w-screen float">
                     <div className="flex flex-col items-end justify-end self-end text-right gap-y-5">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">CONNECT WITH US</div>
-                        <div className="font-[subheading-font] text-white text-xl w-3/4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. </div>
+                        <div className="font-[subheading-font] text-white text-xl w-3/4">To keep updated on upcoming events, novel projects, and other related endeavors, follow IEEE UCF on various forms of social media.</div>
                 
                     </div>
                 </div>
@@ -28,7 +28,7 @@ export default function ConnectPage() {
                 <div className="bg-black h-full w-full">
                     <Image
                         className="absolute h-full w-full object-cover z-0 opacity-50"
-                        src="/SEC-Hardware.jpg"
+                        src="/First-GBM.jpeg"
                         alt="About Us Photo"
                         width={2000}
                         height={2000}
@@ -43,7 +43,7 @@ export default function ConnectPage() {
 
                     <div className="flex flex-col display gap-y-3 self-center">
 
-                        <div className="text-black font-bold text-4xl">FOLLOW OUR SOCIALS</div>
+                        <div className="text-[var(--ieee-bright-yellow)]  font-[heading-font] text-4xl">FOLLOW OUR SOCIALS</div>
 
                         <div className="w-full flex display flex-row font-bold text-black text-2xl items-center gap-x-5 font-['Open Sans']"> ieee.ucf@gmail.com | ieee@ucf.edu </div>
 
@@ -106,13 +106,13 @@ export default function ConnectPage() {
 
                    
                 <div className="bg-black p-15">
-                    <div className="text-white font-bold text-4xl place-self-start py-8">INTERESTED IN JOINING?</div>
+                    <div className="text-[var(--ieee-bright-yellow)] font-[heading-font] text-4xl place-self-start py-8">INTERESTED IN JOINING?</div>
 
-                    <div className="flex flex-row display justify-between gap-x-5">
+            <div className="flex flex-row display justify-between gap-x-5 w-1/2">
                         <Card className="w-130 h-110 hover:scale-102 transition-transform">
-                            <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1">
-                                <div className="font-bold text-black text-2xl">STEP ONE</div>
-                                <div className="">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. </div>
+                            <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1 flex-wrap">
+                                <div className="font-bold text-black font-[heading-font] text-2xl">STEP ONE</div>
+                                <div className="font-[body-font]">Head to <Link href={"https://www.ieee.org"}>IEEE.org</Link> and select <span className="font-bold">Join IEEE</span>.</div>
                                 <Image 
                                     className="object-center object-cover w-full h-auto rounded-xl" 
                                     src="/stepone.png"
@@ -127,8 +127,8 @@ export default function ConnectPage() {
 
                         <Card className="w-130 h-110 hover:scale-102 transition-transform">
                             <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1">
-                                <div className="font-bold text-black text-2xl">STEP TWO</div>
-                                <div className="">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. </div>
+                                <div className="font-bold text-black font-[heading-font] text-2xl">STEP TWO</div>
+                                <div className="font-[body-font]">Select <span className="font-bold">JOIN AS A STUDENT</span>.</div>
                                 <Image 
                                     className="object-center object-cover w-full h-auto rounded-xl" 
                                     src="/steptwo.png"
@@ -144,7 +144,7 @@ export default function ConnectPage() {
                         <Card className="w-130 h-110 hover:scale-102 transition-transform">
                             <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1">
                                 <div className="font-bold text-black text-2xl">STEP THREE</div>
-                                <div className="">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. </div>
+                                <div className="font-[body-font]">Fill out the following fields below. <span className="font-bold">Make sure to use UCF email, not personal email!</span> Accept the Terms and Conditions, fill out payment information, and check email to confirm.</div>
                                 <Image 
                                     className="object-center object-cover w-full h-auto rounded-xl" 
                                     src="/stepthree.png"

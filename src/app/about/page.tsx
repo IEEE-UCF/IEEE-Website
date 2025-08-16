@@ -68,20 +68,20 @@ export default function About() {
 
                 <div className="flex flex-row my-10 p-40 justify-center absolute z-3 w-screen">
                     <div className="flex flex-col items-center justify-center self-center text-center gap-y-3 float">
-                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">WHAT IS IEEE?</div>
+                        <div className=" font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">WHAT IS IEEE?</div>
                         
-                        <div className="text-white font-[body-font] text-3xl">ieee • /aɪ ˈtɹɪp.əl iː/ • institute of electrical and electronics engineers</div>
+                        <div className="text-white font-[body-font] text-xl lg:text-3xl flex flex-wrap max-w-screen px-3">ieee • /aɪ ˈtɹɪp.əl iː/ • institute of electrical and electronics engineers</div>
 
                         <div className="mt-[23vh]"></div>
 
-                         <div className="relative group cursor-pointer">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                         <div className="relative group cursor-pointer max-w-screen">
+                            <div className="absolute -inset-2 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                             
-                            <div className="group relative w-fit overflow-hidden rounded-2xl p-[2px] bg-transparent cursor-pointer transition-transform hover:scale-102">
+                            <div className="group relative w-fit overflow-hidden rounded-2xl p-[4px] bg-transparent cursor-pointer transition-transform hover:scale-102">
                                 <div className="animated-border pointer-events-none absolute inset-0 z-0 rounded-2xl bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] animate-spin-slow"></div>
                                 
                                 <button
-                                className="relative z-10 w-195 h-50 p-5 rounded-2xl backdrop-blur-sm m-0.5 bg-[#0c0a09] text-white cursor-pointer"
+                                className="relative z-10 w-195 h-[235px] max-w-screen rounded-2xl backdrop-blur-sm p-5  bg-[#0c0a09] text-white cursor-pointer"
                                 onClick={() => setIsFlipped(!isFlipped)}
                                 >
                                 {isFlipped ? (
@@ -131,7 +131,7 @@ export default function About() {
             </div>
 
             <div className="flex flex-col w-full justify-center gap-x-3 bg-black">
-                <div className="h-auto p-20 w-10/12 text-white place-self-center">
+                <div className="h-auto p-10 sm:p-20 sm:w-10/12 text-white place-self-center">
                 {/* <div className="h-auto p-20 text-white w-1/2"> */}
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-4xl">IEEE UCF IN A NUTSHELL</div>
                         <Accordion type="single" collapsible>
@@ -177,7 +177,7 @@ export default function About() {
                                     </div>
                                     <div className="flex flex-row">
                                         <Image
-                                        className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                        className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
                                         src="/tech1.jpeg"
                                         alt="About Us Photo"
                                         width={2000}
@@ -185,7 +185,7 @@ export default function About() {
                                         />
 
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
                                             src="/tech2.jpeg"
                                             alt="About Us Photo"
                                             width={2000}
@@ -206,7 +206,7 @@ export default function About() {
                                     </div>
                                     <div className="flex flex-row">
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
                                             src="/everyonessodead.png"
                                             alt="About Us Photo"
                                             width={2000}
@@ -214,7 +214,7 @@ export default function About() {
                                         />
 
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
                                             src="/aldemworking.png"
                                             alt="About Us Photo"
                                             width={2000}
@@ -238,16 +238,15 @@ export default function About() {
                                     </div>  
                                     <div className="flex flex-row">
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
-                                            src="/service.jpeg"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
+                                            src="/service2.jpeg"
                                             alt="About Us Photo"
                                             width={2000}
                                             height={2000}
                                         />
-
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
-                                            src="/service2.jpeg"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
+                                            src="/service.jpeg"
                                             alt="About Us Photo"
                                             width={2000}
                                             height={2000}
@@ -266,9 +265,9 @@ export default function About() {
                                     <div className="text-white text-lg font-[body-font] py-2">
                                         In-person and virtual events are hosted weekly by the Social Committee and allow for the club to build a community around itself. Throughout this past year, members have enjoyed grabbing bubble tea, ice skating, playing games at arcades, partaking in board games, rollerskating, playing golf, participating in board game competitions, and more. Many members can corroborate that they have developed incredible everlasting relationships through IEEE UCF.
                                     </div>
-                                    <div className="flex flex-row flex-wrap">
+                                    <div className="flex flex-row">
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
                                             src="/socials.jpg"
                                             alt="About Us Photo"
                                             width={2000}
@@ -276,7 +275,7 @@ export default function About() {
                                         />
 
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                            className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
                                             src="/social2.jpeg"
                                             alt="About Us Photo"
                                             width={2000}
@@ -295,9 +294,10 @@ export default function About() {
                                      <div className="text-white text-lg font-[body-font] py-2">
                                         The Professional Development Committee is committed to equipping members with essential career-building strategies to enhance their marketability. Members have access to workshops on resumes, LinkedIn profiles, career fairs, and elevator pitch composition and additionally can participate in mentorship programs. Through partnerships with leading companies, IEEE UCF offers exclusive tours, information sessions, and frequent job opportunities, connecting members directly with potential employers.
                                     </div>  
-                                    <div className="flex flex-row">
+                                    <div className="flex flex-row"> 
+                                        {/* add flex-wrap if 2 photos is necessary */}
                                         <Image
-                                        className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                        className="md:w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
                                         src="/prodev.png"
                                         alt="About Us Photo"
                                         width={2000}
@@ -305,7 +305,7 @@ export default function About() {
                                         />
 
                                         <Image
-                                            className="w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+                                            className="md:w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
                                             src="/mtronpti.png"
                                             alt="About Us Photo"
                                             width={2000}
@@ -354,9 +354,9 @@ export default function About() {
 
 
                                     <Card className="w-60 h-100 m-3 hover:scale-102 transition-transform">
-                                        <CardContent className="flex w-full justify-center flex-col items-center align-middle p-4">
+                                        <CardContent className="flex w-full justify-center flex-col items-center align-middle ">
                                             <Image 
-                                                className="object-center object-cover w-45 h-45 rounded-xl" 
+                                                className="object-center object-cover w-45 h-45 rounded-lg" 
                                                 src={officer.photo}
                                                 alt="IEEE Logo" 
                                                 width={2000} 
@@ -392,10 +392,10 @@ export default function About() {
                                 <div key={index} className="">
 
 
-                                    <Card className="w-60 h-100 m-3 hover:scale-102 transition-transform">
-                                        <CardContent className="flex w-full justify-center flex-col items-center align-middle p-4">
+                                    <Card className="w-80 h-120 sm:w-60 sm:h-100 m-3 hover:scale-102 transition-transform">
+                                        <CardContent className="flex w-full justify-center flex-col items-center align-middle">
                                             <Image 
-                                                className="object-center object-cover w-45 h-45 rounded-xl" 
+                                                className="object-center object-cover w-100 h-70 sm:w-45 sm:h-45 rounded-lg" 
                                                 src={officer.photo}
                                                 alt="IEEE Logo" 
                                                 width={2000} 
