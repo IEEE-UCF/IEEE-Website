@@ -133,43 +133,48 @@ export default function EventsPage() {
                 
             </div>
 
-            
+            <div className="p-10 bg-black"></div>
             
             {/* workshops lmao */}
-            <div className="bg-black w-full h-fit flex flex-col p-10 items-center">
+            <div className="bg-black w-full h-fit flex flex-col p-15 items-center">
                 {/* <Sidebar/> */}
                 <div className="flex flex-row h-fit">
                     <div className="w-3/4">
                             {currentEvent ? (
-                                <div className="flex flex-col">
-                                    <Image
-                                        className="object-cover rounded-3xl w-screen"
-                                        src={currentEvent.eventFlyer ? currentEvent.eventFlyer : "/larry.png"}
-                                        alt="Photo"
-                                        width={2000}
-                                        height={2000}
-                                    />
-                                    <div className="m-5 flex flex-col gap-y-3">
-                                        <div className="font-bold text-3xl text-white">
-                                            {currentEvent.eventName}
-                                        </div>
-                                         <div className="text-xl text-white">
-                                            {currentEvent.eventDesc}
-                                        </div>
+                                <div className="relative group h-full">
+                                    <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-50"></div>
+                                        <div className="relative  h-full bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
+                                            <div className="flex flex-row h-full rounded-2xl p-10 gap-x-10">
+                                                    <Image
+                                                        className="object-cover rounded-2xl w-[60vh] h-100vh"
+                                                        src={currentEvent.eventFlyer ? currentEvent.eventFlyer : "/larry.png"}
+                                                        alt="Photo"
+                                                        width={2000}
+                                                        height={2000}
+                                                    />
+                                                    <div className="m-5 flex flex-col gap-y-3">
+                                                        <div className="font-bold text-3xl text-white">
+                                                            {currentEvent.eventName}
+                                                        </div>
+                                                        <div className="text-xl text-white">
+                                                            {currentEvent.eventDesc}
+                                                        </div>
 
-                                        <div className="flex flex-row justify-between ">
-                                            <div className="flex text-lg flex-row gap-x-2 text-white">
-                                                <Calendar1 />
-                                                {currentEvent.eventDate}
-                                            </div>
-                                            <div className="flex text-lg flex-row gap-x-2 text-white">
-                                                <MapPin />
-                                                {currentEvent.eventAddress}
-                                            </div>
-                                        </div>
+                                                        <div className="flex flex-col justify-between ">
+                                                            <div className="flex text-lg flex-row gap-x-2 text-white">
+                                                                <Calendar1 />
+                                                                {currentEvent.eventDate}
+                                                            </div>
+                                                            <div className="flex text-lg flex-row gap-x-2 text-white">
+                                                                <MapPin />
+                                                                {currentEvent.eventAddress}
+                                                            </div>
+                                                        </div>
 
-                                       
-                                    </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                        </div>
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center justify-center h-full w-1/4">
@@ -251,6 +256,9 @@ export default function EventsPage() {
                 </div>
 
             </div>
+
+            <div className="p-10 bg-black"></div>
+            
 
             <Footer/>
 

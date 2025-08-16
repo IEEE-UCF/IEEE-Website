@@ -52,20 +52,21 @@ export default function Home() {
         <div className="px-5 w-full">
           <Navbar/>
           
-          <div className="flex flex-row gap-x-[3vw] py-16 px-20 justify-center">
+          <div className="flex flex-row gap-x-[3vw] justify-center self-center flex-wrap">
 
-            <div className="flex flex-col items-start justify-start float">
-              <div className="my-8">
-                <div className="font-[display-font] text-[var(--ieee-bright-yellow)] text-[120px] -my-8">IEEE UCF</div>
-                <div className="font-[subheading-font] text-white text-5xl">STUDENT CHAPTER</div>
-                <div className="text-white font-[body-italic-font] text-3xl my-3 w-fit">
-                  <div className="typewriter">
-                      From circuits to embedded systems, we engineer the future 
-                  </div>
+            <div className="flex flex-col items-start text-center xl:text-left justify-center self-center float">
+              <div className="max-w-full my-8">
+                <div className="font-[display-font] text-[var(--ieee-bright-yellow)] text-[80px] lg:text-[120px]">IEEE UCF</div>
+                <div className="font-[subheading-font] text-white text-4xl lg:text-5xl">STUDENT CHAPTER</div>
+                <div className=" text-white font-[body-italic-font] text-xl md:text-2xl lg:text-3xl my-3 flex flex-wrap w-fit">
+                <div className="typewriter flex flex-wrap  whitespace-normal break-words">
+                  From circuits to embedded systems, we engineer the future
                 </div>
               </div>
 
-              <div className="relative group cursor-pointer">
+              </div>
+
+              <div className="relative group cursor-pointer self-center xl:self-start">
                   <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                   
                   <div className="relative px-12 py-5 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
@@ -78,14 +79,15 @@ export default function Home() {
               </div>
 
             </div>
-   
+            <div className="">
             <Image 
-              className="object-contain h-110 w-auto float" 
+              className="object-contain float h-120 w-10/12 place-self-center" 
               src="/Logo-Landing.png" 
               alt="IEEE UCF Logo" 
               width={3000} 
               height={3000} 
             />
+            </div>
 
           </div>
 

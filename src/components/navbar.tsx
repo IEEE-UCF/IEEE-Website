@@ -20,10 +20,10 @@ const Navbar: React.FC = () => {
   };
   
   return (
-    <div className="relative flex items-center justify-between h-40 w-full p-5">
+    <div className="relative flex items-center justify-between h-40 w-full">
       <div className="flex w-full justify-between m-6">
         <div className="flex justify-start items-center">
-          <Link href={"/"} className="text-white font-[body-font] flex-row flex align-middle justify-center items-center gap-x-5 text-2xl hover:text-[var(--ieee-dark-yellow)] transition">
+          <Link href={"/"} className="text-white font-[body-font] flex-row flex align-middle justify-center items-center gap-x-5 text-xl lg:text-2xl hover:text-[var(--ieee-dark-yellow)] transition">
             <Image className="object-contain" src="/IEEE-UCF-ICON.png" alt="IEEE UCF Logo" width={70} height={70} />IEEE UCF Student Chapter
           </Link>
         </div>
@@ -76,14 +76,20 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
   return (
     <div className="fixed inset-0 flex flex-col z-40 bg-black h-fit">
       <div className="flex w-full grow flex-col gap-1 px-4 pb-2 py-12">
+          <Link
+            href="/"
+            onClick={toggleMenu}
+            className={"hover:text-[#679436] font-bold text-white inline-flex h-10 w-full items-center text-sm transition-colors"}
+          >
+            HOME
+
+          </Link>
         {routes.map((route, index) => (
           <Link
             key={index}
             href={route.href}
             onClick={toggleMenu}
             className={route.title === "DOWNLOAD" ? "hover:bg-[#d096dc] font-bold text-white justify-center inline-flex align-middle text-center h-10 w-full items-center text-2xl transition-colors bg-[#8D6B94] p-5" : "hover:text-[#679436] font-bold text-white inline-flex h-10 w-full items-center text-sm transition-colors"}
-            
-            
           >
             {route.title}
           </Link>

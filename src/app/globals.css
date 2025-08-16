@@ -253,13 +253,13 @@ body {
     width: 0;
   }
   30% {
-    width: 100%; /* Type the full word */
+    width: 100%;
   }
   80% {
-    width: 100%; /* Pause with full text visible */
+    width: 100%; 
   }
   100% {
-    width: 0;    /* Delete the word */
+    width: 0;   
   }
 }
 
