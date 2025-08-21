@@ -50,7 +50,7 @@ export default function ProjectsPage() {
                 if (!open) setSelectedProject(null)
             }}
         >
-        <div className={`flex flex-col w-screen overflow-hidden bg-transparent transition-all duration-300 ${selectedProject ? "blur-sm" : "blur-none"}`}>
+        <div className={`flex flex-col max-w-screen overflow-hidden bg-transparent transition-all duration-300 ${selectedProject ? "blur-sm" : "blur-none"}`}>
             <div className="relative w-full h-[120vh]">
                 <div className="absolute z-4 w-full h-fit inset-0 items-center px-5">
                     <Navbar />
@@ -67,7 +67,7 @@ export default function ProjectsPage() {
                 <div className="bg-black h-full w-full">
                     <Image
                     className="absolute h-full w-full object-cover z-0 opacity-50"
-                    src="/mtronpti.png"
+                    src="/autismcreature.gif"
                     alt="Events Photo"
                     width={2000}
                     height={2000}
@@ -76,11 +76,11 @@ export default function ProjectsPage() {
             </div>
 
         
-<div className="justify-center flex flex-row flex-wrap py-20 px-3">
+<div className="justify-start flex flex-row flex-wrap py-20 px-3">
   {projectData.map((project) => (
     <div
       key={project._id}
-      className="flex flex-col h-fit w-1/3 hover:scale-102 transition p-3"
+      className="flex flex-col h-fit w-full md:basis-1/2 lg:basis-1/3 hover:scale-102 transition p-3"
     >
       <div className="relative group cursor-pointer">
         <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-300 group-hover:duration-200"></div>
@@ -88,7 +88,7 @@ export default function ProjectsPage() {
         <Card className="relative bg-black border-0">
           <CardContent className="p-6">
             <Image
-              className="object-center object-cover w-120 h-80 rounded-md mb-4"
+              className="object-center object-cover w-full h-80 rounded-md mb-4"
               src={project.photo || "/larry.png"}
               alt={project.name}
               width={2000}
@@ -110,7 +110,7 @@ export default function ProjectsPage() {
                 ? project.hardware?.map((skill, skillIndex) => (
                     <div
                       key={`hw-${skillIndex}`}
-                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-dark-yellow)] text-sm"
+                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-light-grey)] text-sm"
                     >
                       {skill}
                     </div>
@@ -120,7 +120,7 @@ export default function ProjectsPage() {
                 ? project.software?.map((skill, skillIndex) => (
                     <div
                       key={`sw-${skillIndex}`}
-                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-dark-grey)] text-sm"
+                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-grey)] text-sm"
                     >
                       {skill}
                     </div>
@@ -130,7 +130,7 @@ export default function ProjectsPage() {
                 ? project.skills?.map((skill, skillIndex) => (
                     <div
                       key={`sk-${skillIndex}`}
-                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-grey)] text-sm"
+                      className="text-white rounded-xl w-fit px-3 py-1 bg-[var(--ieee-dark-grey)] text-sm"
                     >
                       {skill}
                     </div>
@@ -163,8 +163,8 @@ export default function ProjectsPage() {
                 ( <div className="h-full flex flex-col w-130">
                     <div className="flex items-center justify-between">
                         <div className="text-xl text-[var(--ieee-bright-yellow)]">{selectedProject.name?.toUpperCase()}</div>
-                        <Button variant="ghost" onClick={closeSidebar} className="cursor-pointer">
-                            <X/>
+                        <Button onClick={closeSidebar} className="hover:scale-150 text-white cursor-pointer bg-transparent transition-transform hover:bg-transparent">
+                            <X size={24}/>
                         </Button>
                     </div>
 
@@ -198,7 +198,7 @@ export default function ProjectsPage() {
                             <div className="flex flex-wrap gap-2">
                                 {selectedProject.hardware?.length ? (
                                 selectedProject.hardware.map((item, itemIndex) => (
-                                    <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-dark-yellow)] rounded-md text-sm">
+                                    <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-light-grey)] rounded-md text-sm">
                                     {item}
                                     </div>
                                 ))
@@ -213,7 +213,7 @@ export default function ProjectsPage() {
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.software?.length ? (
                       selectedProject.software.map((item, itemIndex) => (
-                        <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-dark-grey)] rounded-md text-sm">
+                        <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-grey)] rounded-md text-sm">
                           {item}
                         </div>
                       ))
@@ -228,7 +228,7 @@ export default function ProjectsPage() {
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.skills?.length ? (
                       selectedProject.skills.map((item, itemIndex) => (
-                        <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-grey)] rounded-md text-sm">
+                        <div key={itemIndex} className="px-3 py-1 bg-[var(--ieee-dark-grey)] rounded-md text-sm">
                           {item}
                         </div>
                       ))

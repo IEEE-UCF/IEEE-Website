@@ -46,7 +46,7 @@ const Timer: React.FC = () => {
 
 
   return (
-      <div className="max-w-lg mx-auto bg-white drop-shadow-lg rounded-lg overflow-hidden">
+      <div className="lg:w-5/12 w-full mx-auto bg-white drop-shadow-lg rounded-md overflow-hidden">
         <div className="p-4">
           <h2 className="text-[25px] font-[subheading-font]">NEXT GENERAL BODY MEETING</h2>
           <p className="mt-2 text-xl font-[body-font]">
@@ -55,25 +55,33 @@ const Timer: React.FC = () => {
         </div>
 
         <div className="py-4 px-6">
-          <div className="flex flex-wrap gap-1 justify-center items-center">
-            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
+          <div className="flex gap-1 justify-center items-center">
+            <div className="rounded-sm px-6 py-2 bg-[var(--ieee-bright-yellow)] w-1/4">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
-                {timeLeft.days}d
+                {timeLeft.days}
+                <br></br>
+                <span className="text-sm">days</span>
               </div>
             </div>
-            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
+            <div className="rounded-sm px-6 py-2 bg-[var(--ieee-bright-yellow)] w-1/4">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
-                {timeLeft.hours}h
+                {timeLeft.hours}
+                <br></br>
+                <span className="text-sm">hours</span>
               </div>
             </div>
-            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
+            <div className="rounded-sm px-6 py-2 bg-[var(--ieee-bright-yellow)] w-1/4">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
-                {timeLeft.minutes}m
+                {timeLeft.minutes}
+                <br></br>
+                <span className="text-sm">minutes</span>
               </div>
             </div>
-            <div className="rounded-lg px-6 py-2 bg-[var(--ieee-bright-yellow)]">
+            <div className="rounded-sm px-6 py-2 bg-[var(--ieee-bright-yellow)] w-1/4">
               <div className="font-bold font-[heading-font] text-2xl text-gray-800">
-                {timeLeft.seconds}s
+                {timeLeft.seconds}
+                <br></br>
+                <span className="text-sm">seconds</span>
               </div>
             </div>
           </div>

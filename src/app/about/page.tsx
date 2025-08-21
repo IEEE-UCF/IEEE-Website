@@ -81,15 +81,15 @@ export default function About() {
                                 <div className="animated-border pointer-events-none absolute inset-0 z-0 rounded-2xl bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] animate-spin-slow"></div>
                                 
                                 <button
-                                className="relative z-10 w-195 h-[235px] max-w-screen rounded-2xl backdrop-blur-sm p-5  bg-[#0c0a09] text-white cursor-pointer"
+                                className="relative z-10 w-85 sm:w-120 md:w-170 lg:w-195 h-[280px] md:h-[235px] max-w-screen rounded-2xl backdrop-blur-sm p-5  bg-[#0c0a09] text-white cursor-pointer"
                                 onClick={() => setIsFlipped(!isFlipped)}
                                 >
                                 {isFlipped ? (
                                     <div>
-                                    <div className="font-[subheading-italic-font] text-[var(--ieee-bright-yellow)] text-2xl">
+                                    <div className="font-[subheading-italic-font] text-[var(--ieee-bright-yellow)] text-xl sm:text-2xl">
                                         We are the innovators of tomorrow.
                                     </div>
-                                    <div className="font-[body-font] text-xl">
+                                    <div className="font-[body-font] text-md sm:text-xl">
                                         Located at the University of Central Florida, our IEEE student chapter is one of the largest in the nation and boasts over 300 active members. We foster technical experience through a collaborative environment, ultimately paving the way for successful careers in diverse engineering fields.
                                         
                                     </div>
@@ -169,7 +169,7 @@ export default function About() {
                             <AccordionItem value="item-2">
                                 <AccordionTrigger className="text-2xl font-[subheading-font] cursor-pointer">TECHNICAL DEVELOPMENT</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="text-white text-lg font-[subheading-font] py-2">
+                                    <div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
                                         Workshops and projects are premier opportunities for IEEE UCF members to advance their technical knowledge and experience.
                                     </div>
                                     <div className="text-white text-lg font-[body-font] py-2">
@@ -198,7 +198,8 @@ export default function About() {
                             <AccordionItem value="item-3">
                                 <AccordionTrigger className="text-2xl font-[subheading-font] cursor-pointer">SOUTHEASTCON</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="text-white text-lg font-[subheading-font] py-2">
+                                    <div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
+
                                         IEEE UCF is an annual participant at SoutheastCon, the most influential IEEE Region 3 conference.
                                     </div>
                                     <div className="text-white text-lg font-[body-font] py-2">
@@ -230,7 +231,7 @@ export default function About() {
                             <AccordionItem value="item-4">
                                 <AccordionTrigger className="text-2xl font-[subheading-font] cursor-pointer">COMMUNITY SERVICE</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="text-white text-lg font-[subheading-font] py-2">
+                                    <div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
                                         Community involvement is a core value for IEEE UCF.
                                     </div>  
                                     <div className="text-white text-lg font-[body-font] py-2">
@@ -259,7 +260,7 @@ export default function About() {
                             <AccordionItem value="item-5">
                                 <AccordionTrigger className="text-2xl font-[subheading-font] cursor-pointer">SOCIAL EVENTS</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="text-white text-lg font-[subheading-font] py-2">
+                                    <div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
                                         A highlight of IEEE UCF is the fun, connection-building social events.
                                     </div>  
                                     <div className="text-white text-lg font-[body-font] py-2">
@@ -288,7 +289,7 @@ export default function About() {
                             <AccordionItem value="item-6">
                                 <AccordionTrigger className="text-2xl font-[subheading-font] cursor-pointer">PROFESSIONAL DEVELOPMENT</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="text-white text-lg font-[subheading-font] py-2">
+                                    <div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
                                         Supporting members’ career advancement is critical for IEEE UCF.
                                     </div>  
                                      <div className="text-white text-lg font-[body-font] py-2">
@@ -317,7 +318,7 @@ export default function About() {
                             <AccordionItem value="item-7">
                                 <AccordionTrigger className="text-2xl font-[subheading-font] cursor-pointer">ALUMNI AND MEMBER NETWORK</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="text-white text-lg font-[subheading-font] py-2">
+                                    <div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
                                         IEEE UCF has an extensive network of engineering professionals at notable companies.
                                     </div>  
                                     <div className="flex flex-row">
@@ -353,7 +354,7 @@ export default function About() {
                                 <div key={index} className="">
 
 
-                                    <Card className="w-60 h-100 m-3 hover:scale-102 transition-transform">
+                                    <Card className="rounded-md w-60 h-100 m-3 hover:scale-102 transition-transform">
                                         <CardContent className="flex w-full justify-center flex-col items-center align-middle ">
                                             <Image 
                                                 className="object-center object-cover w-45 h-45 rounded-lg" 
@@ -392,10 +393,10 @@ export default function About() {
                                 <div key={index} className="">
 
 
-                                    <Card className="w-80 h-120 sm:w-60 sm:h-100 m-3 hover:scale-102 transition-transform">
+                                    <Card className="rounded-md w-60 h-100 m-3 hover:scale-102 transition-transform">
                                         <CardContent className="flex w-full justify-center flex-col items-center align-middle">
                                             <Image 
-                                                className="object-center object-cover w-100 h-70 sm:w-45 sm:h-45 rounded-lg" 
+                                                className="object-center object-cover w-45 h-45 rounded-lg" 
                                                 src={officer.photo}
                                                 alt="IEEE Logo" 
                                                 width={2000} 

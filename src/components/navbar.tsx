@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
 
       {menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
-      <button onClick={toggleMenu} className="sm:hidden bg-[var(--ieee-dark-yellow)] mr-5 z-50">
+      <button onClick={toggleMenu} className="sm:hidden bg-[var(--ieee-dark-yellow)] mr-5 z-50 cursor-pointer">
         {menuOpen ? (
           <XMarkIcon className="h-7 w-7 fixed bg-[var(--ieee-dark-yellow)] -translate-x-7 -translate-y-3.5 z-50" />
         ) : (
@@ -74,12 +74,12 @@ const Navbar: React.FC = () => {
 
 const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
   return (
-    <div className="fixed inset-0 flex flex-col z-40 bg-black h-fit">
+    <div className="fixed inset-0 flex flex-col z-40 bg-black h-fit max-w-screen">
       <div className="flex w-full grow flex-col gap-1 px-4 pb-2 py-12">
           <Link
             href="/"
             onClick={toggleMenu}
-            className={"hover:text-[#679436] font-bold text-white inline-flex h-10 w-full items-center text-sm transition-colors"}
+            className={"hover:text-[var(--ieee-bright-yellow)] font-[heading-font] text-white inline-flex h-10 w-full items-center text-sm transition-colors"}
           >
             HOME
 
@@ -89,7 +89,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
             key={index}
             href={route.href}
             onClick={toggleMenu}
-            className={route.title === "DOWNLOAD" ? "hover:bg-[#d096dc] font-bold text-white justify-center inline-flex align-middle text-center h-10 w-full items-center text-2xl transition-colors bg-[#8D6B94] p-5" : "hover:text-[#679436] font-bold text-white inline-flex h-10 w-full items-center text-sm transition-colors"}
+            className={"hover:text-[var(--ieee-bright-yellow)] font-[heading-font] text-white inline-flex h-10 w-full items-center text-sm transition-colors"}
           >
             {route.title}
           </Link>
