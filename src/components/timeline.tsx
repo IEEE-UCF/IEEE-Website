@@ -30,7 +30,6 @@ export default function timeline() {
 //   };
 // }
 
-// // sorry for the prop drilling... im rawdogging this on a plane
 // // reminder to self to fix this mess later......
 // const Timeline = ( {committee}: {committee: string;} ) => {
 //   const monthOrder = {

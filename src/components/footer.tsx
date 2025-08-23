@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
             <div className="w-full h-fit"></div>
             <div className="flex flex-row justify-between gap-x-2 p-10">
                 <Image
-                    className="h-40 w-40 object-cover"
+                    className="hidden md:block h-40 w-40 object-cover"
                     src="/IEEEUCF_Logo.svg"
                     alt="Events Photo"
                     width={2000}
@@ -31,31 +31,33 @@ const Footer: React.FC = () => {
                 />
                 <div className="flex flex-col gap-y-2 place-self-center ">
 
-                <div className="flex flex-row gap-x-3 items-center">
+                <div className="flex md:flex-nowrap flex-wrap lg:flex-row flex-col">
                     {/* <div className="text-white font-bold text-sm">ABOUT IEEE UCF</div> */}
-                    <Link href={"/"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">HOME</Link>
-                    |
-                    <Link href={"/about"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">ABOUT</Link>
-                    |
-                    <Link href={"/connect"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">CONTACT</Link>  
-                    |
-                    <Link href={"https://www.ieee.org/accessibility_statement.html"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">ACCESSIBILITY</Link>  
-                    |
-                    <Link href={"https://www.ieee.org/nondiscrimination"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">NONDISCRIMINATION POLICY</Link>  
-                    |
-                    <Link href={"http://www.ieee-ethics-reporting.org"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">IEEE ETHICS REPORTING</Link>  
-                    |
-                    <Link href={"https://privacy.ieee.org/policies"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">IEEE PRIVACY POLICY</Link>  
-                    |
-                    <Link href={"https://www.ieee.org/site_terms_conditions.html"} className="w-full font-extralight sm:w-auto text-white text-md font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">TERMS & DISCLOSURES</Link> 
-                     
+                    <div className="flex flex-row gap-x-3 items-center text-xs md:text-sm">
+                    <Link href={"/"} className="w-full font-extralight sm:w-auto text-white  font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">HOME</Link>
+                    <span className="text-3xl">|</span>
+                    <Link href={"/about"} className="w-full font-extralight sm:w-auto text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">ABOUT</Link>
+                    <span className="text-3xl">|</span>
+                    <Link href={"/connect"} className="w-full font-extralight sm:w-auto text-white  font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">CONTACT</Link>  
+                    <span className="text-3xl">|</span>
+                    <Link href={"https://www.ieee.org/accessibility_statement.html"} className="w-full font-extralight sm:w-auto text-white  font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">ACCESSIBILITY</Link>  
+                    <span className="text-3xl">|</span>
+                    </div>
+
+                    <div className="flex flex-row gap-x-3 items-center text-xs md:text-sm">
+                    <Link href={"https://www.ieee.org/nondiscrimination"} className="w-full font-extralight sm:w-auto text-white  font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">NONDISCRIMINATION POLICY</Link>  
+                    <span className="text-3xl">|</span>
+                    <Link href={"http://www.ieee-ethics-reporting.org"} className="w-full font-extralight sm:w-auto text-white  font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">IEEE ETHICS REPORTING</Link>  
+                    <span className="text-3xl">|</span>
+                    <Link href={"https://privacy.ieee.org/policies"} className="w-full font-extralight sm:w-auto text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">IEEE PRIVACY POLICY</Link>  
+                    <span className="text-3xl">|</span>
+                    <Link href={"https://www.ieee.org/site_terms_conditions.html"} className="w-full font-extralight sm:w-auto text-white  font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">TERMS & DISCLOSURES</Link> 
+                     </div>
                 </div>
-                <div className="flex flex-row gap-x-4 items-center">
+                <div className="flex flex-row gap-x-4 items-center text-xs md:text-base">
                     © Copyright 2025 IEEE – All rights reserved. A public charity, IEEE is the world&rsquo;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
                 </div>
-                <div className="flex flex-row gap-x-4 items-center">
-                    Made with blood, sweat, and tears.
-                </div>
+               
                 </div>
 
                 {/* <div className="flex flex-col py-10 px-5 lg:px-10">

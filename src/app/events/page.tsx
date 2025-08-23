@@ -117,13 +117,11 @@ export default function EventsPage() {
         <div className="flex flex-row my-30 p-40 px-10 md:px-20 lg:px-40 justify-end absolute z-3 w-screen">
           <div className="flex flex-col items-end justify-end self-end text-right gap-y-5 float">
             <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">
-              UPCOMING EVENTS
+              EVENTS
             </div>
             <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">
-              Experience IEEE UCF&rsquo;s exciting lineup of events this
-              <span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]"> {currentMonth} </span>
-              and beyond. From technical workshops to career-building sessions to social gatherings to community service
-              opportunities, there is unlimited opportunity to expand networks and grow skills.
+              From technical workshops to career-building sessions to social gatherings to community service
+              opportunities, there is unlimited opportunity to expand networks and grow skills in IEEE UCF.
             </div>
           </div>
         </div>
@@ -140,12 +138,12 @@ export default function EventsPage() {
       </div>
      
 
-      {/* workshops lmao */}
       <div className="bg-black w-full h-fit flex flex-col px-10 items-center">
-      <div className="p-20 bg-black items-start text-left place-self-start">
-        <div className="font-[heading-font] text-white text-4xl sm:text-5xl">title</div>
-        <div className="font-[body-font] text-white text-xl sm:text-2xl">Take a look at some cool events fml</div>
-
+      <div className="p-20 bg-black items-start text-left lg:place-self-start place-self-center">
+        <div className="font-[heading-font] text-white text-4xl lg:text-5xl lg:text-left text-center py-3">UPCOMING EVENTS</div>
+        <div className="font-[body-font] text-white text-xl lg:text-2xl lg:text-left text-center">Experience IEEE UCF&rsquo;s exciting lineup of events this
+              <span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]"> {currentMonth} </span>
+              and beyond.</div>
       </div>
         
         {/* <Sidebar/> */}
@@ -268,13 +266,13 @@ export default function EventsPage() {
 
                     <button
                       onClick={() => handleEventSelect(item)}
-                      className="relative z-10 flex flex-row cursor-pointer bg-black rounded-2xl w-full"
+                      className="relative z-10 flex flex-row cursor-pointer bg-black rounded-2xl w-full text-white hover:text-[var(--ieee-bright-yellow)]"
                     >
-                      <div className="m-5 flex flex-col justify-center">
-                        <div className="flex flex-col justify-between">
-                          <div className="text-left font-bold text-lg text-white">{item.eventName}</div>
-                          <div className="flex text-left gap-x-2 text-md text-white">{item.eventDate}</div>
-                          <div className="flex text-left text-md text-white">{item.eventAddress}</div>
+                      <div className="m-5 flex flex-col justify-center ">
+                        <div className="flex flex-col justify-between ">
+                          <div className="text-left font-bold text-lg ">{item.eventName}</div>
+                          <div className="flex text-left gap-x-2 text-md ">{item.eventDate}</div>
+                          <div className="flex text-left text-md ">{item.eventAddress}</div>
                         </div>
                       </div>
                     </button>

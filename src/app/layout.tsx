@@ -5,7 +5,10 @@ import "./globals.css";
 // pls dont forget um
 export const metadata: Metadata = {
   title: "IEEE UCF",
-  description: "some mega good seo???? someone help idk what to put here",
+  description: "IEEE UCF is the largest electrical engineering organization at UCF. We host EE and CS projects, workshops, and professional events.",
+  icons: {
+    icon: '/IEEE-UCF-ICON.png', 
+  },
 };
 
 export default function RootLayout({

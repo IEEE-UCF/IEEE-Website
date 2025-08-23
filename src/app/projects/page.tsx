@@ -43,7 +43,7 @@ export default function ProjectsPage() {
     }
 
     return (
-        <SidebarProvider
+        <SidebarProvider className="flex flex-col max-w-screen overflow-hidden"
             defaultOpen={false}
             open={selectedProject !== null}
             onOpenChange={(open) => {
@@ -58,17 +58,17 @@ export default function ProjectsPage() {
                 <div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
                 <div className="flex flex-row my-30 p-40 absolute z-3 w-screen">
                     <div className="flex flex-col items-left text-left gap-y-5 float">
-                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">PROJECTS</div>
-                        <div className="font-[body-font] text-white text-2xl w-3/4">
+                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">PROJECTS</div>
+                        <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">
                         Tackle real-world challenges by joining or leading IEEE UCF’s hands-on projects. Members of all skill levels and backgrounds can get involved to develop technical experience, collaborate with others, and push the boundaries of engineering. 
                         </div>
                     </div>
                 </div>
-                <div className="bg-black h-full w-full">
+                <div className="relative bg-black h-full w-full">
                     <Image
-                    className="absolute h-full w-full object-cover z-0 opacity-50"
+                    className="absolute h-full w-full object-cover object-center z-0 opacity-100"
                     src="/autismcreature.gif"
-                    alt="Events Photo"
+                    alt="Projects Photo"
                     width={2000}
                     height={2000}
                     />

@@ -19,8 +19,8 @@ export default function ConnectPage() {
 
                 <div className="flex flex-row my-20 p-40 justify-end absolute z-3 w-screen float">
                     <div className="flex flex-col items-end justify-end self-end text-right gap-y-5">
-                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-6xl">CONNECT WITH US</div>
-                        <div className="font-[subheading-font] text-white text-xl w-3/4">To keep updated on upcoming events, novel projects, and other related endeavors, follow IEEE UCF on various forms of social media.</div>
+                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">CONNECT WITH US</div>
+                        <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">To keep updated on upcoming events, novel projects, and other related endeavors, follow IEEE UCF on various forms of social media.</div>
                 
                     </div>
                 </div>
@@ -108,11 +108,11 @@ export default function ConnectPage() {
                 <div className="bg-black p-15">
                     <div className="text-[var(--ieee-bright-yellow)] font-[heading-font] text-4xl place-self-start py-8">INTERESTED IN JOINING?</div>
 
-            <div className="flex flex-row display justify-between gap-x-5 w-1/2">
-                        <Card className="w-130 h-110 hover:scale-102 transition-transform">
+            <div className="flex flex-row display justify-between flex-wrap basis-1/">
+                        <Card className="lg:w-1/4 w-1/2 h-110 hover:scale-102 transition-transform">
                             <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1 flex-wrap">
-                                <div className="font-bold text-black font-[heading-font] text-2xl">STEP ONE</div>
-                                <div className="font-[body-font]">Head to <Link href={"https://www.ieee.org"}>IEEE.org</Link> and select <span className="font-bold">Join IEEE</span>.</div>
+                                <div className="font-[heading-font] text-black text-2xl">STEP ONE</div>
+                                <div className="font-[body-font]">Head over to <Link href={"https://www.ieee.org"}>IEEE.org</Link> and select <span className="font-[subheading-italic-font]">Join IEEE</span>.</div>
                                 <Image 
                                     className="object-center object-cover w-full h-auto rounded-xl" 
                                     src="/stepone.png"
@@ -125,10 +125,10 @@ export default function ConnectPage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="w-130 h-110 hover:scale-102 transition-transform">
+                        <Card className="lg:w-1/4 w-1/2 h-110 hover:scale-102 transition-transform">
                             <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1">
-                                <div className="font-bold text-black font-[heading-font] text-2xl">STEP TWO</div>
-                                <div className="font-[body-font]">Select <span className="font-bold">JOIN AS A STUDENT</span>.</div>
+                                <div className="font-[heading-font] text-black text-2xl">STEP TWO</div>
+                                <div className="font-[body-font]">To create an account, select <span className="font-[subheading-italic-font]">JOIN AS A STUDENT</span>.</div>
                                 <Image 
                                     className="object-center object-cover w-full h-auto rounded-xl" 
                                     src="/steptwo.png"
@@ -141,10 +141,28 @@ export default function ConnectPage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="w-130 h-110 hover:scale-102 transition-transform">
+                        <Card className="lg:w-1/4 w-1/2 h-110 hover:scale-102 transition-transform justify-between">
+                            <CardContent className="flex w-full flex-col items-start text-left h-full">
+                                <div className="font-[heading-font] text-black text-2xl">STEP THREE</div>
+                                <div className="font-[body-font]">Fill out the following fields. <span className="font-[subheading-italic-font] text-[var(--ieee-bright-yellow)]">Use your UCF email, not personal email!</span></div>
+                                <div className="">
+                                <Image 
+                                    className="object-center object-cover w-full h-auto rounded-xl" 
+                                    src="/stepthree.png"
+                                    alt="IEEE Logo" 
+                                    width={2000} 
+                                    height={2000} 
+                                                            
+                                />
+                                </div>
+
+                            </CardContent>
+                        </Card>
+
+                        <Card className="lg:w-1/4 w-1/2 h-110 hover:scale-102 transition-transform">
                             <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1">
-                                <div className="font-bold text-black text-2xl">STEP THREE</div>
-                                <div className="font-[body-font]">Fill out the following fields below. <span className="font-bold">Make sure to use UCF email, not personal email!</span> Accept the Terms and Conditions, fill out payment information, and check email to confirm.</div>
+                                <div className="font-[heading-font] text-black text-2xl">STEP FOUR</div>
+                                <div className="font-[body-font]">Accept the Terms and Conditions, fill out payment information, and check email to confirm.</div>
                                 <Image 
                                     className="object-center object-cover w-full h-auto rounded-xl" 
                                     src="/stepthree.png"

@@ -31,7 +31,7 @@ export default function Home() {
       {/* Hero Section */}
       <div className="relative w-full">
         {/* Background with gradient */}
-        <div className="flex flex-col w-full relative xl:h-[130vh] h-[165vh] lg:h-[150vh] items-center [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
+        <div className="flex flex-col w-full relative 2xl:h-[140vh] h-[165vh] lg:h-[150vh] items-center [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
           <div className="px-5 w-full">
             <Navbar />
 
@@ -46,7 +46,7 @@ export default function Home() {
                   <div className="font-[subheading-font] text-white text-4xl lg:text-5xl">
                     STUDENT CHAPTER
                   </div>
-                  <div className="text-white font-[body-italic-font] text-xl md:text-2xl lg:text-3xl my-3 flex flex-wrap w-fit">
+                  <div className="text-white font-[body-italic-font] text-sm md:text-2xl lg:text-3xl my-3 flex flex-wrap w-fit">
                     <div className="typewriter flex flex-wrap whitespace-normal break-words">
                       From circuits to embedded systems, we engineer the future
                     </div>

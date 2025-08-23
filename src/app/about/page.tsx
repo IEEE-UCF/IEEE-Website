@@ -337,8 +337,6 @@ export default function About() {
                         </Accordion>
                 </div>
 
-                {/* rawdogging this linechart lol */}
-                {/* it's fucking broken (never coding on an airplane again) */}
                 {/* <Linechart/>  */}
                 {/* <Barchart/> */}
              

@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
         ))}
 
         </div>
-        {/* <Image className="object-contain" src="/stupidieeemasterbrand.png" alt="IEEE UCF Logo" width={70} height={70} /> */}
+        {/* <Image className="object-contain" src="/ieeemasterbrand.png" alt="IEEE UCF Logo" width={70} height={70} /> */}
       </div>
 
       
