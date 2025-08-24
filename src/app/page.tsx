@@ -30,12 +30,6 @@ const carouselList = [
 export default function Home() {
   return (
     <div>
-      <Head>
-        <title>Meta Tag Example</title>
-        <meta name="google" content="nositelinkssearchbox" key="sitelinks" />
-        <meta name="google" content="notranslate" key="notranslate" />
-      </Head>
-      
       <div className="flex flex-col max-w-screen overflow-x-hidden">
       
       {/* Hero Section */}
