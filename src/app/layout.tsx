@@ -4,7 +4,7 @@ import "./globals.css";
 // edit the seo...
 // pls dont forget um
 export const metadata: Metadata = {
-  title: "IEEE UCF",
+  title: "IEEE UCF Student Branch",
   description: "IEEE UCF is the largest electrical engineering organization at UCF. We host EE and CS projects, workshops, and professional events.",
   icons: {
     icon: '/IEEE-UCF-ICON.png', 

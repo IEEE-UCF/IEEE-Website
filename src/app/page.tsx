@@ -17,6 +17,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
+import Head from 'next/head';
+
 const carouselList = [
   { feature: "TECHNICAL WORKSHOPS", photo: "/workshopgif.gif" },
   { feature: "EMBEDDED PROJECTS", photo: "/techgif.gif" },
@@ -27,7 +29,15 @@ const carouselList = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col max-w-screen overflow-x-hidden">
+    <div>
+      <Head>
+        <title>Meta Tag Example</title>
+        <meta name="google" content="nositelinkssearchbox" key="sitelinks" />
+        <meta name="google" content="notranslate" key="notranslate" />
+      </Head>
+      
+      <div className="flex flex-col max-w-screen overflow-x-hidden">
+      
       {/* Hero Section */}
       <div className="relative w-full">
         {/* Background with gradient */}
@@ -175,6 +185,7 @@ export default function Home() {
       </div>
 
       <Footer />
+    </div>
     </div>
   );
 }
