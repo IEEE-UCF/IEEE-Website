@@ -17,7 +17,6 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-import Head from 'next/head';
 
 const carouselList = [
   { feature: "TECHNICAL WORKSHOPS", photo: "/workshopgif.gif" },
