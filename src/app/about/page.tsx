@@ -59,7 +59,7 @@ export default function About() {
 </div>
             <div className="flex -translate-y-20  flex-col w-full justify-center gap-x-3 bg-black">
                 <div className="h-auto p-10 sm:p-20 sm:w-10/12 text-white place-self-center">
-                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-4xl">IEEE UCF IN A NUTSHELL</div>
+                        <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-4xl">IEEE @ UCF IN A NUTSHELL</div>
                         <AboutIEEE/>
                 </div>
 
