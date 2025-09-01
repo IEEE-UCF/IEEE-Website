@@ -56,7 +56,7 @@ const Timer: React.FC = () => {
           <div className="p-4 w-full">
             <h2 className="text-4xl text-white font-[subheading-font]">NEXT GENERAL BODY MEETING</h2>
             <p className="mt-2 text-2xl text-white font-[body-font]">
-              Join IEEE UCF for the upcoming GBM in Room TBD!
+              Join IEEE @ UCF for the upcoming GBM in Room TBD!
             </p>
           </div>
           <div className="m-3 rounded-sm px-3 border-1 lg:px-6 py-4 backdrop-blur-3xl w-full h-fit">

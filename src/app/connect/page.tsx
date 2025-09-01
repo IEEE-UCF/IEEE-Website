@@ -36,7 +36,7 @@ export default function ConnectPage() {
                 <div className="flex flex-row my-20 p-40 justify-center lg:justify-end absolute z-3 w-screen float">
                     <div className="flex flex-col items-center lg:items-end justify-end self-end text-center lg:text-right gap-y-5">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">CONNECT WITH US</div>
-                        <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">To keep updated on upcoming events, novel projects, and other related endeavors, follow IEEE UCF on various forms of social media.</div>
+                        <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">To keep updated on upcoming events, novel projects, and other related endeavors, follow IEEE @ UCF on various forms of social media.</div>
                 
                     </div>
                 </div>

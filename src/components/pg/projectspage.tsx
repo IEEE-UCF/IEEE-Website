@@ -92,7 +92,7 @@ export default function ProjectsPage() {
                 PROJECTS
               </div>
               <div className="font-[body-font] text-white text-xl lg:text-2xl w-full lg:w-3/4">
-                Tackle real-world challenges by joining or leading IEEE UCF’s
+                Tackle real-world challenges by joining or leading IEEE @ UCF’s
                 hands-on projects. Members of all skill levels and backgrounds
                 can get involved to develop technical experience, collaborate
                 with others, and push the boundaries of engineering.

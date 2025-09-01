@@ -82,7 +82,7 @@ export default function Home() {
                 <div className="flex flex-col items-start text-center xl:text-left justify-center self-center">
                   <div className="max-w-full my-8">
                     <div className="font-[display-font] text-[var(--ieee-bright-yellow)] text-7xl lg:text-8xl">
-                      IEEE UCF
+                      IEEE @ UCF
                     </div>
                     <div className="font-[subheading-font] text-white text-4xl lg:text-5xl">
                       STUDENT CHAPTER

@@ -39,7 +39,7 @@ export default function EventsPage() {
             </div>
             <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">
               From technical workshops to career-building sessions to social gatherings to community service
-              opportunities, there is unlimited opportunity to expand networks and grow skills in IEEE UCF.
+              opportunities, there is unlimited opportunity to expand networks and grow skills in IEEE @ UCF.
             </div>
           </div>
         </div>

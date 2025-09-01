@@ -63,7 +63,7 @@ export default function SponsorshipsPage() {
                     <div className="flex flex-col items-center justify-center self-center text-center gap-y-5 float">
                         <div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">SPONSORSHIPS</div>
                         <div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">
-                        Without sponsors, nothing would be possible for IEEE UCF. To inquire about supporting IEEE UCF, view the sponsorship package below or click the button to send a direct email.
+                        Without sponsors, nothing would be possible for IEEE @ UCF. To inquire about supporting IEEE @ UCF, view the sponsorship package below or click the button to send a direct email.
                         </div>
 
                         <div className="relative group cursor-pointer">

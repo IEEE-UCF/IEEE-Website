@@ -110,7 +110,7 @@ export default function EventSidebar() {
         <div className="p-20 bg-black items-center lg:items-start text-center lg:text-left lg:place-self-start place-self-center">
           <div className="font-[heading-font] text-white text-4xl lg:text-5xl lg:text-left text-center py-3">UPCOMING EVENTS</div>
           <div className="font-[body-font] text-white text-xl lg:text-2xl lg:text-left text-center">
-            Experience IEEE UCF&rsquo;s exciting lineup of events this
+            Experience IEEE @ UCF&rsquo;s exciting lineup of events this
             <span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]"> {currentMonth} </span>
             and beyond. Click on each event to learn more.
           </div>
