@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "IEEE UCF Student Chapter",
   description: "IEEE UCF is the largest electrical engineering organization at UCF. We host EE and CS projects, workshops, and professional events.",
   icons: {
-    icon: '/IEEE-UCF-ICON.png', 
+    icon: '/iconography/ieeemasterbrandlogo.png', 
   },
 };
 
