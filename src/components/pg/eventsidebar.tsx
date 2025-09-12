@@ -54,6 +54,8 @@ export default function EventSidebar() {
   const [currentEvent, setCurrentEvent] = useState<Event | null>(null)
   const [showEventOnMobile, setShowEventOnMobile] = useState(false)
 
+  const currentDate = new Date();
+
   useEffect(() => {
     fetchTimelineData()
   }, [])
@@ -62,8 +64,9 @@ export default function EventSidebar() {
     const res = await fetch("/api/events", { method: "GET" })
     const events = await res.json()
 
-    // Map and sort events by date
-    const mappedEvents: Event[] = events.data.map((event: EventData) => {
+    const mappedEvents: Event[] = events.data
+    .filter((event: EventData) => new Date(event.time).getTime() > currentDate.getTime())
+    .map((event: EventData) => {
       const eventDateObj = new Date(event.time)
       const newDate = eventDateObj.toLocaleString("default", {
         month: "long",
@@ -82,7 +85,6 @@ export default function EventSidebar() {
       }
     })
 
-    // Sort by _sortDate ascending
     mappedEvents.sort((a, b) => (a._sortDate ?? 0) - (b._sortDate ?? 0))
 
     setEventData(mappedEvents)
@@ -98,7 +100,6 @@ export default function EventSidebar() {
   }
 
   useEffect(() => {
-    // Select first event by default if available
     if (!currentEvent && eventData.length > 0) {
       setCurrentEvent(eventData[0])
     }
@@ -116,7 +117,6 @@ export default function EventSidebar() {
           </div>
         </div>
         <div className="flex flex-row h-fit w-full justify-between">
-          {/* Current Event (desktop) */}
           <div className={`lg:block w-3/4 ${showEventOnMobile ? "hidden" : "hidden lg:block"}`}>
             {currentEvent ? (
               <div className="relative group h-[60vh] lg:h-[90vh]">
@@ -154,7 +154,6 @@ export default function EventSidebar() {
             )}
           </div>
 
-          {/* Current Event (mobile) */}
           {showEventOnMobile && currentEvent && (
             <div className="w-full lg:hidden">
               <div className="relative group h-fit">
@@ -191,7 +190,6 @@ export default function EventSidebar() {
             </div>
           )}
 
-          {/* Event List */}
           <div className={`flex flex-col h-[60vh] lg:h-[90vh] overflow-y-scroll p-6 ${showEventOnMobile ? "hidden lg:flex" : "w-full lg:w-auto"}`}>
             {eventData.map((item, idx) => (
               <div className="hover:scale-102 transition hover:opacity-80 hover:z-100" key={`${idx}-${item.eventName}`}>

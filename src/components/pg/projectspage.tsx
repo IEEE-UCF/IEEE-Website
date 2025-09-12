@@ -26,7 +26,7 @@ interface Project {
 export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [projectData, setProjectData] = useState<Project[]>([])
-  const cardsRef = useRef<HTMLDivElement[]>([]) // track all cards
+  const cardsRef = useRef<HTMLDivElement[]>([]) 
 
   useEffect(() => {
     fetchProjectData()
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
           ease: "power3.out",
           stagger: 0.15,
           scrollTrigger: {
-            trigger: cardsRef.current[0].parentElement, // the wrapping flex container
+            trigger: cardsRef.current[0].parentElement, 
             start: "top 20%",
           },
         }
@@ -75,7 +75,6 @@ export default function ProjectsPage() {
         if (!open) setSelectedProject(null)
       }}
     >
-      {/* Main content with blur */}
       <div
         className={`flex flex-col max-w-screen overflow-hidden bg-transparent transition-all duration-300 ${
           selectedProject ? "blur-sm" : "blur-none"
@@ -171,7 +170,6 @@ export default function ProjectsPage() {
       ...(project.software || []).map((s) => ({ label: s, type: "sw" })),
     ]
 
-    // max items including +X more
     const maxTotalItems = 6
     let visibleSkills: typeof allSkills = []
     let remainingCount = 0
@@ -224,7 +222,6 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Sidebar OUTSIDE the blurred container */}
       {selectedProject && (
         <div className="fixed inset-0 flex items-center justify-center z-[200]">
           <div className="h-full flex flex-col w-full max-w-[95vw] sm:max-w-md bg-black rounded-sm p-4 overflow-y-auto">

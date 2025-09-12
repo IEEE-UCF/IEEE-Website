@@ -102,7 +102,6 @@ export default function AboutOfficers() {
 
   return (
     <div className="flex flex-col items-center justify-center p-10 w-full gap-10">
-      {/* Executive Board */}
       <div className="">
         <div className="text-center text-white font-[heading-font] text-3xl my-5">EXECUTIVE BOARD</div>
         <div ref={executiveRef} className="flex flex-col w-full gap-4">
@@ -110,7 +109,6 @@ export default function AboutOfficers() {
         </div>
       </div>
 
-      {/* Chairs */}
       <div className="">
         <div className="text-center text-white font-[heading-font] text-3xl my-5">CHAIRS</div>
         <div ref={chairRef} className="flex flex-col w-full gap-4">
