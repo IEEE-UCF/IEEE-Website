@@ -1,5 +1,4 @@
 import { dbConnect } from '@/lib/mongodb';
-import { Officer } from '@/lib/models/Officer'; 
 import { NextResponse } from 'next/server';
 import { MongoClient } from "mongodb";
 
@@ -20,19 +19,4 @@ export async function GET() {
   } catch {
     return NextResponse.json({ success: false, error: 'Failed to fetch officers' }, { status: 500 });
   }
-
-}
-
-export async function POST(req: Request) {
-  await dbConnect();
-
-  try {
-    const body = await req.json(); 
-    const newOfficer = await Officer.create(body);
-    return NextResponse.json({ success: true, data: newOfficer }, { status: 201 });
-  
-  } catch {
-    return NextResponse.json({ success: false, error: 'Failed to create officer' }, { status: 400 });
-  }
-
 }

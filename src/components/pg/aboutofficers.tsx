@@ -70,7 +70,6 @@ export default function AboutOfficers() {
 
   const renderOfficerCard = (officer: Officer, index: number) => (
     <div key={index} className="w-70 h-110 m-2 relative rounded-sm border-1 border-white overflow-hidden shadow-lg transition-transform hover:scale-102">
-      {/* Officer Image */}
       <Image
         src={officer.photo}
         alt={officer.name}
@@ -78,7 +77,6 @@ export default function AboutOfficers() {
         className="object-cover"
       />
 
-      {/* Info overlay */}
       <div className="absolute inset-0 hover:bg-black/0 transition-colors bg-black/40 flex flex-col justify-end p-4 text-white ">
         <span className="text-xl font-[heading-font]">{officer.name.toUpperCase()}</span>
         <span className="text-md font-[heading-font]">{officer.role.toUpperCase()}</span>

@@ -2,9 +2,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
-
 import { Card, CardContent } from "@/components/ui/card"
-
 import { Metadata } from "next";
 
 const pageTitle = "Connect | IEEE UCF";
@@ -25,12 +23,9 @@ export default function ConnectPage() {
     return(
         <div className="flex flex-col max-w-screen overflow-hidden">
             <div className="relative w-full h-[120vh]">
-                
                 <div className="absolute z-4 w-full h-fit inset-0 items-center px-5">
                     <Navbar />
-
                 </div>
-
                 <div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r   inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
 
                 <div className="flex flex-row my-20 p-40 justify-center lg:justify-end absolute z-3 w-screen float">
@@ -54,36 +49,31 @@ export default function ConnectPage() {
             </div>
 
             <div className="relative -translate-y-20 w-full overflow-hidden leading-none">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1200 120"
-    preserveAspectRatio="none"
-    className="w-full h-20"
-  >
-    <defs>
-      <radialGradient id="bg-gradient4" cx="40%" cy="120%" r="130%">
-        <stop offset="10%" stopColor="#000000" />
-        <stop offset="100%" stopColor="#3d3110" />
-      </radialGradient>
-    </defs>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1200 120"
+                    preserveAspectRatio="none"
+                    className="w-full h-20"
+                >
+                    <defs>
+                    <radialGradient id="bg-gradient4" cx="40%" cy="120%" r="130%">
+                        <stop offset="10%" stopColor="#000000" />
+                        <stop offset="100%" stopColor="#3d3110" />
+                    </radialGradient>
+                    </defs>
 
-    <path
-      d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86, 82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53, 26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-      fill="url(#bg-gradient4)"
-      transform="scale(1,-1) translate(0,-120)" 
-    />
-  </svg>
-</div>
-
+                    <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86, 82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53, 26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    fill="url(#bg-gradient4)"
+                    transform="scale(1,-1) translate(0,-120)" 
+                    />
+                </svg>
+            </div>
 
             <div className="flex display flex-col">
-
                 <div className="justify-between items-start text-left py-30 p-15 bg-[#30250a] flex flex-row -translate-y-20">
-
                     <div className="flex flex-col display gap-y-3 self-center">
-
                         <div className="text-[var(--ieee-bright-yellow)]  font-[heading-font] text-4xl">FOLLOW OUR SOCIALS</div>
-
                         <div className="w-full flex display flex-row font-bold text-white text-2xl items-center gap-x-5 font-['Open Sans']"> ieee.ucf@gmail.com | ieee@ucf.edu </div>
 
                         <Link href={"https://discord.com/invite/WBcKem9kCq"} className="w-full flex display flex-row font-bold text-white text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors">
@@ -124,10 +114,9 @@ export default function ConnectPage() {
                         <Link href={"https://github.com/IEEE-UCF"} className="w-full flex display flex-row font-bold text-white text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors">
                             ADD US ON GITHUB
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-github" viewBox="0 0 16 16">
-  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
-</svg>
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                            </svg>
                         </Link>
-
                     </div>
                   
                     <Image
@@ -140,52 +129,49 @@ export default function ConnectPage() {
                     
                 </div>
 
-                {/* new members */}
-                {/* <div className="justify-between items-end text-right p-10 bg-black display flex flex-row"> */}
+                <div className="relative -translate-y-40 w-full overflow-hidden leading-none">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        className="w-full h-20"
+                    >
+                        <defs>
+                        <radialGradient id="bg-gradient5" cx="40%" cy="120%" r="130%">
+                            <stop offset="10%" stopColor="#000000" />
+                            <stop offset="100%" stopColor="#000000" />
+                        </radialGradient>
+                        </defs>
 
- <div className="relative -translate-y-40 w-full overflow-hidden leading-none">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1200 120"
-    preserveAspectRatio="none"
-    className="w-full h-20"
-  >
-    <defs>
-      <radialGradient id="bg-gradient5" cx="40%" cy="120%" r="130%">
-        <stop offset="10%" stopColor="#000000" />
-        <stop offset="100%" stopColor="#000000" />
-      </radialGradient>
-    </defs>
-
-    <path
-      d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86, 82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53, 26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-      fill="url(#bg-gradient5)"
-      transform="scale(1,-1) translate(0,-120)" 
-    />
-  </svg>
-</div>
+                        <path
+                        d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86, 82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53, 26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                        fill="url(#bg-gradient5)"
+                        transform="scale(1,-1) translate(0,-120)" 
+                        />
+                    </svg>
+                </div>
                    
                 <div className="bg-black p-15 -translate-y-40 ">
                     <div className="text-[var(--ieee-bright-yellow)] font-[heading-font] text-4xl place-self-start py-8">INTERESTED IN JOINING?</div>
 
-            <div className="flex flex-row display justify-between flex-wrap basis-1">
-                        <Card className="lg:w-1/4 2xl:h-fit lg:h-100 w-full h-fit hover:scale-102 transition-transform rounded-sm bg-[var(--ieee-dark-grey)] border-white border-1 opacity-90 hover:opacity-100">
-                            <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1 flex-wrap">
-                                <div className="font-[heading-font] text-white text-2xl">STEP ONE</div>
-                                <div className="font-[body-font] text-white">
-                Head over to <Link href={"https://www.ieee.org"}>IEEE.org</Link> and select <span className="font-[subheading-italic-font] text-white">Join IEEE</span>.
-            </div>
-                                <Image 
-                                    className="object-center object-cover w-full h-auto rounded-sm" 
-                                    src="/newmembers/stepone.png"
-                                    alt="IEEE Logo" 
-                                    width={2000} 
-                                    height={2000} 
+                    <div className="flex flex-row display justify-between flex-wrap basis-1">
+                                <Card className="lg:w-1/4 2xl:h-fit lg:h-100 w-full h-fit hover:scale-102 transition-transform rounded-sm bg-[var(--ieee-dark-grey)] border-white border-1 opacity-90 hover:opacity-100">
+                                    <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1 flex-wrap">
+                                        <div className="font-[heading-font] text-white text-2xl">STEP ONE</div>
+                                        <div className="font-[body-font] text-white">
+                        Head over to <Link href={"https://www.ieee.org"}>IEEE.org</Link> and select <span className="font-[subheading-italic-font] text-white">Join IEEE</span>.
+                    </div>
+                    <Image 
+                        className="object-center object-cover w-full h-auto rounded-sm" 
+                        src="/newmembers/stepone.png"
+                        alt="IEEE Logo" 
+                        width={2000} 
+                        height={2000} 
                                                             
-                                />
+                    />
 
-                            </CardContent>
-                        </Card>
+                </CardContent>
+             </Card>
 
                         <Card className="lg:w-1/4 2xl:h-fit lg:h-100 w-full h-fit hover:scale-102 transition-transform rounded-sm bg-[var(--ieee-dark-grey)] border-white border-1 opacity-90 hover:opacity-100">
                             <CardContent className="flex w-full justify-start flex-col items-start text-left gap-y-1 flex-wrap">

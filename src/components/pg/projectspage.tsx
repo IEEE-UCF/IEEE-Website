@@ -162,48 +162,47 @@ export default function ProjectsPage() {
                       {project.overview?.slice(0, 120)}...
                     </div>
 
-                    {/* Skills row */}
-<div className="flex flex-wrap gap-2 mb-4">
-  {(() => {
-    const allSkills = [
-      ...(project.hardware || []).map((s) => ({ label: s, type: "hw" })),
-      ...(project.software || []).map((s) => ({ label: s, type: "sw" })),
-    ]
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {(() => {
+                        const allSkills = [
+                          ...(project.hardware || []).map((s) => ({ label: s, type: "hw" })),
+                          ...(project.software || []).map((s) => ({ label: s, type: "sw" })),
+                        ]
 
-    const maxTotalItems = 6
-    let visibleSkills: typeof allSkills = []
-    let remainingCount = 0
+                        const maxTotalItems = 6
+                        let visibleSkills: typeof allSkills = []
+                        let remainingCount = 0
 
-    if (allSkills.length > maxTotalItems) {
-      visibleSkills = allSkills.slice(0, maxTotalItems - 1) // leave 1 for +X
-      remainingCount = allSkills.length - visibleSkills.length
-    } else {
-      visibleSkills = allSkills
-    }
+                        if (allSkills.length > maxTotalItems) {
+                          visibleSkills = allSkills.slice(0, maxTotalItems - 1) 
+                          remainingCount = allSkills.length - visibleSkills.length
+                        } else {
+                          visibleSkills = allSkills
+                        }
 
-    return (
-      <>
-        {visibleSkills.map((skill, idx) => (
-          <div
-            key={idx}
-            className={`text-white rounded-sm w-fit px-3 py-1 text-sm ${
-              skill.type === "hw"
-                ? "bg-[var(--ieee-light-grey)]"
-                : "bg-[var(--ieee-grey)]"
-            }`}
-          >
-            {skill.label}
-          </div>
-        ))}
-        {remainingCount > 0 && (
-          <div className="text-white rounded-sm w-fit px-3 py-1 bg-[var(--ieee-dark-grey)] text-sm font-[subheading-font]">
-            +{remainingCount} more
-          </div>
-        )}
-      </>
-    )
-  })()}
-</div>
+                        return (
+                          <>
+                            {visibleSkills.map((skill, idx) => (
+                              <div
+                                key={idx}
+                                className={`text-white rounded-sm w-fit px-3 py-1 text-sm ${
+                                  skill.type === "hw"
+                                    ? "bg-[var(--ieee-light-grey)]"
+                                    : "bg-[var(--ieee-grey)]"
+                                }`}
+                              >
+                                {skill.label}
+                              </div>
+                            ))}
+                            {remainingCount > 0 && (
+                              <div className="text-white rounded-sm w-fit px-3 py-1 bg-[var(--ieee-dark-grey)] text-sm font-[subheading-font]">
+                                +{remainingCount} more
+                              </div>
+                            )}
+                          </>
+                        )
+                      })()}
+                    </div>
 
 
 
