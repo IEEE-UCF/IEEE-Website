@@ -52,15 +52,15 @@ const Timer: React.FC = () => {
         priority
       />
       <div className="flex flex-col lg:flex-row flex-wrap justify-between items-center gap-8">
-        <div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-center px-2 py-4">
+        <div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-center py-4">
           <div className="p-4 w-full">
             <h2 className="text-4xl text-white font-[subheading-font]">NEXT GENERAL BODY MEETING</h2>
             <p className="mt-2 text-2xl text-white font-[body-font]">
               Join IEEE @ UCF for the upcoming GBM in Room TBD!
             </p>
           </div>
-          <div className="m-3 rounded-sm px-3 border-1 lg:px-6 py-4 backdrop-blur-3xl w-full h-fit">
-            <div className="flex justify-between items-center flex-row">
+          <div className="p-3 m-3 rounded-sm border-1 backdrop-blur-3xl w-full h-fit">
+            <div className="flex justify-around items-center flex-row">
               <div className="text-white">
                 <span className="font-[heading-font] text-5xl">{timeLeft.days}</span>
                 <br />

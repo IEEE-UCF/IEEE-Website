@@ -244,7 +244,7 @@ export default function Home() {
           <div
           ref={eventsRef}>
             
-            <div className="  p-5 m-4  flex flex-row items-center flex-wrap">
+            <div className="p-1 sm:p-9 flex flex-row items-center flex-wrap">
               <Timer />
             </div>
 
