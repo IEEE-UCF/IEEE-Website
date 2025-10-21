@@ -88,8 +88,8 @@ const Timer: React.FC = () => {
           </div>
         </div>
         <div className="border-1 border-white w-full lg:w-5/12 rounded-sm px-2 py-4">
-  <Calendar className="w-full h-[350px] sm:h-[400px] lg:h-[400px] opacity-87" />
-</div>
+          <Calendar className="w-full h-[350px] sm:h-[400px] lg:h-[400px] opacity-87" />
+        </div>
       </div>
     </div>
   );
