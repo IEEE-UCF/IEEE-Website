@@ -1,9 +1,10 @@
 import React from "react";
-import MemberQRCode from "@/components/pg/memberqrcode";
+import MemberQRCode from "@/components/pg/memberqrcodegen";
 
 const TestPage = () => {
   const memberData = {
     id: "99688747573981184",
+    // Add other member details as needed
     // name: "John Doe",
     // email: "john.doe@email.com",
     // membershipType: "Student",
@@ -26,7 +27,6 @@ const TestPage = () => {
             <MemberQRCode
               memberInfo={memberInfoString}
               logoUrl="/iconography/ieeeucficon.png"
-              errorCorrectionLevel="M"
             />
             <div className="mt-4 text-sm text-gray-600">
               <p>
@@ -35,14 +35,13 @@ const TestPage = () => {
             </div>
           </div>
 
-          {/* QR Code with Icon Logo */}
+          {/* QR Code with no data sent */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4">QR Code with Icon</h2>
             <MemberQRCode
               memberInfo=""
               logoUrl="/iconography/ieeeucficon.png"
               logoSize={40}
-              errorCorrectionLevel="M"
             />
             <div className="mt-4 text-sm text-gray-600">
               <p>
