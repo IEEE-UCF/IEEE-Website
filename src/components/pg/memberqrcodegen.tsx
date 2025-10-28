@@ -61,7 +61,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
       const logoImage = new Image();
       logoImage.crossOrigin = "anonymous"; // Handle CORS for external images
 
-      await new Promise((resolve, reject) => {
+      await new Promise((resolve) => {
         logoImage.onload = resolve;
         logoImage.onerror = () => {
           console.warn("Logo failed to load, using QR without logo");
