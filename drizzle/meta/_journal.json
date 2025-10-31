@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1760332491273,
-      "tag": "0000_peaceful_triathlon",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1760333436787,
-      "tag": "0001_exotic_quasimodo",
+      "when": 1761903776584,
+      "tag": "0000_many_archangel",
       "breakpoints": true
     }
   ]
