@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navbar";
+import { FormPopup } from "@/components/dashboard/form";
 
 export default function Dashboard() {
     return (
@@ -7,7 +8,10 @@ export default function Dashboard() {
                 <div className="absolute z-4 w-full h-fit inset-0 px-5">
                     <Navbar />
                 </div>
-            </div>    
+            </div>
+            <div className="flex justify-center items-center h-screen">
+                <FormPopup />
+            </div>
         </div>
     );
 };
