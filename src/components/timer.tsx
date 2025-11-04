@@ -43,7 +43,7 @@ const Timer: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-fit mx-auto bg-transparent drop-shadow-lg p-4 sm:p-10 lg:p-20 rounded-sm overflow-hidden content-center">
+    <div className="w-full h-fit mx-auto bg-transparent drop-shadow-lg p-4 sm:p-10 lg:p-20 rounded-sm content-center">
       <Image
         src="/gbms/gbmgif.gif"
         alt="Photo"
