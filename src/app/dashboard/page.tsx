@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { FormPopup } from "@/components/dashboard/form";
+import { EventList } from "@/components/dashboard/event-list";
 
 export default function Dashboard() {
     return (
@@ -9,8 +10,9 @@ export default function Dashboard() {
                     <Navbar />
                 </div>
             </div>
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex flex-col items-center justify-center h-screen">
                 <FormPopup />
+                <EventList />
             </div>
         </div>
     );

@@ -1,0 +1,10 @@
+[
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a91",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+        "granted_by_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "context_type": "committee",
+        "context_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
+        "permission": "scan_attendance"
+    }
+]

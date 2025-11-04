@@ -30,10 +30,27 @@ export const FormPopup = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Add your form submission logic here
+    try {
+      const response = await fetch('/api/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log('Event created successfully');
+        togglePopup();
+        window.location.reload();
+      } else {
+        console.error('Failed to create event');
+      }
+    } catch (error) {
+      console.error('An error occurred while creating the event', error);
+    }
   };
 
   return (
