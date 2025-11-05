@@ -43,12 +43,12 @@ const Timer: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-fit mx-auto bg-transparent drop-shadow-lg p-4 sm:p-10 lg:p-20 rounded-sm overflow-hidden content-center">
+    <div className="w-full h-fit mx-auto bg-transparent drop-shadow-none p-4 sm:p-10 lg:p-20 rounded-sm overflow-hidden content-center">
       <Image
         src="/gbms/gbmgif.gif"
         alt="Photo"
         fill
-        className="opacity-50 -z-10 object-cover object-center rounded-none"
+        className="opacity-50 -z-10 object-cover object-center rounded-sm"
         priority
       />
       <div className="flex flex-col lg:flex-row flex-wrap justify-between items-center gap-8">
@@ -59,7 +59,7 @@ const Timer: React.FC = () => {
               Join IEEE @ UCF for the upcoming GBM in Room TBD!
             </p>
           </div>
-          <div className="p-3 m-3 rounded-sm border-1 backdrop-blur-3xl w-full h-fit">
+          <div className="p-3 m-3 rounded-sm border-1 backdrop-blur-lg w-full h-fit">
             <div className="flex justify-around items-center flex-row">
               <div className="text-white">
                 <span className="font-[heading-font] text-5xl">{timeLeft.days}</span>
