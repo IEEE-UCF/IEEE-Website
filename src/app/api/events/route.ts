@@ -1,6 +1,6 @@
 //import { dbConnect } from '@/lib/mongodb';
-import { db } from '@/lib/drizzle';
-import { Events } from '@/lib/schema';
+import { db } from '@/lib/database/drizzle';
+import { Events } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
 //import { MongoClient } from "mongodb";
 //import { DateTime } from "luxon";

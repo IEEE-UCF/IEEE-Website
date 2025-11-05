@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { type Event } from '@/lib/schema';
+import { type Event } from '@/lib/database/schema';
 
 export const EventList = () => {
   const [events, setEvents] = useState<Event[]>([]);
