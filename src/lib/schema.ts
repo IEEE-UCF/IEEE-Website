@@ -1,15 +1,24 @@
 import { pgTable, uuid, varchar, boolean, date, integer, text, timestamp, pgEnum, index, unique } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm/sql/sql';
+import { relations } from "drizzle-orm";
 
 // ==== Enums ====
 
 // Officer Roles: Executive Chair, Executive Vice Chair, Executive Secretary, Executive Treasurer, Committee Lead
 export const officerRoleEnum = pgEnum('officer_role_enum', [
-	'executive_chair',
-	'executive_vice_chair',
-	'executive_secretary',
-	'executive_treasurer',
-	'committee_lead',
+	'Executive Chair',
+	'Vice Chair',
+	'Treasurer',
+	'Secretary',
+	'Project Chair',
+	'Workshop Chair',
+	'Conference Chair',
+	'Outreach Chair',
+	'Service Chair',
+	'Social Chair',
+	'Professional Development Chair',
+	'Marketing Chair',
+	'Software Chair',
 ]);
 
 // Gender: Male (M), Female (F), Non-Binary (NB), Other (O), Prefer Not to Say (PNTS)
@@ -19,17 +28,49 @@ export const genderEnum = pgEnum('gender_enum', [
 
 // Sponsorship Tiers: Bronze, Silver, Gold
 export const sponsorshipTierEnum = pgEnum('sponsorship_tier_enum', [
-	'bronze',
-	'silver',
-	'gold',
+	'Bronze',
+	'Silver',
+	'Gold',
 ]);
 
 
 // ==== Schemas ====
 
+// basically we need this for authentication with nextauth and drizzle, and we need to link it in members
+export const Users = pgTable("users", {
+  	id: uuid("id").primaryKey().defaultRandom(),
+  	name: text("name"),
+  	email: varchar("email", { length: 255 }).notNull().unique(),
+  	emailVerified: timestamp("email_verified", { withTimezone: true }),
+  	image: text("image"), // pull from discord
+  	discordId: varchar("discord_id", { length: 64 }),
+});
+
+export const Accounts = pgTable("accounts", {
+	id: uuid("id").primaryKey().defaultRandom(),
+	userId: uuid("user_id").notNull().references(() => Users.id, { onDelete: "cascade" }),
+	type: varchar("type", { length: 255 }).$type<"oauth">().notNull(),
+	provider: varchar("provider", { length: 255 }).notNull(),
+	providerAccountId: varchar("provider_account_id", { length: 255 }).notNull(),
+	refresh_token: text("refresh_token"),
+	access_token: text("access_token"),
+	expires_at: integer("expires_at"), // must be integer for NextAuth
+	token_type: varchar("token_type", { length: 255 }),
+	scope: varchar("scope", { length: 255 }),
+	id_token: text("id_token"),
+	session_state: varchar("session_state", { length: 255 }),
+});
+
+export const Sessions = pgTable("sessions", {
+	sessionToken: varchar("session_token", { length: 255 }).primaryKey(),
+	userId: uuid("user_id").notNull().references(() => Users.id, { onDelete: "cascade" }),
+	expires: timestamp("expires", { withTimezone: true }).notNull(),
+});
+
 // Members
 export const Members = pgTable('members', {
 	id: uuid('id').primaryKey().defaultRandom(),
+	userId: uuid("user_id").references(() => Users.id, { onDelete: "cascade" }), // we reference that authentication information
 	firstName: varchar('first_name', { length: 255 }).notNull(),
 	middleName: varchar('middle_name', { length: 255 }),
 	lastName: varchar('last_name', { length: 255 }).notNull(),
@@ -197,6 +238,38 @@ export const Sponsorships = pgTable('sponsorships', {
 	index('sponsorships_idx_created_at').on(table.createdAt),
 	index('sponsorships_idx_updated_at').on(table.updatedAt),
 ]);
+
+// ==== Relations ====
+
+export const UsersRelations = relations(Users, ({ one }) => ({
+	member: one(Members, {
+		fields: [Users.id],
+		references: [Members.userId],
+	}),
+}));
+
+export const MembersRelations = relations(Members, ({ one }) => ({
+  	user: one(Users, {
+		fields: [Members.userId],
+		references: [Users.id],
+	}),
+}))
+
+export const AccountRelations = relations(Accounts, ({ one }) => ({
+	user: one(Users, { 
+		fields: [Accounts.userId], 
+		references: [Users.id] 
+	}),
+}));
+
+export const SessionRelations = relations(Sessions, ({ one }) => ({
+  	user: one(Users, { 
+		fields: [Sessions.userId], 
+		references: [Users.id] 
+	}),
+}));
+
+
 
 // Infer Types
 export type Member = typeof Members.$inferSelect;
