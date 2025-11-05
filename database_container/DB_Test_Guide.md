@@ -1,6 +1,7 @@
 # PostgreSQL Setup and Usage Guide
+#### Authored by Dawn Balaschak Novemeber 11th, 2025
 
-This document provides an overview of how to set up and run the PostgreSQL database for local development.
+This document provides an overview of how to set up and run the PostgreSQL database for local development. This is for testing purposes only, as that the schemas are still under going changes and will need updates. However, there is a need for the ability to work with a adta server for confirmation on services working. This is what this guide is meant to do, give developers the ability to work with updated data tables for development purposes only. There are various other references on the database structure which provide more details into the current database design.
 
 ## 1. Docker Setup (Local Database)
 
@@ -12,6 +13,7 @@ To run a local PostgreSQL database, we use Docker and Docker Compose.
     docker-compose up -d
     ```
     This will start a PostgreSQL container in the background.
+    
 
 ## 2. Dependencies
 
@@ -19,7 +21,7 @@ The application uses the `postgres` package as the database driver for Drizzle O
 
 *   **Node.js Installation**: If you don't have it installed, run the following command:
     ```bash
-    npm install postgres
+    pnpm install postgres
     ```
 *   **Python Installation**: For the seeding script, install the dependencies from the `database_container` directory:
     ```bash
@@ -42,7 +44,7 @@ We use `drizzle-kit` to manage the database schema. A script is provided in `pac
 
 *   **Run Migrations**: To create or update the database tables based on the schema defined in `src/lib/schema.ts`, run the following command from the project root:
     ```bash
-    npm run db:push
+    pnpm run db:push
     ```
 
 ## 5. Database Seeding
@@ -54,15 +56,15 @@ The project includes a Python script to seed the database with a comprehensive s
 *   **Usage Examples**:
     *   **Seed all tables** (default behavior):
         ```bash
-        npm run db:seed
+        pnpm run db:seed
         ```
     *   **Seed specific tables** (add flags after `--`):
         ```bash
-        npm run db:seed -- --members --events
+        pnpm run db:seed -- --members --events
         ```
     *   **Clear the database** (without seeding new data):
         ```bash
-        npm run db:seed -- --clear-only
+        pnpm run db:seed -- --clear-only
         ```
 
 *   **Available Flags**:
