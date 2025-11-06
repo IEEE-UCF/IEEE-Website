@@ -59,7 +59,7 @@ if (require.main === module) {
 		.positional('dburl', { type: 'string', describe: 'Database URL to use.' });
 	const argv = parser.parseSync();
 
-	const dbUrl = argv.dburl || argv._[0] || DEFAULT_DB_URL;
+	const dbUrl = argv.dburl || String(argv._[0]) || DEFAULT_DB_URL;
 	const client = new Client({ connectionString: dbUrl });
 	client.connect().then(async () => {
 		if (argv.wipe) {
