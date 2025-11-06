@@ -4,19 +4,19 @@ import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI!;
 const client = new MongoClient(uri);
-const dbName = "IEEE-Website"; 
+const dbName = "IEEE-Website";
 
 export async function GET() {
-  await dbConnect();
+	await dbConnect();
 
-  await client.connect();
-  const db = client.db(dbName);
+	await client.connect();
+	const db = client.db(dbName);
 
-  try {
-    const officers = await db.collection('Officers').find({}).toArray();
-    return NextResponse.json({ success: true, data: officers });
-  
-  } catch {
-    return NextResponse.json({ success: false, error: 'Failed to fetch officers' }, { status: 500 });
-  }
+	try {
+		const officers = await db.collection('Officers').find({}).toArray();
+		return NextResponse.json({ success: true, data: officers });
+
+	} catch {
+		return NextResponse.json({ success: false, error: 'Failed to fetch officers' }, { status: 500 });
+	}
 }

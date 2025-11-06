@@ -1,13 +1,13 @@
-//import { dbConnect } from '@/lib/mongodb';
+// import { dbConnect } from '@/lib/mongodb';
 import { db } from '@/lib/database/drizzle';
 import { Events } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
-//import { MongoClient } from "mongodb";
-//import { DateTime } from "luxon";
+// import { MongoClient } from "mongodb";
+// import { DateTime } from "luxon";
 
 // const uri = process.env.MONGODB_URI!;
 // const client = new MongoClient(uri);
-// const dbName = "IEEE-Website"; 
+// const dbName = "IEEE-Website";
 
 // export async function GET() {
 //   await dbConnect();
@@ -28,12 +28,12 @@ import { NextResponse } from 'next/server';
 
 //       return {
 //         ...event,
-//         time: easternTime, 
+//         time: easternTime,
 //       };
 //     });
 
 //     return NextResponse.json({ success: true, data: convertedEvents });
-  
+
 //   } catch (error) {
 //     console.error(error);
 //     return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
@@ -42,32 +42,32 @@ import { NextResponse } from 'next/server';
 // }
 
 export async function GET() {
-  try {
-    const events = await db.select().from(Events);
-    return NextResponse.json({ success: true, data: events });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
-  }
+	try {
+		const events = await db.select().from(Events);
+		return NextResponse.json({ success: true, data: events });
+	} catch (error) {
+		console.error(error);
+		return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
+	}
 }
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { startTime, endTime, duration, hostId, ...rest } = body;
+	try {
+		const body = await request.json();
+		const { startTime, endTime, duration, hostId, ...rest } = body;
 
-    const values = {
-      ...rest,
-      hostId: hostId || null,
-      startTime: new Date(startTime),
-      endTime: endTime ? new Date(endTime) : null,
-      duration: duration ? parseInt(duration, 10) : null,
-    };
+		const values = {
+			...rest,
+			hostId: hostId || null,
+			startTime: new Date(startTime),
+			endTime: endTime ? new Date(endTime) : null,
+			duration: duration ? parseInt(duration, 10) : null,
+		};
 
-    const newEvent = await db.insert(Events).values(values).returning();
-    return NextResponse.json({ success: true, data: newEvent });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ success: false, error: 'Failed to create event' }, { status: 500 });
-  }
+		const newEvent = await db.insert(Events).values(values).returning();
+		return NextResponse.json({ success: true, data: newEvent });
+	} catch (error) {
+		console.error(error);
+		return NextResponse.json({ success: false, error: 'Failed to create event' }, { status: 500 });
+	}
 }
