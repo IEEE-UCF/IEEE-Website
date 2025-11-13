@@ -2,13 +2,12 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { db } from "@/lib/index";
 import { Members } from "@/lib/schema";
-import { eq, and, or, ilike, desc, asc } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { 
   protectedProcedure, 
   adminProcedure, 
-  publicProcedure,
-  officerProcedure,
-  memberProcedure 
+  memberProcedure,
+  createTRPCRouter
 } from "../trpc";
 
 // Validation schemas
@@ -16,14 +15,13 @@ const memberRegistrationSchema = z.object({
   firstName: z.string().min(1, "First name is required").max(255),
   middleName: z.string().max(255).optional(),
   lastName: z.string().min(1, "Last name is required").max(255),
-  email: z.string().email("Invalid UCF email format").max(255),
-  personalEmail: z.string().email("Invalid personal email format").max(255).optional(),
+  personalEmail: z.string().email("Invalid email format").max(255),
+  ucfEmail: z.string().email("Invalid email format").refine((email)=>email.endsWith("@ucf.edu")).max(255),
   dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
   phoneNumber: z.string().max(20).optional(),
   gender: z.enum(["M", "F", "NB", "O", "PNTS"]),
   graduationYear: z.number().int().min(2020).max(2035),
   major: z.string().min(1, "Major is required").max(255),
-  discordID: z.string().min(1, "Discord ID is required").max(64),
 });
 
 const memberUpdateSchema = z.object({
@@ -37,16 +35,18 @@ const memberUpdateSchema = z.object({
   linkedinURL: z.string().url().optional(),
   githubURL: z.string().url().optional(),
   websiteURL: z.string().url().optional(),
-  personalEmail: z.string().email().optional(),
 });
 
-export const memberRouter = {
-  // Complete registration after Discord OAuth (protected - user is already authenticated via Discord)
+// create all these damn routers
+export const memberRouter = createTRPCRouter({
+
+  // for member creation and registration checking
   completeRegistration: protectedProcedure
-    .input(memberRegistrationSchema.omit({ discordID: true }))
+    .input(memberRegistrationSchema)
     .mutation(async ({ ctx, input }) => {
+      
       try {
-        // Check if member profile already exists for this user
+        // search to see if they exist
         const existingMember = await db
           .select()
           .from(Members)
@@ -56,28 +56,14 @@ export const memberRouter = {
         if (existingMember.length > 0) {
           throw new TRPCError({
             code: "CONFLICT",
-            message: "Member profile already exists",
+            message: "member profile already exists!",
           });
         }
 
-        // // Check if email is already used by another member
-        // const emailExists = await db
-        //   .select()
-        //   .from(Members)
-        //   .where(eq(Members.email, input.email))
-        //   .limit(1);
-
-        // if (emailExists.length > 0) {
-        //   throw new TRPCError({
-        //     code: "CONFLICT",
-        //     message: "This email is already registered",
-        //   });
-        // }
-
-        // Get Discord ID from ctx (assuming it's stored in user object from Discord OAuth)
-        const discordID = ctx.session.user.discordId || ctx.session.user.id; // Adjust based on your auth setup
-
-        // Create new member profile
+        // collect the discord id from the user or session created when they logged in with discord auth
+        const discordID = ctx.session.user.discordId || ctx.session.user.id;
+        
+        // insert the new member
         const newMember = await db
           .insert(Members)
           .values({
@@ -86,7 +72,8 @@ export const memberRouter = {
             firstName: input.firstName,
             middleName: input.middleName || null,
             lastName: input.lastName,
-            email: input.email,
+            personalEmail: input.personalEmail,
+            ucfEmail: input.ucfEmail,
             dateOfBirth: input.dateOfBirth,
             phoneNumber: input.phoneNumber || null,
             gender: input.gender,
@@ -110,15 +97,18 @@ export const memberRouter = {
           member: newMember[0],
         };
       } catch (error) {
+        
+        // error with completion
         if (error instanceof TRPCError) throw error;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to complete registration",
+          message: error instanceof Error ? error.message : "Failed to complete registration",
         });
       }
+
     }),
 
-    updateMyProfile: memberProcedure
+  updateMyProfile: memberProcedure
     .input(memberUpdateSchema)
     .mutation(async ({ ctx, input }) => {
       const [updated] = await db
@@ -174,5 +164,4 @@ export const memberRouter = {
 
     return member;
   }),
-
-}
+});

@@ -43,7 +43,7 @@ export const Users = pgTable("users", {
   	email: varchar("email", { length: 255 }).notNull().unique(),
   	emailVerified: timestamp("email_verified", { withTimezone: true }),
   	image: text("image"), // pull from discord
-  	discordId: varchar("discord_id", { length: 64 }),
+  	discordId: varchar("discordId", { length: 64 }).notNull(),
 });
 
 export const Accounts = pgTable("accounts", {
@@ -79,9 +79,10 @@ export const Members = pgTable('members', {
 	administrator: boolean('administrator').notNull().default(false),
 	biography: text('biography'),
 	duesPaid: boolean('dues_paid').notNull().default(false),
-	discordID: varchar('discord_id', { length: 64 }).notNull().unique(),
+	discordID: varchar('discordId', { length: 64 }).notNull().unique(),
 	dateOfBirth: date('date_of_birth').notNull(),
-	email: varchar('email', { length: 255 }).notNull().unique(),
+	personalEmail: varchar('personal_email', { length: 255 }).notNull().unique(),
+	ucfEmail: varchar('ucf_email', { length: 255 }).notNull().unique(),
 	phoneNumber: varchar('phone_number', { length: 20 }),
 	major: varchar('major', { length: 255 }).notNull(), // Check on this to maybe add like a default list of majors or smth similar
 	gender: genderEnum('gender').notNull(),
@@ -95,8 +96,9 @@ export const Members = pgTable('members', {
 	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
 }, (table) => [
 	index('members_idx_id').on(table.id),
-	index('members_idx_discord_id').on(table.discordID),
-	index('members_idx_email').on(table.email),
+	index('members_idx_discordId').on(table.discordID),
+	index('members_idx_personal_email').on(table.personalEmail),
+	index('members_idx_ucf_email').on(table.ucfEmail),
 	index('members_idx_officer_status').on(table.officerStatus),
 	index('members_idx_officer_role').on(table.officerRole),
 	index('members_idx_administrator').on(table.administrator),
