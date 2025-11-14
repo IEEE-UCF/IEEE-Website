@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { FormPopup } from "@/components/dashboard/form";
 import { EventList } from "@/components/dashboard/event-list";
-import { DemoEventButton } from "@/components/DemoEventButton"; // Import the new component
 
 export default function Dashboard() {
 	return (
@@ -14,7 +13,6 @@ export default function Dashboard() {
 			<div className="flex flex-col items-center justify-center h-screen">
 				<FormPopup />
 				
-				<DemoEventButton /> {/* Render the DemoEventButton here */} 
 				<EventList />
 			</div>
 		</div>

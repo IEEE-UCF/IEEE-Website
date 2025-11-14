@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 // Assuming your schema.ts file is located at `@/lib/db/schema`
 // Please adjust this import path if it's different.
 import { NewEvent } from '@/lib/database/schema';
-import { Button } from '../ui/button';
 
 // --- Type Definitions ---
 
-// Interface for the raw demo event data
+// Interface for the raw demo event data used for Debugging do not remove
 interface DemoEventData {
   title: string;
   location: string;
@@ -19,7 +18,7 @@ interface DemoEventData {
   startTime: string; // ISO string
   endTime: string; // ISO string
   requiresDues: boolean;
-  slug: string;
+  slug: string | null;
 }
 
 // Type for the 'hostType' dropdown
@@ -40,14 +39,7 @@ interface EventFormData {
   duration: string; // In minutes, as a string
 }
 
-/*
- * We no longer need the manual `ApiEventPayload` interface, 
- * since we are now importing `NewEvent` directly from the schema.
- *
- * interface ApiEventPayload { ... } // <- This is now removed.
-*/
-
-// --- Demo Data ---
+// --- Demo Data --- Example of what can be used and is included in Demo used for Debugging and easy event creation.
 
 const demoEventData: DemoEventData = {
   title: 'Demo Event - Test Insertion',
@@ -60,7 +52,7 @@ const demoEventData: DemoEventData = {
   startTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
   endTime: new Date(Date.now() + 25 * 60 * 60 * 1000).toISOString(),
   requiresDues: false,
-  slug: 'demo-event-test',
+  slug: null,
 };
 
 // --- Helper Functions ---
@@ -125,22 +117,23 @@ export const FormPopup: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  // Function to load demo data into the form
+ // Function to load demo data into the form used for Debugging do not remove
   const loadDemoData = () => {
     // Type the prepared data object for safety
     const preparedDemoData: EventFormData = {
-      title: demoEventData.title,
-      location: demoEventData.location,
-      hostType: demoEventData.committeeId === null ? 'committee' : '', // Assuming null maps to 'committee'
-      hostId: demoEventData.committeeId === null ? '' : String(demoEventData.committeeId),
-      startTime: formatDateTimeLocal(demoEventData.startTime),
-      endTime: formatDateTimeLocal(demoEventData.endTime),
-      requiresDues: demoEventData.requiresDues,
-      description: demoEventData.description,
-      flyerUrl: demoEventData.flyerUrl || '', // Use empty string if null
-      rsvpLink: demoEventData.rsvpLink || '',   // Use empty string if null
-      duration: calculateDurationMinutes(demoEventData.startTime, demoEventData.endTime),
+		title: demoEventData.title,
+		location: demoEventData.location,
+		hostType: demoEventData.committeeId === null ? 'committee' : '', // Assuming null maps to 'committee'
+		hostId: demoEventData.committeeId === null ? '' : String(demoEventData.committeeId),
+		startTime: formatDateTimeLocal(demoEventData.startTime),
+		endTime: formatDateTimeLocal(demoEventData.endTime),
+		requiresDues: demoEventData.requiresDues,
+		description: demoEventData.description,
+		flyerUrl: demoEventData.flyerUrl || '', // Use empty string if null
+		rsvpLink: demoEventData.rsvpLink || '',   // Use empty string if null
+		duration: calculateDurationMinutes(demoEventData.startTime, demoEventData.endTime),
     };
+	
     setFormData(preparedDemoData);
   };
 
@@ -235,8 +228,8 @@ export const FormPopup: React.FC = () => {
 
   return (
     <div>
-      <button onClick={togglePopup} className="bg-white mr-2">Test Popup</button>
-      <button onClick={loadDemoData} className="bg-blue-500 text-white px-4 py-2 rounded-md">Load Demo Data</button>
+    
+    <button onClick={togglePopup} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Event</button>
       
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center z-50">
@@ -268,11 +261,11 @@ export const FormPopup: React.FC = () => {
                 </select>
               </div>
 
-              {/* Host ID */}
-              <div className="mb-4">
+              {/* Host ID */} {/* Removed 11/13/2025 */} 
+              {/* <div className="mb-4">
                 <label htmlFor="hostId" className="block text-sm font-medium text-gray-700">Host ID</label>
                 <input type="text" name="hostId" id="hostId" value={formData.hostId} onChange={handleChange} required className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-              </div>
+              </div> */}
 
               {/* Start Time */}
               <div className="mb-4">
@@ -286,11 +279,11 @@ export const FormPopup: React.FC = () => {
                 <input type="datetime-local" name="endTime" id="endTime" value={formData.endTime} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
               </div>
 
-              {/* Duration (Read-only) */}
-              <div className="mb-4">
+              {/* Duration (Read-only) */} {/* Removed 11/13/2025 */} 
+              {/* <div className="mb-4">
                 <label htmlFor="duration" className="block text-sm font-medium text-gray-700">Duration (minutes)</label>
                 <input type="number" name="duration" id="duration" value={formData.duration} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none sm:text-sm" readOnly />
-              </div>
+              </div> */}
 
               {/* Description */}
               <div className="mb-4">
@@ -318,8 +311,11 @@ export const FormPopup: React.FC = () => {
 
               {/* Form Actions */}
               <div className="flex justify-end">
+                <button type="button" onClick={loadDemoData} className="bg-indigo-600 text-white px-4 py-2 rounded-md mr-30">Load Demo Data</button>
                 <button type="button" onClick={togglePopup} className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">Close</button>
                 <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-md">Submit</button>
+                
+            	  {/* Demo Data for when doing debugging and testing */}
               </div>
             </form>
           </div>

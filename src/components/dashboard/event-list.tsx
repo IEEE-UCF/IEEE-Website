@@ -22,17 +22,24 @@ export const EventList = () => {
 	}, []);
 
 	return (
-		<div className="w-full max-w-4xl mx-auto mt-8">
-			<h2 className="text-2xl font-bold mb-4 text-white">Events</h2>
-			<ul className="bg-white rounded-lg shadow-lg overflow-hidden">
-				{events.map((event) => (
-					<li key={event.id} className="p-4 border-b border-gray-200 last:border-b-0">
-						<h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
-						<p className="text-gray-600">{event.location}</p>
-						<p className="text-gray-600">{new Date(event.startTime).toLocaleString()}</p>
-					</li>
-				))}
-			</ul>
+		<div className="w-full max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-lg p-6">
+			<h2 className="text-2xl font-bold mb-4 text-gray-800">Events</h2>
+			{/* Container for the scrollable list */}
+			<div className={`${events.length > 3 ? 'max-h-60 overflow-y-auto' : ''}`}>
+				<ul className="divide-y divide-gray-200">
+					{events.length === 0 ? (
+						<p className="p-4 text-center text-gray-500">No events found.</p>
+					) : (
+						events.map((event) => (
+							<li key={event.id} className="p-4">
+								<h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
+								<p className="text-gray-600">{event.location}</p>
+								<p className="text-gray-600">{new Date(event.startTime).toLocaleString()}</p>
+							</li>
+						))
+					)}
+				</ul>
+			</div>
 		</div>
 	);
 };
