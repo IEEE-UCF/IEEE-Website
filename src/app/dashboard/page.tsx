@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/navbar";
-import { FormPopup } from "@/components/dashboard/form";
+import { FormPopup } from "@/components/dashboard/newEventForm";
 import { EventList } from "@/components/dashboard/event-list";
 
 export default function Dashboard() {
