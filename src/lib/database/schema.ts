@@ -143,10 +143,10 @@ export const Events = pgTable("events", {
 	index("events_idx_title").using("btree", table.title.asc().nullsLast().op("text_ops")),
 	index("events_idx_updated_at").using("btree", table.updatedAt.asc().nullsLast().op("timestamptz_ops")),
 	foreignKey({
-			columns: [table.committeeId],
-			foreignColumns: [Committees.id],
-			name: "events_committee_id_committees_id_fk"
-		}).onDelete("cascade"),
+		columns: [table.committeeId],
+		foreignColumns: [Committees.id],
+		name: "events_committee_id_committees_id_fk",
+	}).onDelete("cascade"),
 	unique("events_slug_unique").on(table.slug),
 ]);
 // EventAttendees: Join table for many-to-many relation between Events and Members
