@@ -153,9 +153,7 @@ export const FormPopup: React.FC = () => {
 				...prev,
 				[key]: checked,
 			}));
-		}
-		// Handle all other inputs (which have string values)
-		else if (key !== 'requiresDues') {
+		}else if (key !== 'requiresDues') {	// Handle all other inputs (which have string values)
 			setFormData(prev => ({
 				...prev,
 				[key]: value,

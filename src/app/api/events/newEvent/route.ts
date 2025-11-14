@@ -1,20 +1,16 @@
-//import { dbConnect } from '@/lib/mongodb';
+// import { dbConnect } from '@/lib/mongodb';
 import { db } from '@/lib/database/drizzle';
 import { Events } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
-//import { MongoClient } from "mongodb";
-//import { DateTime } from "luxon";
-
+// import { MongoClient } from "mongodb";
+// import { DateTime } from "luxon";
 // const uri = process.env.MONGODB_URI!;
 // const client = new MongoClient(uri);
-// const dbName = "IEEE-Website"; 
-
+// const dbName = "IEEE-Website";
 // export async function GET() {
 //   await dbConnect();
-
 //   await client.connect();
 //   const db = client.db(dbName);
-
 //   try {
 //     const events = await db.collection('Events').find({}).toArray();
 //     const convertedEvents = events.map(event => {
@@ -25,20 +21,16 @@ import { NextResponse } from 'next/server';
 //         utcTime = DateTime.fromJSDate(event.time, { zone: 'utc' });
 //       }
 //       const easternTime = utcTime.setZone('America/New_York').toFormat('MMMM d, yyyy h:mm a');
-
 //       return {
 //         ...event,
-//         time: easternTime, 
+//         time: easternTime,
 //       };
 //     });
-
 //     return NextResponse.json({ success: true, data: convertedEvents });
-  
 //   } catch (error) {
 //     console.error(error);
 //     return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
-//   }
-
+//
 // }
 
 export async function GET() {
@@ -61,7 +53,6 @@ export async function POST(request: Request) {
       committeeId: committeeId || null,
       startTime: new Date(startTime).toISOString(),
       endTime: endTime ? new Date(endTime).toISOString() : null,
-      
     };
 
     const newEvent = await db.insert(Events).values(values).returning();
