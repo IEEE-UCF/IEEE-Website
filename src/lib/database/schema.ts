@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, boolean, date, integer, text, timestamp, pgEnum, index, unique } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, foreignKey, varchar, boolean, date, integer, text, timestamp, pgEnum, index, unique } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm/sql/sql';
 
 // ==== Enums ====
@@ -117,33 +117,37 @@ export const CommitteeMembers = pgTable('committee_members', {
 ]);
 
 // Events
-export const Events = pgTable('events', {
-	id: uuid('id').primaryKey().defaultRandom(),
-	title: varchar('title', { length: 255 }).notNull(),
-	location: varchar('location', { length: 255 }).notNull(),
-	hostType: eventHostTypeEnum('host_type').notNull(), // 'club', 'committee', 'project', 'member'
-	hostId: uuid('host_id'), // nullable, references Committees.id, Projects.id, or Members.id if not 'club'
-	slug: varchar('slug', { length: 64 }).unique(),
-	startTime: timestamp('start_time', { withTimezone: true }).notNull(),
-	endTime: timestamp('end_time', { withTimezone: true }),
-	requiresDues: boolean('requires_dues').notNull().default(false),
-	active: boolean('active').notNull().default(true),
-	description: text('description').notNull(),
-	flyerUrl: varchar('flyer_url', { length: 500 }),
-	rsvpLink: varchar('rsvp_link', { length: 500 }),
-	photoUrls: text('photo_urls').$type<string[]>(),
-	duration: integer('duration'), // optional, duration in minutes
-	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
-	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
+export const Events = pgTable("events", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	title: varchar({ length: 255 }).notNull(),
+	location: varchar({ length: 255 }).notNull(),
+	committeeId: uuid("committee_id"),
+	description: text().notNull(),
+	flyerUrl: varchar("flyer_url", { length: 500 }),
+	rsvpLink: varchar("rsvp_link", { length: 500 }),
+	photoUrls: text("photo_urls"),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	slug: varchar({ length: 64 }),
+	startTime: timestamp("start_time", { withTimezone: true, mode: 'string' }).notNull(),
+	endTime: timestamp("end_time", { withTimezone: true, mode: 'string' }),
+	requiresDues: boolean("requires_dues").default(false).notNull(),
+	active: boolean().default(true).notNull(),
 }, (table) => [
-	index('events_idx_id').on(table.id),
-	index('events_idx_host').on(table.hostType, table.hostId),
-	index('events_idx_start_time').on(table.startTime),
-	index('events_idx_time_desc').on(sql`start_time DESC`),
-	index('events_idx_title').on(table.title),
-	index('events_idx_location').on(table.location),
-	index('events_idx_created_at').on(table.createdAt),
-	index('events_idx_updated_at').on(table.updatedAt),
+	index("events_idx_committee_id").using("btree", table.committeeId.asc().nullsLast().op("uuid_ops")),
+	index("events_idx_created_at").using("btree", table.createdAt.asc().nullsLast().op("timestamptz_ops")),
+	index("events_idx_id").using("btree", table.id.asc().nullsLast().op("uuid_ops")),
+	index("events_idx_location").using("btree", table.location.asc().nullsLast().op("text_ops")),
+	index("events_idx_start_time").using("btree", table.startTime.asc().nullsLast().op("timestamptz_ops")),
+	index("events_idx_time_desc").using("btree", table.startTime.desc().nullsFirst().op("timestamptz_ops")),
+	index("events_idx_title").using("btree", table.title.asc().nullsLast().op("text_ops")),
+	index("events_idx_updated_at").using("btree", table.updatedAt.asc().nullsLast().op("timestamptz_ops")),
+	foreignKey({
+			columns: [table.committeeId],
+			foreignColumns: [Committees.id],
+			name: "events_committee_id_committees_id_fk"
+		}).onDelete("cascade"),
+	unique("events_slug_unique").on(table.slug),
 ]);
 // EventAttendees: Join table for many-to-many relation between Events and Members
 export const EventAttendees = pgTable('event_attendees', {

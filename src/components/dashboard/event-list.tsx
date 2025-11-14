@@ -8,7 +8,7 @@ export const EventList = () => {
 	useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await fetch('/api/events');
+				const response = await fetch('/api/events/getEvents');
 				if (response.ok) {
 					const { data } = await response.json();
 					setEvents(data);
