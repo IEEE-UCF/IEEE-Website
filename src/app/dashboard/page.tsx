@@ -12,7 +12,6 @@ export default function Dashboard() {
 			</div>
 			<div className="flex flex-col items-center justify-center h-screen">
 				<FormPopup />
-				
 				<EventList />
 			</div>
 		</div>

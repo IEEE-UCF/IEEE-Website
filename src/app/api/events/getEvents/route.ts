@@ -1,5 +1,5 @@
 // Dawn Balaschak 11/14/2025
-// API get to grab all events from database, no filters/types TODO later
+// API get to grab all events from database, no filters/types TODO
 
 import { db } from '@/lib/database/drizzle';
 import { Events } from '@/lib/database/schema';
