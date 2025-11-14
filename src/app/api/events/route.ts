@@ -4,17 +4,13 @@ import { Events } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
 // import { MongoClient } from "mongodb";
 // import { DateTime } from "luxon";
-
 // const uri = process.env.MONGODB_URI!;
 // const client = new MongoClient(uri);
 // const dbName = "IEEE-Website"; 
-
 // export async function GET() {
 //   await dbConnect();
-
 //   await client.connect();
 //   const db = client.db(dbName);
-
 //   try {
 //     const events = await db.collection('Events').find({}).toArray();
 //     const convertedEvents = events.map(event => {
@@ -31,21 +27,18 @@ import { NextResponse } from 'next/server';
 //         time: easternTime, 
 //       };
 //     });
-
 //     return NextResponse.json({ success: true, data: convertedEvents });
-  
 //   } catch (error) {
 //     console.error(error);
 //     return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
-//   }
-
+//   
 // }
 
 export async function GET() {
 	try {
 		const events = await db.select().from(Events);
 		return NextResponse.json({ success: true, data: events });
-		} catch (error) {
+	} catch (error) {
 		console.error(error);
 		return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
 	}
@@ -65,7 +58,7 @@ export async function POST(request: Request) {
 
 		const newEvent = await db.insert(Events).values(values).returning();
 		return NextResponse.json({ success: true, data: newEvent });
-		} catch (error) {
+	} catch (error) {
 		console.error(error);
 		return NextResponse.json({ success: false, error: 'Failed to create event' }, { status: 500 });
 	}
