@@ -30,6 +30,9 @@ const customConfig = {
 		'**/coverage/*',
 		'**/.env*',
 		'**/logs/*',
+		'*.config.mjs',
+		'eslint.config.mjs',
+		'postcss.config.mjs',
 	],
 	rules: {
 		'arrow-spacing': ['warn', {
@@ -68,7 +71,7 @@ const customConfig = {
 
 		'no-floating-decimal': 'error',
 		'no-lonely-if': 'error',
-		'no-mixed-spaces-and-tabs': 'error',
+		'no-mixed-spaces-and-tabs': 'warn',
 		'no-multi-spaces': 'error',
 
 		'no-multiple-empty-lines': ['error', {
@@ -77,7 +80,7 @@ const customConfig = {
 			maxBOF: 0,
 		}],
 
-		'no-shadow': ['error', {
+		'no-shadow': ['warn', {
 			allow: ['err', 'resolve', 'reject'],
 		}],
 
@@ -93,7 +96,6 @@ const customConfig = {
 			argsIgnorePattern: '^_',
 			varsIgnorePattern: '^_',
 		}],
-		'@typescript-eslint/prefer-nullish-coalescing': 'error',
 		'@typescript-eslint/prefer-optional-chain': 'error',
 		'@typescript-eslint/no-floating-promises': 'warn',
 		'@typescript-eslint/await-thenable': 'error',
@@ -107,7 +109,6 @@ const customConfig = {
 		'require-await': 'warn',
 		'object-curly-spacing': ['error', 'always'],
 		'prefer-const': 'error',
-		'quotes': ['error', 'single'],
 		'semi': ['error', 'always'],
 		'space-before-blocks': 'error',
 

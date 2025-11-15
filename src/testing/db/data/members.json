@@ -1,0 +1,50 @@
+[
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "first_name": "John",
+        "last_name": "Doe",
+        "officer_role": "executive_chair",
+        "administrator": true,
+        "biography": "A natural leader.",
+        "dues_paid": true,
+        "discord_id": "johndoe#1234",
+        "date_of_birth": "1998-05-10",
+        "email": "john.doe@ieee.org",
+        "phone_number": "123-456-7890",
+        "major": "Computer Science",
+        "gender": "M",
+        "graduation_year": 2025
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "officer_role": "committee_lead",
+        "administrator": false,
+        "biography": "Loves to build things.",
+        "dues_paid": true,
+        "discord_id": "janesmith#5678",
+        "date_of_birth": "2000-08-22",
+        "email": "jane.smith@ieee.org",
+        "phone_number": "098-765-4321",
+        "major": "Electrical Engineering",
+        "gender": "F",
+        "graduation_year": 2026
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13",
+        "first_name": "Peter",
+        "last_name": "Jones",
+        "officer_role": null,
+        "administrator": false,
+        "biography": "New member, eager to learn.",
+        "dues_paid": false,
+        "discord_id": "peterjones#9101",
+        "date_of_birth": "2002-01-15",
+        "email": "peter.jones@ieee.org",
+        "phone_number": "555-555-5555",
+        "major": "Computer Engineering",
+        "gender": "NB",
+        "graduation_year": 2027
+    }
+]
