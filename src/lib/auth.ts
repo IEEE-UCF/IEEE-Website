@@ -6,7 +6,6 @@ import { Accounts, Users, Sessions, Members } from '@/lib/schema';
 import type { DiscordProfile } from "next-auth/providers/discord";
 import { eq } from "drizzle-orm";
 import type { AdapterUser } from "next-auth/adapters";
-import { randomUUID } from "crypto";
 
 interface User extends AdapterUser {
   discordId?: string;
