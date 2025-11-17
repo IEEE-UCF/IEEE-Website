@@ -91,7 +91,7 @@ export default function SettingsPage() {
         websiteURL: formData.get("website_url") as string || undefined,
       });
     } catch (err) {
-    //   console.error("Update error:", err);
+      console.error("Update error:", err);
     }
   };
 
@@ -136,6 +136,16 @@ export default function SettingsPage() {
                   </Button>
                 </div>
 
+                {error && (
+                  <div className="mb-4 p-3 bg-[var(--ieee-dark-grey)]  text-white rounded">
+                    {error}
+                  </div>
+                )}
+                {success && (
+                  <div className="mb-4 p-3 bg-[var(--ieee-dark-yellow)] text-white rounded">
+                    {success}
+                  </div>
+                )}
 
                 <div className="mb-6">
                   <h2 className="text-2xl font-[heading-font] mb-4 border-b border-white/20 pb-2 text-white">

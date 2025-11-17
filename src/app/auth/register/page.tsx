@@ -81,7 +81,7 @@ export default function RegisterPage() {
         major: formData.get("ucf_major") as string,
       });
     } catch (err) {
-      // console.error("Registration error:", err);
+      console.error("Registration error:", err);
       setIsSubmitting(false);
     }
   };
