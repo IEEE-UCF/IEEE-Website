@@ -19,7 +19,7 @@ interface AvatarMenuProps {
 
 const AvatarMenu: React.FC<AvatarMenuProps> = ({ image }) => {
     return (
-        <div className="">
+        <div className="z-100">
             <NavigationMenu>
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>
@@ -34,22 +34,22 @@ const AvatarMenu: React.FC<AvatarMenuProps> = ({ image }) => {
                     </NavigationMenuTrigger>
 
                     <NavigationMenuContent>
-                    <ul className="grid w-fit] gap-4 bg-[var(--ieee-dark-yellow)] rounded-md ">
-                        <li>
+                    <div className="grid w-fit gap-4 bg-[var(--ieee-dark-yellow)] rounded-md ">
+                        <div className="flex flex-col">
                             <NavigationMenuLink asChild>
-                                <Link href="#" className="m-1 hover:bg-[var(--ieee-bright-yellow)] transition-all flex-row items-center gap-2 text-white font-[subheading-font]">
+                                <Link href="/dashboard" className="m-1 hover:bg-[var(--ieee-bright-yellow)] transition-all flex-row items-center gap-2 text-white font-[subheading-font]">
                                 DASHBOARD
                                 </Link>
                             </NavigationMenuLink>
 
                             <NavigationMenuLink asChild>
-                                <Link href="#" className="m-1 hover:bg-[var(--ieee-bright-yellow)] transition-all flex-row items-center gap-2 text-white font-[subheading-font]">
+                                <Link href="/settings" className="m-1 hover:bg-[var(--ieee-bright-yellow)] transition-all flex-row items-center gap-2 text-white font-[subheading-font]">
                                 SETTINGS
                                 </Link>
                             </NavigationMenuLink>
                            
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </NavigationMenuContent>
 
 

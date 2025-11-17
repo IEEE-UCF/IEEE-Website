@@ -76,7 +76,7 @@ export const authOptions: NextAuthOptions = {
           },
         };
       } catch (error) {
-        console.error("Session callback error:", error);
+        // console.error("Session callback error:", error);
         return session;
       }
     },
