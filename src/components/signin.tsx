@@ -25,7 +25,7 @@ export default function Signinblock() {
 
           <span className="flex flex-row gap-2 items-center">
             <div className="text-white font-[subheading-font] text-md">
-              Don't have an account?
+              Don&apos;t have an account?
             </div>
             <a
               className="text-white font-[heading-font] text-lg hover:scale-102 hover:text-[var(--ieee-dark-yellow)] transition-all"
