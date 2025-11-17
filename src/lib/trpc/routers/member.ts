@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { db } from "@/lib/index";
-import { Members } from "@/lib/schema";
+import { db } from "@/lib/database/index";
+import { Members } from "@/lib/database/schema";
 import { eq } from "drizzle-orm";
 import { 
   protectedProcedure, 

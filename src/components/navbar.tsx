@@ -24,18 +24,18 @@ const Navbar: React.FC = () => {
   const { data: auth } = trpc.auth.getAuthStatus.useQuery();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-  
-  return (
-    <div className="relative flex items-center justify-between h-40 w-full">
-      <div className="flex w-full justify-between m-6">
-        <div className="flex justify-start items-center">
-          <Link href={"/"} className="text-white font-[body-font] flex-row flex align-middle justify-center items-center gap-x-5 text-xl lg:text-2xl hover:text-[var(--ieee-dark-yellow)] transition">
-            <Image className="object-contain" src="/iconography/ieeeucficon.png" alt="IEEE UCF Logo" width={70} height={70} />IEEE @ UCF Student Chapter
-          </Link>
-        </div>
+	const toggleMenu = () => {
+		setMenuOpen(!menuOpen);
+	};
+
+	return (
+		<div className="relative flex items-center justify-between h-40 w-full">
+			<div className="flex w-full justify-between m-6">
+				<div className="flex justify-start items-center">
+					<Link href={"/"} className="text-white font-[body-font] flex-row flex align-middle justify-center items-center gap-x-5 text-xl lg:text-2xl hover:text-[var(--ieee-dark-yellow)] transition">
+						<Image className="object-contain" src="/iconography/ieeeucficon.png" alt="IEEE UCF Logo" width={70} height={70} />IEEE @ UCF Student Chapter
+					</Link>
+				</div>
 
         <div className="lg:flex hidden items-center justify-end gap-5">
         {routes.map((route, index) => (
@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
 
       
 
-      {menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
+			{menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
       <button onClick={toggleMenu} className="lg:hidden bg-[var(--ieee-dark-yellow)] mr-5 z-50 cursor-pointer">
         {menuOpen ? (

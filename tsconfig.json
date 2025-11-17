@@ -22,6 +22,17 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/lib/mongodb.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/lib/mongodb.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "*.config.mjs",
+    "eslint.config.mjs",
+    "postcss.config.mjs"
+  ]
 }

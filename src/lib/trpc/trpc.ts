@@ -6,8 +6,8 @@ import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import type { Session } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { db } from "@/lib/index";
-import { Members } from "@/lib/schema";
+import { db } from "@/lib/database/index";
+import { Members } from "@/lib/database/schema";
 import { eq } from "drizzle-orm";
 /**
  * Isomorphic Session getter for API requests
