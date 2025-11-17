@@ -411,6 +411,12 @@ export const ScanningSessionsRelations = relations(ScanningSessions, ({ one }) =
 }));
 
 // Infer Types
+export type User = typeof Users.$inferSelect;
+export type NewUser = typeof Users.$inferInsert;
+export type Account = typeof Accounts.$inferSelect;
+export type NewAccount = typeof Accounts.$inferInsert;
+export type Session = typeof Sessions.$inferSelect;
+export type NewSession = typeof Sessions.$inferInsert;
 export type Member = typeof Members.$inferSelect;
 export type NewMember = typeof Members.$inferInsert;
 export type Event = typeof Events.$inferSelect;
