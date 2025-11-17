@@ -43,7 +43,7 @@ export const Users = pgTable("users", {
   	email: varchar("email", { length: 255 }).notNull().unique(),
   	emailVerified: timestamp("email_verified", { withTimezone: true }),
   	image: text("image"), // pull from discord
-  	discordId: varchar("discordId", { length: 64 }).notNull(),
+  	discordId: varchar("discordId", { length: 64 }),
 });
 
 export const Accounts = pgTable("accounts", {
@@ -79,7 +79,7 @@ export const Members = pgTable('members', {
 	administrator: boolean('administrator').notNull().default(false),
 	biography: text('biography'),
 	duesPaid: boolean('dues_paid').notNull().default(false),
-	discordID: varchar('discordId', { length: 64 }).notNull().unique(),
+	discordID: varchar('discordId', { length: 64 }).unique(),
 	dateOfBirth: date('date_of_birth').notNull(),
 	personalEmail: varchar('personal_email', { length: 255 }).notNull().unique(),
 	ucfEmail: varchar('ucf_email', { length: 255 }).notNull().unique(),

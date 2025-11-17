@@ -24,6 +24,7 @@ export async function middleware(request: NextRequest) {
   if (token) {
     // pls dont get access to sign in, instead we pass through to others
     if (pathname === "/auth/signin") {
+      
       // if they have good member id, push to db, otherwise reg
       if (token.memberId) {
         return NextResponse.redirect(new URL("/dashboard", request.url));

@@ -7,7 +7,8 @@ import {
   protectedProcedure, 
   adminProcedure, 
   memberProcedure,
-  createTRPCRouter
+  createTRPCRouter,
+  publicProcedure
 } from "../trpc";
 
 // Validation schemas
@@ -91,6 +92,7 @@ export const memberRouter = createTRPCRouter({
             websiteURL: null,
           })
           .returning();
+          
 
         return {
           success: true,

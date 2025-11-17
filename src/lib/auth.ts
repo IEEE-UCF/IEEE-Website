@@ -6,6 +6,7 @@ import { Accounts, Users, Sessions, Members } from '@/lib/schema';
 import type { DiscordProfile } from "next-auth/providers/discord";
 import { eq } from "drizzle-orm";
 import type { AdapterUser } from "next-auth/adapters";
+import { randomUUID } from "crypto";
 
 interface User extends AdapterUser {
   discordId?: string;
@@ -25,13 +26,12 @@ export const authOptions: NextAuthOptions = {
       authorization: "https://discord.com/api/oauth2/authorize?scope=identify+email",
       profile: (profile: DiscordProfile) => {
         return {
-          id: "",
+          id: profile.id,
           name: profile.username,
           email: profile.email,
           image: profile.avatar 
             ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
             : null,
-          discordId: profile.id,
         };
       },
     }),
@@ -44,68 +44,31 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
-      console.log("=== SIGNIN CALLBACK ===");
-      console.log("User:", JSON.stringify(user, null, 2));
-      console.log("Account:", JSON.stringify(account, null, 2));
-      console.log("Profile:", JSON.stringify(profile, null, 2));
-      
-      try {
-        if (account?.provider === "discord" && profile) {
-          const discordProfile = profile as DiscordProfile;
-          
-          console.log("Discord ID from profile:", discordProfile.id);
-          console.log("User ID:", user.id);
-          
-          // update user with Discord ID
-          const result = await db
-            .update(Users)
-            .set({ discordId: discordProfile.id })
-            .where(eq(Users.id, user.id))
-            .returning();
-            
-          console.log("Update result:", result);
-          console.log("Discord ID updated successfully");
-        }
-        
-        console.log("SignIn callback returning TRUE");
-        return true;
-      } catch (error) {
-        console.error("=== SIGNIN CALLBACK ERROR ===");
-        console.error("Error details:", error);
-        console.error("Error stack:", error instanceof Error ? error.stack : "No stack");
-        
-        return true;
-      }
-    },
     async session({ session, user }) {
       if (!user) {
         return session;
       }
 
       try {
-        const u = user as User;
-
-        // get Discord ID from Users table
-        const [userWithDiscord] = await db
+        const [account] = await db
           .select()
-          .from(Users)
-          .where(eq(Users.id, u.id))
+          .from(Accounts)
+          .where(eq(Accounts.userId, user.id)) // u.id is the providerAccountId
           .limit(1);
 
         // get member info if exists
         const [member] = await db
           .select()
           .from(Members)
-          .where(eq(Members.userId, u.id))
+          .where(eq(Members.userId, user.id))
           .limit(1);
 
         return {
           ...session,
           user: {
             ...session.user,
-            id: u.id,
-            discordId: userWithDiscord?.discordId || null,
+            id: user.id,
+            discordId: account?.providerAccountId || null,
             memberId: member?.id || null,
             officerStatus: member?.officerStatus || false,
             officerRole: member?.officerRole || null,
@@ -117,18 +80,15 @@ export const authOptions: NextAuthOptions = {
         return session;
       }
     },
+
+    // fucking kill myself, this was the stupid bitching fucking solution to a 5 hour long bug session
+    // stuuuuupid
     async redirect({ url, baseUrl }) {
-      // handle redirects after sign in
-      // if coming from register page, go back there
-      if (url.includes('callbackUrl')) {
-        const urlParams = new URLSearchParams(url.split('?')[1]);
-        const callbackUrl = urlParams.get('callbackUrl');
-        if (callbackUrl) {
-          return callbackUrl;
-        }
-      }
-      
-      // check if user has member profile, middleware stuff
+
+       if (url.startsWith("/")) return `${baseUrl}${url}`;
+  
+        if (url.startsWith(baseUrl)) return url;
+        
       return baseUrl;
     },
   },
