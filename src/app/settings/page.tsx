@@ -99,7 +99,6 @@ export default function SettingsPage() {
   if (!memberProfile) {
     return (
       <div className="flex justify-center min-h-screen items-center bg-black [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
-        <div className="text-white text-xl">No member profile found</div>
       </div>
     );
   }
@@ -112,7 +111,7 @@ export default function SettingsPage() {
          
         </div>
 
-      <div className="relative w-full max-w-4xl p-5 m-20 rounded-lg shadow-lg bg-black min-h-[80vh] border">
+      <div className="flex flex-col rounded-lg shadow-lg bg-black p-10">
 
         <div className="absolute inset-0 bg-black opacity-70 blur-3xl rounded-lg pointer-events-none"/>
         
