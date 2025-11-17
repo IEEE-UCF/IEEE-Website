@@ -3,7 +3,8 @@ import { z } from "zod";
 import { db } from "@/lib/index";
 import { Members, Users } from "@/lib/schema";
 import { eq } from "drizzle-orm";
-import { protectedProcedure, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
+// protectedprocedure not imported lol
 
 export const authRouter = {
   // current session

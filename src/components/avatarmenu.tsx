@@ -8,9 +8,9 @@ import {
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
+//   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+//   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
 interface AvatarMenuProps {

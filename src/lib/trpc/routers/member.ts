@@ -8,7 +8,7 @@ import {
   adminProcedure, 
   memberProcedure,
   createTRPCRouter,
-  publicProcedure
+  // publicProcedure
 } from "../trpc";
 
 // Validation schemas
