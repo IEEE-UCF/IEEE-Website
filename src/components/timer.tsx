@@ -5,42 +5,42 @@ import Image from "next/image";
 import { Calendar } from "@/components/calendar";
 
 const Timer: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+	const [timeLeft, setTimeLeft] = useState({
+		days: 0,
+		hours: 0,
+		minutes: 0,
+		seconds: 0,
+	});
 
-  useEffect(() => {
-    fetchTimer();
-  }, []);
+	useEffect(() => {
+		fetchTimer();
+	}, []);
 
-  const fetchTimer = async () => {
-    const res = await fetch("/api/times?title=GBM", { method: "GET" });
-    const timerRes = await res.json();
-    const timerData = timerRes.data?.[0];
-    const countDownDate = new Date(timerData.time).getTime();
+	const fetchTimer = async () => {
+		const res = await fetch("/api/times?title=GBM", { method: "GET" });
+		const timerRes = await res.json();
+		const timerData = timerRes.data?.[0];
+		const countDownDate = new Date(timerData.time).getTime();
 
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
+		const interval = setInterval(() => {
+			const now = new Date().getTime();
+			const distance = countDownDate - now;
 
-      if (distance < 0) {
-        clearInterval(interval);
-        return;
-      }
+			if (distance < 0) {
+				clearInterval(interval);
+				return;
+			}
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
+			setTimeLeft({ days, hours, minutes, seconds });
+		}, 1000);
 
-    return () => clearInterval(interval);
-  };
+		return () => clearInterval(interval);
+	};
 
   return (
     <div className="w-full h-fit mx-auto bg-transparent drop-shadow-none p-4 sm:p-10 lg:p-20 rounded-sm overflow-hidden content-center">

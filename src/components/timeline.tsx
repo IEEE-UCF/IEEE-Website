@@ -1,11 +1,11 @@
-export default function timeline() { 
-    return(
-        <div>
+export default function timeline() {
+	return (
+		<div>
 
             hi
-        </div>
+		</div>
 
-    );
+	);
 };
 // "use client";
 
@@ -16,7 +16,7 @@ export default function timeline() {
 // import { useState, useEffect } from "react"
 
 // interface EventData {
-//   _id: string; 
+//   _id: string;
 //   committee: string;
 //   title: string;
 //   time: Date;
@@ -26,7 +26,7 @@ export default function timeline() {
 //   rsvp?: string;
 //   photos?: {
 //     type?: string;
-//     [key: string]: any; 
+//     [key: string]: any;
 //   };
 // }
 
@@ -110,7 +110,6 @@ export default function timeline() {
 
 //       }
 
-    
 
 //     });
 
@@ -121,14 +120,14 @@ export default function timeline() {
 //         eventDesc: groupedEvents[month].eventDesc,
 //         eventAddress: groupedEvents[month].eventAddress,
 //         eventCommittee: groupedEvents[month].eventCommittee
-          
+
 //       }));
 
 //       transformedData.sort((a, b) => {
 //             return monthOrder[a.month] - monthOrder[b.month];
 
 //       });
-    
+
 //       setTimelineData(transformedData);
 
 
@@ -158,10 +157,10 @@ export default function timeline() {
 
 //         </VerticalTimeline>
 //       </div>
-      
+
 
 //     );
 
 // }
 
-// export { Timeline }; 
+// export { Timeline };
