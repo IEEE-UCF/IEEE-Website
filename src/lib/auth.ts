@@ -5,11 +5,6 @@ import { db } from '@/lib/index';
 import { Accounts, Users, Sessions, Members } from '@/lib/schema'; 
 import type { DiscordProfile } from "next-auth/providers/discord";
 import { eq } from "drizzle-orm";
-import type { AdapterUser } from "next-auth/adapters";
-
-interface User extends AdapterUser {
-  discordId?: string;
-}
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db, {
@@ -75,7 +70,7 @@ export const authOptions: NextAuthOptions = {
           },
         };
       } catch (error) {
-        // console.error("Session callback error:", error);
+        console.error("Session callback error:", error);
         return session;
       }
     },

@@ -1,5 +1,4 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { z } from "zod";
 import { db } from "@/lib/index";
 import { Members, Users } from "@/lib/schema";
 import { eq } from "drizzle-orm";
