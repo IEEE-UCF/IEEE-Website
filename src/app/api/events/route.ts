@@ -33,7 +33,7 @@ export async function GET() {
     return NextResponse.json({ success: true, data: convertedEvents });
   
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return NextResponse.json({ success: false, error: 'Failed to fetch events' }, { status: 500 });
   }
 

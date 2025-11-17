@@ -32,6 +32,8 @@ const memberUpdateSchema = z.object({
   biography: z.string().optional(),
   phoneNumber: z.string().max(20).optional(),
   major: z.string().max(255).optional(),
+  graduationYear: z.number().int().min(2020).max(2035).optional(),
+  gender: z.enum(["M", "F", "NB", "O", "PNTS"]).optional(),
   resumeURL: z.string().url().optional(),
   linkedinURL: z.string().url().optional(),
   githubURL: z.string().url().optional(),
