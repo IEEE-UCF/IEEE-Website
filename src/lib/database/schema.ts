@@ -28,6 +28,13 @@ export const permissionEnum = pgEnum('permission_enum', [
 	'manage_context',
 ]);
 
+// Context Types: global, committee, project
+export const contextTypeEnum = pgEnum('context_type_enum', [
+	'global',
+	'committee',
+	'project',
+]);
+
 // Gender: Male (M), Female (F), Non-Binary (NB), Other (O), Prefer Not to Say (PNTS)
 export const genderEnum = pgEnum('gender_enum', [
 	'M', 'F', 'NB', 'O', 'PNTS',
@@ -50,16 +57,18 @@ export const eventHostTypeEnum = pgEnum('event_host_type_enum', [
 
 // ==== Schemas ====
 
-// basically we need this for authentication with nextauth and drizzle, and we need to link it in members
+// NextAuth Tables
 export const Users = pgTable("users", {
   	id: uuid("id").primaryKey().defaultRandom(),
   	name: text("name"),
   	email: varchar("email", { length: 255 }).notNull().unique(),
   	emailVerified: timestamp("email_verified", { withTimezone: true }),
   	image: text("image"), // pull from discord
-  	discordId: varchar("discordId", { length: 64 }),
-});
-
+	discordID: varchar('discordId', { length: 64 }).unique(),
+}, (table) => [
+	index('users_idx_id').on(table.id),
+	index('users_idx_discord_id').on(table.discordID),
+]);
 export const Accounts = pgTable("accounts", {
 	id: uuid("id").primaryKey().defaultRandom(),
 	userId: uuid("user_id").notNull().references(() => Users.id, { onDelete: "cascade" }),
@@ -74,7 +83,6 @@ export const Accounts = pgTable("accounts", {
 	id_token: text("id_token"),
 	session_state: varchar("session_state", { length: 255 }),
 });
-
 export const Sessions = pgTable("sessions", {
 	sessionToken: varchar("session_token", { length: 255 }).primaryKey(),
 	userId: uuid("user_id").notNull().references(() => Users.id, { onDelete: "cascade" }),
@@ -84,7 +92,7 @@ export const Sessions = pgTable("sessions", {
 // Members
 export const Members = pgTable('members', {
 	id: uuid('id').primaryKey().defaultRandom(),
-	userId: uuid("user_id").references(() => Users.id, { onDelete: "cascade" }), // we reference that authentication information
+	userId: uuid("user_id").notNull().unique().references(() => Users.id, { onDelete: "cascade" }), // 1:1 relationship with auth user
 	firstName: varchar('first_name', { length: 255 }).notNull(),
 	middleName: varchar('middle_name', { length: 255 }),
 	lastName: varchar('last_name', { length: 255 }).notNull(),
@@ -93,7 +101,7 @@ export const Members = pgTable('members', {
 	officerStatus: boolean('officer_status').notNull().default(false),
 	biography: text('biography'),
 	duesPaid: boolean('dues_paid').notNull().default(false),
-	discordID: varchar('discordId', { length: 64 }).unique(),
+	// discordID: varchar('discordId', { length: 64 }).unique(), // Removed in favor of Users.discordID for now
 	dateOfBirth: date('date_of_birth').notNull(),
 	personalEmail: varchar('personal_email', { length: 255 }).notNull().unique(),
 	ucfEmail: varchar('ucf_email', { length: 255 }).notNull().unique(),
@@ -111,7 +119,8 @@ export const Members = pgTable('members', {
 	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
 }, (table) => [
 	index('members_idx_id').on(table.id),
-	index('members_idx_discordId').on(table.discordID),
+	index('members_idx_user_id').on(table.userId),
+	// index('members_idx_discordId').on(table.discordID),
 	index('members_idx_personal_email').on(table.personalEmail),
 	index('members_idx_ucf_email').on(table.ucfEmail),
 	index('members_idx_officer_status').on(table.officerStatus),
@@ -132,7 +141,6 @@ export const Committees = pgTable('committees', {
 	title: varchar('title', { length: 255 }).notNull(),
 	slug: varchar('slug', { length: 64 }).unique(), // URL-friendly identifier, smth like "software" committee or "solarcar" project
 	about: text('about').notNull(),
-	chairId: uuid('chair_id').notNull().references(() => Members.id, { onDelete: 'cascade' }),
 	discordRoleId: varchar('discord_role_id', { length: 64 }),
 	active: boolean('active').notNull().default(true),
 	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -141,7 +149,6 @@ export const Committees = pgTable('committees', {
 	index('committees_idx_id').on(table.id),
 	index('committees_idx_title').on(table.title),
 	index('committees_idx_slug').on(table.slug),
-	index('committees_idx_chair_id').on(table.chairId),
 	index('committees_idx_created_at').on(table.createdAt),
 	index('committees_idx_updated_at').on(table.updatedAt),
 ]);
@@ -164,7 +171,8 @@ export const Events = pgTable("events", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	title: varchar({ length: 255 }).notNull(),
 	location: varchar({ length: 255 }).notNull(),
-	committeeId: uuid("committee_id"),
+	hostType: eventHostTypeEnum('host_type').notNull().default('committee'), // club, committee, project, or member
+	hostId: uuid('host_id'), // Points to committee/project/member ID based on hostType
 	description: text().notNull(),
 	flyerUrl: varchar("flyer_url", { length: 500 }),
 	rsvpLink: varchar("rsvp_link", { length: 500 }),
@@ -177,7 +185,7 @@ export const Events = pgTable("events", {
 	requiresDues: boolean("requires_dues").default(false).notNull(),
 	active: boolean().default(true).notNull(),
 }, (table) => [
-	index("events_idx_committee_id").using("btree", table.committeeId.asc().nullsLast().op("uuid_ops")),
+	index("events_idx_host").using("btree", table.hostType.asc().nullsLast(), table.hostId.asc().nullsLast().op("uuid_ops")),
 	index("events_idx_created_at").using("btree", table.createdAt.asc().nullsLast().op("timestamptz_ops")),
 	index("events_idx_id").using("btree", table.id.asc().nullsLast().op("uuid_ops")),
 	index("events_idx_location").using("btree", table.location.asc().nullsLast().op("text_ops")),
@@ -185,11 +193,6 @@ export const Events = pgTable("events", {
 	index("events_idx_time_desc").using("btree", table.startTime.desc().nullsFirst().op("timestamptz_ops")),
 	index("events_idx_title").using("btree", table.title.asc().nullsLast().op("text_ops")),
 	index("events_idx_updated_at").using("btree", table.updatedAt.asc().nullsLast().op("timestamptz_ops")),
-	foreignKey({
-		columns: [table.committeeId],
-		foreignColumns: [Committees.id],
-		name: "events_committee_id_committees_id_fk",
-	}).onDelete("cascade"),
 	unique("events_slug_unique").on(table.slug),
 ]);
 // EventAttendees: Join table for many-to-many relation between Events and Members
@@ -270,12 +273,19 @@ export const UsersRelations = relations(Users, ({ one }) => ({
 	}),
 }));
 
-export const MembersRelations = relations(Members, ({ one }) => ({
+export const MembersRelations = relations(Members, ({ one, many }) => ({
   	user: one(Users, {
 		fields: [Members.userId],
 		references: [Users.id],
 	}),
-}))
+	committeeMembers: many(CommitteeMembers),
+	projectMembers: many(ProjectMembers),
+	eventAttendees: many(EventAttendees),
+	permissionsGranted: many(MemberPermissions, { relationName: 'grantedBy' }),
+	permissions: many(MemberPermissions, { relationName: 'hasPermission' }),
+	scannedSessions: many(ScanningSessions, { relationName: 'scanned' }),
+	scannerSessions: many(ScanningSessions, { relationName: 'scanner' }),
+}));
 
 export const AccountRelations = relations(Accounts, ({ one }) => ({
 	user: one(Users, { 
@@ -291,6 +301,51 @@ export const SessionRelations = relations(Sessions, ({ one }) => ({
 	}),
 }));
 
+export const CommitteesRelations = relations(Committees, ({ many }) => ({
+	members: many(CommitteeMembers),
+}));
+
+export const CommitteeMembersRelations = relations(CommitteeMembers, ({ one }) => ({
+	committee: one(Committees, {
+		fields: [CommitteeMembers.committeeId],
+		references: [Committees.id],
+	}),
+	member: one(Members, {
+		fields: [CommitteeMembers.memberId],
+		references: [Members.id],
+	}),
+}));
+
+export const EventsRelations = relations(Events, ({ many }) => ({
+	attendees: many(EventAttendees),
+	scanningSessions: many(ScanningSessions),
+}));
+
+export const EventAttendeesRelations = relations(EventAttendees, ({ one }) => ({
+	event: one(Events, {
+		fields: [EventAttendees.eventId],
+		references: [Events.id],
+	}),
+	member: one(Members, {
+		fields: [EventAttendees.memberId],
+		references: [Members.id],
+	}),
+}));
+
+export const ProjectsRelations = relations(Projects, ({ many }) => ({
+	members: many(ProjectMembers),
+}));
+
+export const ProjectMembersRelations = relations(ProjectMembers, ({ one }) => ({
+	project: one(Projects, {
+		fields: [ProjectMembers.projectId],
+		references: [Projects.id],
+	}),
+	member: one(Members, {
+		fields: [ProjectMembers.memberId],
+		references: [Members.id],
+	}),
+}));
 
 
 // MemberPermissions: Delegated or custom permissions for members
@@ -298,7 +353,7 @@ export const MemberPermissions = pgTable('member_permissions', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	memberId: uuid('member_id').notNull().references(() => Members.id, { onDelete: 'cascade' }),
 	grantedById: uuid('granted_by_id').references(() => Members.id, { onDelete: 'set null' }), // who granted the permission
-	contextType: varchar('context_type', { length: 32 }).notNull(), // e.g., 'committee', 'project', 'global'
+	contextType: contextTypeEnum('context_type').notNull(), // 'global', 'committee', or 'project'
 	contextId: uuid('context_id'), // links to a specific committee/project if applicable
 	permission: permissionEnum('permission').notNull(),
 	active: boolean('active').notNull().default(true),
@@ -309,6 +364,51 @@ export const MemberPermissions = pgTable('member_permissions', {
 	index('member_permissions_idx_context').on(table.contextType, table.contextId),
 	unique('member_permission_unique').on(table.memberId, table.contextType, table.contextId, table.permission),
 ]);
+
+// ScanningSessions: Audit trail for attendance scanning
+export const ScanningSessions = pgTable('scanning_sessions', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	eventId: uuid('event_id').notNull().references(() => Events.id, { onDelete: 'cascade' }),
+	scannerId: uuid('scanner_id').references(() => Members.id, { onDelete: 'set null' }), // Who performed the scan
+	scannedMemberId: uuid('scanned_member_id').notNull().references(() => Members.id, { onDelete: 'cascade' }), // Who was scanned
+	method: varchar('method', { length: 32 }).notNull().default('qr'), // 'qr', 'manual', 'api'
+	timestamp: timestamp('timestamp', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => [
+	index('scanning_sessions_idx_event').on(table.eventId),
+	index('scanning_sessions_idx_scanner').on(table.scannerId),
+	index('scanning_sessions_idx_scanned_member').on(table.scannedMemberId),
+	index('scanning_sessions_idx_timestamp').on(table.timestamp),
+]);
+
+export const MemberPermissionsRelations = relations(MemberPermissions, ({ one }) => ({
+	member: one(Members, {
+		relationName: 'hasPermission',
+		fields: [MemberPermissions.memberId],
+		references: [Members.id],
+	}),
+	grantedBy: one(Members, {
+		relationName: 'grantedBy',
+		fields: [MemberPermissions.grantedById],
+		references: [Members.id],
+	}),
+}));
+
+export const ScanningSessionsRelations = relations(ScanningSessions, ({ one }) => ({
+	event: one(Events, {
+		fields: [ScanningSessions.eventId],
+		references: [Events.id],
+	}),
+	scanner: one(Members, {
+		relationName: 'scanner',
+		fields: [ScanningSessions.scannerId],
+		references: [Members.id],
+	}),
+	scannedMember: one(Members, {
+		relationName: 'scanned',
+		fields: [ScanningSessions.scannedMemberId],
+		references: [Members.id],
+	}),
+}));
 
 // Infer Types
 export type Member = typeof Members.$inferSelect;
@@ -329,3 +429,5 @@ export type Sponsorship = typeof Sponsorships.$inferSelect;
 export type NewSponsorship = typeof Sponsorships.$inferInsert;
 export type MemberPermission = typeof MemberPermissions.$inferSelect;
 export type NewMemberPermission = typeof MemberPermissions.$inferInsert;
+export type ScanningSession = typeof ScanningSessions.$inferSelect;
+export type NewScanningSession = typeof ScanningSessions.$inferInsert;
