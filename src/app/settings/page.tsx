@@ -105,8 +105,8 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex flex-col justify-center min-h-screen items-center ">
-        <div className="py-20 bg-black [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)] w-full">
+    <div className="flex flex-col justify-center min-h-screen items-center w-screen">
+        <div className="py-20 bg-black [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)] w-full ">
          <div className="absolute z-100 w-full h-fit inset-0 items-center px-5">
             <Navbar />
          
