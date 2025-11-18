@@ -1,9 +1,31 @@
+"use client";
 import React from "react";
+import { trpc } from "@/lib/trpc/client";
 import MemberQRCode from "@/components/pg/memberqrcodegen";
 
+
 const TestPage = () => {
+    
+	const { data: session, isLoading, isError } = trpc.auth.getSession.useQuery();
+	
+	if (isLoading) {
+		return (
+			<div className="min-h-screen bg-black flex items-center justify-center">
+				<p className="text-white text-xl">Loading session data...</p>
+			</div>
+		);
+	}
+
+	if (isError || !session?.user?.discordId) {
+		return (
+			<div className="min-h-screen bg-black flex items-center justify-center">
+				<p className="text-red-500 text-xl">Error loading session or Discord ID not found.</p>
+			</div>
+		);
+	}
+
 	const memberData = {
-		id: "99688747573981184",
+		id: session.user.discordId,
 		// Add other member details as needed
 		// name: "John Doe",
 		// email: "john.doe@email.com",
@@ -31,21 +53,6 @@ const TestPage = () => {
 						<div className="mt-4 text-sm text-gray-600">
 							<p>
 								<strong>Data:</strong> {memberInfoString}
-							</p>
-						</div>
-					</div>
-
-					{/* QR Code with no data sent */}
-					<div className="bg-white rounded-lg shadow-md p-6">
-						<h2 className="text-xl font-semibold mb-4">QR Code with Icon</h2>
-						<MemberQRCode
-							memberInfo=""
-							logoUrl="/iconography/ieeeucficon.png"
-							logoSize={40}
-						/>
-						<div className="mt-4 text-sm text-gray-600">
-							<p>
-								<strong>Blank</strong>
 							</p>
 						</div>
 					</div>

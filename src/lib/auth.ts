@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import { DrizzleAdapter } from '@auth/drizzle-adapter'; 
-import { db } from '@/lib/database/index'; 
+import { db } from '@/lib/database/client'; 
 import { Accounts, Users, Sessions, Members } from '@/lib/database/schema'; 
 import type { DiscordProfile } from "next-auth/providers/discord";
 import { eq } from "drizzle-orm";

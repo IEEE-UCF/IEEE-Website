@@ -1,5 +1,6 @@
 // import { dbConnect } from '@/lib/mongodb';
-import { db } from '@/lib/database/drizzle';
+//import { db } from '@/lib/database/drizzle';
+import { db } from '@/lib/database/client';
 import { Events } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
 // import { MongoClient } from "mongodb";
