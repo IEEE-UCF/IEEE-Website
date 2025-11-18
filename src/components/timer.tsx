@@ -5,50 +5,50 @@ import Image from "next/image";
 import { Calendar } from "@/components/calendar";
 
 const Timer: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+	const [timeLeft, setTimeLeft] = useState({
+		days: 0,
+		hours: 0,
+		minutes: 0,
+		seconds: 0,
+	});
 
-  useEffect(() => {
-    fetchTimer();
-  }, []);
+	useEffect(() => {
+		fetchTimer();
+	}, []);
 
-  const fetchTimer = async () => {
-    const res = await fetch("/api/times?title=GBM", { method: "GET" });
-    const timerRes = await res.json();
-    const timerData = timerRes.data?.[0];
-    const countDownDate = new Date(timerData.time).getTime();
+	const fetchTimer = async () => {
+		const res = await fetch("/api/times?title=GBM", { method: "GET" });
+		const timerRes = await res.json();
+		const timerData = timerRes.data?.[0];
+		const countDownDate = new Date(timerData.time).getTime();
 
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
+		const interval = setInterval(() => {
+			const now = new Date().getTime();
+			const distance = countDownDate - now;
 
-      if (distance < 0) {
-        clearInterval(interval);
-        return;
-      }
+			if (distance < 0) {
+				clearInterval(interval);
+				return;
+			}
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
+			setTimeLeft({ days, hours, minutes, seconds });
+		}, 1000);
 
-    return () => clearInterval(interval);
-  };
+		return () => clearInterval(interval);
+	};
 
   return (
-    <div className="w-full h-fit mx-auto bg-transparent drop-shadow-lg p-4 sm:p-10 lg:p-20 rounded-sm overflow-hidden content-center">
+    <div className="w-full h-fit mx-auto bg-transparent drop-shadow-none p-4 sm:p-10 lg:p-20 rounded-sm overflow-hidden content-center">
       <Image
         src="/gbms/gbmgif.gif"
         alt="Photo"
         fill
-        className="opacity-50 -z-10 object-cover object-center rounded-none"
+        className="opacity-50 -z-10 object-cover object-center rounded-sm"
         priority
       />
       <div className="flex flex-col lg:flex-row flex-wrap justify-between items-center gap-8">
@@ -59,7 +59,7 @@ const Timer: React.FC = () => {
               Join IEEE @ UCF for the upcoming GBM in Room TBD!
             </p>
           </div>
-          <div className="p-3 m-3 rounded-sm border-1 backdrop-blur-3xl w-full h-fit">
+          <div className="p-3 m-3 rounded-sm border-1 backdrop-blur-lg w-full h-fit">
             <div className="flex justify-around items-center flex-row">
               <div className="text-white">
                 <span className="font-[heading-font] text-5xl">{timeLeft.days}</span>
@@ -88,8 +88,8 @@ const Timer: React.FC = () => {
           </div>
         </div>
         <div className="border-1 border-white w-full lg:w-5/12 rounded-sm px-2 py-4">
-  <Calendar className="w-full h-[350px] sm:h-[400px] lg:h-[400px] opacity-87" />
-</div>
+          <Calendar className="w-full h-[350px] sm:h-[400px] lg:h-[400px] opacity-87" />
+        </div>
       </div>
     </div>
   );

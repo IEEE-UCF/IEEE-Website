@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# we hate all package managers except pnpm
+package-lock.json
+bun.lock
+bun.lockb
+certificates
