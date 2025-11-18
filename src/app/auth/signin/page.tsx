@@ -12,7 +12,7 @@ export default async function SignInPage() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    if (!session.user.discordId) {
+    if (!session.user.discordID) {
       redirect("/auth/error"); 
       return;
     }
@@ -20,7 +20,7 @@ export default async function SignInPage() {
     const [member] = await db
       .select()
       .from(Members)
-      .where(eq(Members.discordID, session.user.discordId))
+      .where(eq(Members.discordID, session.user.discordID))
       .limit(1);
 
     if (member) redirect("/");

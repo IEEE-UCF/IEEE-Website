@@ -64,7 +64,7 @@ export const Users = pgTable("users", {
   	email: varchar("email", { length: 255 }).notNull().unique(),
   	emailVerified: timestamp("email_verified", { withTimezone: true }),
   	image: text("image"), // pull from discord
-	discordID: varchar('discordId', { length: 64 }).unique(),
+	discordID: varchar('discordID', { length: 64 }).unique(),
 }, (table) => [
 	index('users_idx_id').on(table.id),
 	index('users_idx_discord_id').on(table.discordID),
@@ -101,7 +101,7 @@ export const Members = pgTable('members', {
 	officerStatus: boolean('officer_status').notNull().default(false),
 	biography: text('biography'),
 	duesPaid: boolean('dues_paid').notNull().default(false),
-	// discordID: varchar('discordId', { length: 64 }).unique(), // Removed in favor of Users.discordID for now
+	discordID: varchar('discordID', { length: 64 }).unique(),
 	dateOfBirth: date('date_of_birth').notNull(),
 	personalEmail: varchar('personal_email', { length: 255 }).notNull().unique(),
 	ucfEmail: varchar('ucf_email', { length: 255 }).notNull().unique(),
@@ -120,7 +120,7 @@ export const Members = pgTable('members', {
 }, (table) => [
 	index('members_idx_id').on(table.id),
 	index('members_idx_user_id').on(table.userId),
-	// index('members_idx_discordId').on(table.discordID),
+	index('members_idx_discordID').on(table.discordID),
 	index('members_idx_personal_email').on(table.personalEmail),
 	index('members_idx_ucf_email').on(table.ucfEmail),
 	index('members_idx_officer_status').on(table.officerStatus),

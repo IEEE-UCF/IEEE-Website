@@ -62,7 +62,7 @@ export const authOptions: NextAuthOptions = {
           user: {
             ...session.user,
             id: user.id,
-            discordId: account?.providerAccountId || null,
+            discordID: account?.providerAccountId || null,
             memberId: member?.id || null,
             officerStatus: member?.officerStatus || false,
             officerRole: member?.officerRole || null,

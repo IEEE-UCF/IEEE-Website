@@ -123,8 +123,8 @@ export const authRouter = {
 
     let discordAvatar = userWithDiscord?.image || null;
     
-    if (!discordAvatar && userWithDiscord?.discordId) {
-        discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordId) % 5}.png`;
+    if (!discordAvatar && userWithDiscord?.discordID) {
+        discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordID) % 5}.png`;
     }
 
     return {
@@ -136,7 +136,7 @@ export const authRouter = {
         officerRole: member?.officerRole || null,
         user: ctx.session.user,
         member: member || null,
-        profile: ctx.session?.user.discordId,
+        profile: ctx.session?.user.discordID,
         discordAvatar,
     };
   }),
