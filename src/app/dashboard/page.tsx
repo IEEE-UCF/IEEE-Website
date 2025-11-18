@@ -6,7 +6,7 @@ export default function Dashboard() {
 	return (
 		<div className="flex flex-col max-w-screen overflow-hidden bg-black min-h-screen">
 			<div className="relative w-full">
-				<div className="absolute z-4 w-fit h-fit inset-0 px-5">
+				<div className="absolute z-100 w-full h-fit inset-0 items-center px-5 ">
 					<Navbar />
 				</div>
 			</div>
