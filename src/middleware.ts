@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const protectedRoutes = ["/dashboard", "/settings"];
+  const protectedRoutes = ["/dashboard", "/settings", "/scan-qr"];
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
   const sessionCookie = request.cookies.get("next-auth.session-token") || request.cookies.get("__Secure-next-auth.session-token");

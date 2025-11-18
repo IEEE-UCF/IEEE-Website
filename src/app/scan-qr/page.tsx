@@ -25,6 +25,7 @@
 import React from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useMemberScanner } from "@/components/pg/memberqrcode-scan";
+import { type Event } from '@/lib/database/schema';
 
 export default function ScanQRPage() {
   // ============================================
@@ -47,8 +48,35 @@ export default function ScanQRPage() {
   >("idle");
   const [apiError, setApiError] = React.useState<string | null>(null);
 
+  const [events, setEvents] = React.useState<Event[]>([]);
+  const [selectedEventId, setSelectedEventId] = React.useState<string>("");
+  const [eventsLoading, setEventsLoading] = React.useState<boolean>(true);
+  const [eventsError, setEventsError] = React.useState<string | null>(null);
+
   React.useEffect(() => {
-    if (memberInfo) {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/events/getEvents");
+        const result = await response.json();
+        if (result.success) {
+          setEvents(result.data);
+        } else {
+          setEventsError(result.error || "Failed to fetch events.");
+        }
+      } catch (error) {
+        setEventsError("An error occurred while fetching events.");
+        console.error("Error fetching events:", error);
+      } finally {
+        setEventsLoading(false);
+      }
+    };
+
+    fetchEvents();
+
+  }, []);
+
+  React.useEffect(() => {
+    if (memberInfo && selectedEventId) {
       const addAttendee = async () => {
         setApiStatus("loading");
         setApiError(null);
@@ -59,7 +87,7 @@ export default function ScanQRPage() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              eventId: "be1af011-bfe8-46b5-a187-d43ed9322685", // Hardcoded for now
+              eventId: selectedEventId,
               discordId: memberInfo.id,
             }),
           });
@@ -81,7 +109,7 @@ export default function ScanQRPage() {
 
       addAttendee();
     }
-  }, [memberInfo]);
+  }, [memberInfo, selectedEventId]);
 
   // ============================================
   // RENDER / UI
@@ -95,9 +123,39 @@ export default function ScanQRPage() {
           <h1 className="text-2xl font-bold text-center mb-2">
             IEEE Member Check-In
           </h1>
-          <p className="text-sm text-gray-600 text-center">
-            Scan member QR codes to check in
+          <p className="text-sm text-gray-600 text-center mb-4">
+            Select an event and scan member QR codes to check in.
           </p>
+
+          {eventsLoading ? (
+            <p className="text-center text-gray-500">Loading events...</p>
+          ) : eventsError ? (
+            <p className="text-center text-red-500">{eventsError}</p>
+          ) : (
+            <div className="max-w-xs mx-auto">
+              <label
+                htmlFor="event-select"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Select Event
+              </label>
+              <select
+                id="event-select"
+                value={selectedEventId}
+                onChange={(e) => setSelectedEventId(e.target.value)}
+                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+              >
+                <option value="" disabled>
+                  -- Please choose an event --
+                </option>
+                {events.map((event) => (
+                  <option key={event.id} value={event.id}>
+                    {event.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
         {/* ========== SCANNER SECTION ========== */}
@@ -118,23 +176,11 @@ export default function ScanQRPage() {
               </div>
             ) : (
               <div className="relative aspect-square max-w-md mx-auto rounded-lg overflow-hidden border-4 border-blue-500">
-                {/* 
-                  Scanner Component from @yudiel/react-qr-scanner
-                  
-                  Props:
-                  - onScan: Called when QR code is detected (passes result to handleScan)
-                  - onError: Called when scanner encounters an error (camera denied, etc.)
-                  - constraints: Specifies camera settings
-                    - facingMode: "environment" = back camera, "user" = front camera
-                  - styles: Custom CSS for the scanner container
-                  
-                  Note: Requires HTTPS to work on mobile devices
-                */}
                 <Scanner
                   onScan={handleScan}
                   onError={handleError}
                   constraints={{
-                    facingMode: "environment", // Use back camera for scanning
+                    facingMode: "environment",
                   }}
                   styles={{
                     container: {
@@ -143,15 +189,12 @@ export default function ScanQRPage() {
                     },
                   }}
                 />
-
-                {/* Visual scanning guide overlay - helps users align QR code */}
                 <div className="absolute inset-0 pointer-events-none">
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-2 border-white rounded-lg"></div>
                 </div>
               </div>
             )}
 
-            {/* Cancel button to stop scanning */}
             <div className="mt-4 text-center">
               <button
                 onClick={() => setIsScanning(false)}
@@ -163,7 +206,6 @@ export default function ScanQRPage() {
           </div>
         ) : (
           /* ========== MEMBER INFO DISPLAY ========== */
-          /* Shows after successful scan - displays member details and check-in confirmation */
           memberInfo && (
             <div className="bg-white rounded-lg shadow-md p-6 mb-4">
               {apiStatus === "loading" && (
@@ -243,18 +285,15 @@ export default function ScanQRPage() {
                 </div>
               )}
 
-              {/* Member information card */}
               <div className="bg-gray-50 rounded-lg p-4 mb-4">
                 <h3 className="font-semibold mb-2">Member Information:</h3>
                 <div className="space-y-2">
-                  {/* Member ID (always present) */}
                   <div className="flex justify-between">
                     <span className="text-gray-600">Member ID:</span>
                     <span className="font-mono font-semibold">
                       {memberInfo.id}
                     </span>
                   </div>
-                  {/* Additional data from JSON QR codes (name, chapter, etc.) */}
                   {memberInfo.data && (
                     <>
                       {memberInfo.data.name && (
@@ -275,7 +314,6 @@ export default function ScanQRPage() {
                       )}
                     </>
                   )}
-                  {/* Check-in timestamp */}
                   <div className="flex justify-between">
                     <span className="text-gray-600">Time:</span>
                     <span className="font-semibold">
@@ -285,7 +323,6 @@ export default function ScanQRPage() {
                 </div>
               </div>
 
-              {/* Button to scan next member */}
               <button
                 onClick={resetScanner}
                 className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
@@ -297,11 +334,6 @@ export default function ScanQRPage() {
         )}
 
         {/* ========== SCAN HISTORY ========== */}
-        {/* 
-          Displays all members scanned during this session
-          Only shows if at least one member has been scanned
-          Newest scans appear at the top
-        */}
         {scanHistory.length > 0 && (
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between items-center mb-4">
@@ -316,7 +348,6 @@ export default function ScanQRPage() {
               </button>
             </div>
 
-            {/* Scrollable list of scanned members */}
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {scanHistory.map((member, index) => (
                 <div
@@ -324,15 +355,12 @@ export default function ScanQRPage() {
                   className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
                 >
                   <div>
-                    {/* Display member name if available, otherwise show truncated ID */}
                     <p className="font-semibold">
                       {member.data?.name ||
                         `Member ${member.id.slice(0, 8)}...`}
                     </p>
                     <p className="text-xs text-gray-500">{member.timestamp}</p>
                   </div>
-
-                  {/* Check-in success indicator */}
                   <div className="text-green-600">
                     <svg
                       className="w-5 h-5"
@@ -353,16 +381,17 @@ export default function ScanQRPage() {
         )}
 
         {/* ========== IDLE STATE ========== */}
-        {/* 
-          Shows when scanner is stopped but no member info is displayed
-          Provides a button to restart scanning
-        */}
         {!isScanning && !memberInfo && (
           <div className="bg-white rounded-lg shadow-md p-6 text-center">
-            <p className="text-gray-600 mb-4">Ready to scan</p>
+            <p className="text-gray-600 mb-4">
+              {selectedEventId
+                ? "Ready to scan for the selected event."
+                : "Please select an event to begin scanning."}
+            </p>
             <button
               onClick={resetScanner}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
+              disabled={!selectedEventId}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               Start Scanning
             </button>
