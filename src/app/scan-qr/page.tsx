@@ -42,6 +42,47 @@ export default function ScanQRPage() {
     setIsScanning,
   } = useMemberScanner();
 
+  const [apiStatus, setApiStatus] = React.useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [apiError, setApiError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (memberInfo) {
+      const addAttendee = async () => {
+        setApiStatus("loading");
+        setApiError(null);
+        try {
+          const response = await fetch("/api/events/addEventAttendee", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              eventId: "be1af011-bfe8-46b5-a187-d43ed9322685", // Hardcoded for now
+              discordId: memberInfo.id,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            setApiStatus("success");
+          } else {
+            setApiStatus("error");
+            setApiError(result.error || "Failed to add attendee.");
+          }
+        } catch (error) {
+          setApiStatus("error");
+          setApiError("An error occurred while adding the attendee.");
+          console.error("Error adding event attendee:", error);
+        }
+      };
+
+      addAttendee();
+    }
+  }, [memberInfo]);
+
   // ============================================
   // RENDER / UI
   // ============================================
@@ -125,27 +166,82 @@ export default function ScanQRPage() {
           /* Shows after successful scan - displays member details and check-in confirmation */
           memberInfo && (
             <div className="bg-white rounded-lg shadow-md p-6 mb-4">
-              {/* Success icon and message */}
-              <div className="text-center mb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
-                  <svg
-                    className="w-8 h-8 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+              {apiStatus === "loading" && (
+                <div className="text-center mb-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-3">
+                    <svg
+                      className="w-8 h-8 text-blue-600 animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-bold text-blue-600 mb-2">
+                    Checking In...
+                  </h2>
                 </div>
-                <h2 className="text-xl font-bold text-green-600 mb-2">
-                  Check-In Successful!
-                </h2>
-              </div>
+              )}
+
+              {apiStatus === "success" && (
+                <div className="text-center mb-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
+                    <svg
+                      className="w-8 h-8 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-bold text-green-600 mb-2">
+                    Check-In Successful!
+                  </h2>
+                </div>
+              )}
+
+              {apiStatus === "error" && (
+                <div className="text-center mb-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-3">
+                    <svg
+                      className="w-8 h-8 text-red-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-bold text-red-600 mb-2">
+                    Check-In Failed
+                  </h2>
+                  <p className="text-red-700">{apiError}</p>
+                </div>
+              )}
 
               {/* Member information card */}
               <div className="bg-gray-50 rounded-lg p-4 mb-4">

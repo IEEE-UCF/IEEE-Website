@@ -16,14 +16,33 @@
  * Navigate to /test-qr to view examples
  * Scan the QR codes with /scan-qr page to test the full flow
  */
-
+"use client";
 import React from "react";
 import MemberQRCode from "@/components/pg/memberqrcode-gen";
+import { trpc } from "@/lib/trpc/client";
+
 
 const TestPage = () => {
   // ============================================
   // SAMPLE DATA
   // ============================================
+  const { data: session, isLoading, isError } = trpc.auth.getSession.useQuery();
+	
+	if (isLoading) {
+		return (
+			<div className="min-h-screen bg-black flex items-center justify-center">
+				<p className="text-white text-xl">Loading session data...</p>
+			</div>
+		);
+	}
+
+	if (isError || !session?.user?.discordId) {
+		return (
+			<div className="min-h-screen bg-black flex items-center justify-center">
+				<p className="text-red-500 text-xl">Error loading session or Discord ID not found.</p>
+			</div>
+		);
+	}
 
   /**
    * Sample member data object
@@ -41,7 +60,8 @@ const TestPage = () => {
    * Note: Only uncommented fields will be included in the QR code
    */
   const memberData = {
-    id: "99688747573981184", // Required: Unique member ID
+    //id: "99688747573981184", // Required: Unique member ID
+    id: session.user.discordId,
     // Add other member details as needed
     // name: "John Doe",
     // email: "john.doe@email.com",

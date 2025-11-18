@@ -27,7 +27,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
       // Generate base QR code
       const qrDataUrl = await QRCode.toDataURL(text, {
         width: size,
-        errorCorrectionLevel: "L",
+        errorCorrectionLevel: "H",
         margin: 2,
       });
 

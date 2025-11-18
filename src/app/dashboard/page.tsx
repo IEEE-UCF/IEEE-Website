@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/navbar";
 import { FormPopup } from "@/components/dashboard/newEventForm";
 import { EventList } from "@/components/dashboard/event-list";
+import {Member_QR_Code} from "@/components/dashboard/member-qr-code"
 
 export default function Dashboard() {
 	return (
@@ -13,6 +14,7 @@ export default function Dashboard() {
 			<div className="flex flex-col items-center justify-center h-screen">
 				<FormPopup />
 				<EventList />
+				<Member_QR_Code/>
 			</div>
 		</div>
 	);
