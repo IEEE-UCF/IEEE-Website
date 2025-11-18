@@ -23,7 +23,7 @@ export default async function SignInPage() {
       .where(eq(Members.discordID, session.user.discordId))
       .limit(1);
 
-    if (member) redirect("/");
+    if (member) redirect("/dashboard");
     else redirect("/auth/register");
   }
 
