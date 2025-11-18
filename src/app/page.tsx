@@ -101,7 +101,7 @@ export default function Home() {
                       <div className="space-y-2">
                         <Link href="/about">
                           <p className="text-white text-xl font-[body-italic-font]">
-                            learn more
+                            LEARN MORE
                           </p>
                         </Link>
                       </div>
