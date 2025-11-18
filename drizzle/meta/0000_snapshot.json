@@ -1,5 +1,5 @@
 {
-  "id": "c987dc40-43b8-4ac0-b629-05d7cc41a32c",
+  "id": "74fd9606-4f85-4bfb-982f-54b478de7d8c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -985,6 +985,12 @@
           "notNull": true,
           "default": false
         },
+        "discordID": {
+          "name": "discordID",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "date_of_birth": {
           "name": "date_of_birth",
           "type": "date",
@@ -1101,6 +1107,21 @@
           "columns": [
             {
               "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "members_idx_discordID": {
+          "name": "members_idx_discordID",
+          "columns": [
+            {
+              "expression": "discordID",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1320,6 +1341,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "user_id"
+          ]
+        },
+        "members_discordID_unique": {
+          "name": "members_discordID_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "discordID"
           ]
         },
         "members_personal_email_unique": {
@@ -2043,8 +2071,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "discordId": {
-          "name": "discordId",
+        "discordID": {
+          "name": "discordID",
           "type": "varchar(64)",
           "primaryKey": false,
           "notNull": false
@@ -2070,7 +2098,7 @@
           "name": "users_idx_discord_id",
           "columns": [
             {
-              "expression": "discordId",
+              "expression": "discordID",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -2092,11 +2120,11 @@
             "email"
           ]
         },
-        "users_discordId_unique": {
-          "name": "users_discordId_unique",
+        "users_discordID_unique": {
+          "name": "users_discordID_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "discordId"
+            "discordID"
           ]
         }
       },

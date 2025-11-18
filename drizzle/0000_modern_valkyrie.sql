@@ -91,6 +91,7 @@ CREATE TABLE "members" (
 	"officer_status" boolean DEFAULT false NOT NULL,
 	"biography" text,
 	"dues_paid" boolean DEFAULT false NOT NULL,
+	"discordID" varchar(64),
 	"date_of_birth" date NOT NULL,
 	"personal_email" varchar(255) NOT NULL,
 	"ucf_email" varchar(255) NOT NULL,
@@ -107,6 +108,7 @@ CREATE TABLE "members" (
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "members_user_id_unique" UNIQUE("user_id"),
+	CONSTRAINT "members_discordID_unique" UNIQUE("discordID"),
 	CONSTRAINT "members_personal_email_unique" UNIQUE("personal_email"),
 	CONSTRAINT "members_ucf_email_unique" UNIQUE("ucf_email")
 );
@@ -170,9 +172,9 @@ CREATE TABLE "users" (
 	"email" varchar(255) NOT NULL,
 	"email_verified" timestamp with time zone,
 	"image" text,
-	"discordId" varchar(64),
+	"discordID" varchar(64),
 	CONSTRAINT "users_email_unique" UNIQUE("email"),
-	CONSTRAINT "users_discordId_unique" UNIQUE("discordId")
+	CONSTRAINT "users_discordID_unique" UNIQUE("discordID")
 );
 --> statement-breakpoint
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -213,6 +215,7 @@ CREATE INDEX "member_permissions_idx_member" ON "member_permissions" USING btree
 CREATE INDEX "member_permissions_idx_context" ON "member_permissions" USING btree ("context_type","context_id");--> statement-breakpoint
 CREATE INDEX "members_idx_id" ON "members" USING btree ("id");--> statement-breakpoint
 CREATE INDEX "members_idx_user_id" ON "members" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "members_idx_discordID" ON "members" USING btree ("discordID");--> statement-breakpoint
 CREATE INDEX "members_idx_personal_email" ON "members" USING btree ("personal_email");--> statement-breakpoint
 CREATE INDEX "members_idx_ucf_email" ON "members" USING btree ("ucf_email");--> statement-breakpoint
 CREATE INDEX "members_idx_officer_status" ON "members" USING btree ("officer_status");--> statement-breakpoint
@@ -244,4 +247,4 @@ CREATE INDEX "sponsorships_idx_tier" ON "sponsorships" USING btree ("tier");--> 
 CREATE INDEX "sponsorships_idx_created_at" ON "sponsorships" USING btree ("created_at");--> statement-breakpoint
 CREATE INDEX "sponsorships_idx_updated_at" ON "sponsorships" USING btree ("updated_at");--> statement-breakpoint
 CREATE INDEX "users_idx_id" ON "users" USING btree ("id");--> statement-breakpoint
-CREATE INDEX "users_idx_discord_id" ON "users" USING btree ("discordId");
+CREATE INDEX "users_idx_discord_id" ON "users" USING btree ("discordID");
