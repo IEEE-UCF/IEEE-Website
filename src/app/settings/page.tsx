@@ -1,5 +1,6 @@
 "use client";
 
+import { ucfMajors } from "@/app/data/majors";
 import { Button } from "@/components/ui/button"
 import {
   Field,
@@ -253,12 +254,18 @@ export default function SettingsPage() {
 
                     <Field>
                       <FieldLabel htmlFor="major">Major</FieldLabel>
-                      <Input
-                        id="major"
-                        name="major"
-                        defaultValue={memberProfile.major}
-                        placeholder="Your Major"
-                      />
+                      <Select name="ucf_major" required>
+                      <SelectTrigger id="ucf_major">
+                        <SelectValue placeholder="Select major" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        {ucfMajors.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     </Field>
 
                    <Field>
