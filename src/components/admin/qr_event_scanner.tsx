@@ -53,7 +53,7 @@ export function QREventScanner() {
   }, []);
 
   React.useEffect(() => {
-    if (memberInfo && selectedEventId) {
+    if (memberInfo && selectedEventId) { // Ensure both are present and selectedEventId is not empty
       const addAttendee = async () => {
         setApiStatus("loading");
         setApiError(null);
@@ -119,7 +119,10 @@ export function QREventScanner() {
               <select
                 id="event-select"
                 value={selectedEventId}
-                onChange={(e) => setSelectedEventId(e.target.value)}
+                onChange={(e) => {
+                  setSelectedEventId(e.target.value);
+                  resetScanner(); // Clear scanned member info when event changes
+                }}
                 className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
               >
                 <option value="" disabled>
