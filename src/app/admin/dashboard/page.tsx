@@ -5,15 +5,13 @@ import { QREventScanner } from "@/components/admin/qr_event_scanner";
 
 export default function Dashboard() {
     return (
-        <div className="flex flex-col max-w-screen overflow-hidden bg-black min-h-screen text-white">
-            <div className="relative w-full">
-                <header className="sticky top-0 z-20 w-full border-b border-gray-800 bg-black/80 backdrop-blur">
-                <div className="mx-auto flex max-w-6xl px-4 py-1">
-                    <Navbar />
-                </div>
-            </header>
+        <div className="flex flex-col max-w-screen overflow-hidden bg-black min-h-screen text-black">
+            {/* Navbar – match home spacing */}
+            <div className="w-full px-5">
+                <Navbar />
             </div>
-             {/* Dashboard Content */}
+
+            {/* Dashboard Content */}
             <main className="flex-1">
                 <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 lg:flex-row">
                     {/* Left Panel – QR Scanner */}

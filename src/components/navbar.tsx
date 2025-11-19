@@ -14,10 +14,15 @@ const routes: { title: string; href: string; image: string}[] = [
   { title: "Connect", href: "/connect", image: "/iconography/navbarconnect.png"},
 ];
 
-const authRoutes: {title: string; href: string; image: string}[] = [
-  {title: "Dashboard", href: "/dashboard", image: "/iconography/navbardashboard.png"},
-  {title: "Settings", href: "/settings", image: "/iconography/navbarsettings.png"},
+const authRoutes: { title: string; href: string; image: string }[] = [
+  { title: "Dashboard", href: "/dashboard", image: "/iconography/navbardashboard.png" },
+  { title: "Settings", href: "/settings", image: "/iconography/navbarsettings.png" },
+];
 
+const adminRoutes: { title: string; href: string; image: string }[] = [
+  { title: "Admin Dashboard", href: "/admin/dashboard", image: "/iconography/navbardashboard.png" },
+  { title: "Demo Event Scanner", href: "/test/scan-qr", image: "/iconography/navbardashboard.png" },
+  { title: "Testing", href: "/test/demos", image: "/iconography/navbardashboard.png" },
 ];
 
 const Navbar: React.FC = () => {
@@ -50,6 +55,23 @@ const Navbar: React.FC = () => {
 
             </Link>
         ))}
+
+        {auth?.isAdmin && (
+          <div className="flex items-center gap-3 border-l border-gray-700 pl-4 ml-2">
+            <span className="text-xs font-[heading-font] tracking-[0.2em] text-[var(--ieee-dark-yellow)]">
+              ADMIN
+            </span>
+            {adminRoutes.map((route, index) => (
+              <Link
+                key={index}
+                href={route.href}
+                className="font-[body-font] text-xs items-center inline-flex text-white hover:text-[var(--ieee-dark-yellow)] transition"
+              >
+                {route.title.toUpperCase()}
+              </Link>
+            ))}
+          </div>
+        )}
 
         {auth?.isMember && auth?.discordAvatar ?
           (<div className="">
@@ -202,32 +224,59 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
             </div>
 
           </div>
-        
 
+        {/* Mobile ADMIN section for admins */}
+        {auth?.isAdmin && (
+          <div className="flex flex-col ml-6 p-5">
+            <div className="text-[var(--ieee-dark-yellow)] font-[heading-font] text-xl">ADMIN</div>
+            {adminRoutes.map((route, index) => (
+              <Link
+                key={index}
+                href={route.href}
+                onClick={toggleMenu}
+                className={
+                  "hover:text-[var(--ieee-bright-yellow)] font-[subheading-font] text-white inline-flex h-10 w-full items-center text-md transition-colors gap-3"
+                }
+              >
+                <Image
+                  className="object-cover h-7 w-7"
+                  src={route.image}
+                  alt="Profile"
+                  width={2000}
+                  height={2000}
+                />
+
+                {route.title}
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Mobile ACCOUNT section */}
         {auth?.isMember ? (
           <div className="flex flex-col ml-6  p-5">
             <div className="text-[var(--ieee-dark-yellow)] font-[heading-font]  text-xl">ACCOUNT</div>
 
-
             {authRoutes.map((route, index) => (
-                <Link
-                   key={index}
-                   href={route.href}
-                   onClick={toggleMenu}
-                          className={"hover:text-[var(--ieee-bright-yellow)] font-[subheading-font] text-white inline-flex h-10 w-full items-center text-md transition-colors gap-3"}
-                        >
-                          <Image
-                              className="object-cover h-7 w-7"
-                              src={route.image}
-                              alt="Profile"
-                              width={2000}
-                              height={2000}
-                          />
+              <Link
+                key={index}
+                href={route.href}
+                onClick={toggleMenu}
+                className={
+                  "hover:text-[var(--ieee-bright-yellow)] font-[subheading-font] text-white inline-flex h-10 w-full items-center text-md transition-colors gap-3"
+                }
+              >
+                <Image
+                  className="object-cover h-7 w-7"
+                  src={route.image}
+                  alt="Profile"
+                  width={2000}
+                  height={2000}
+                />
 
-                          {route.title}
-                        </Link>
+                {route.title}
+              </Link>
             ))}
-          
           </div>
 
         ) 
