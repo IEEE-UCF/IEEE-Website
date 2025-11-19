@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { db } from "@/lib/database/index";
+import { db } from "@/lib/database/client";
 import { Members } from "@/lib/database/schema";
 import { eq } from "drizzle-orm";
 import Signinblock from "@/components/signin";
@@ -23,7 +23,7 @@ export default async function SignInPage() {
       .where(eq(Members.discordID, session.user.discordID))
       .limit(1);
 
-    if (member) redirect("/");
+    if (member) redirect("/dashboard");
     else redirect("/auth/register");
   }
 
