@@ -7,34 +7,44 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col max-w-screen overflow-hidden bg-black min-h-screen text-white">
             <div className="relative w-full">
-                <div className="absolute z-10 w-full px-5">
+                <header className="sticky top-0 z-20 w-full border-b border-gray-800 bg-black/80 backdrop-blur">
+                <div className="mx-auto flex max-w-6xl px-4 py-1">
                     <Navbar />
                 </div>
+            </header>
             </div>
-            <div className="flex flex-grow pt-20 justify-center">
-                <div className="flex w-full max-w-screen-xl">
-                    {/* Main Content */}
-                    <main className="w-2/3 p-6">
+             {/* Dashboard Content */}
+            <main className="flex-1">
+                <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 lg:flex-row">
+                    {/* Left Panel – QR Scanner */}
+                    <section className="flex-1 rounded-xl border border-gray-800 bg-gray-900/60 p-4 shadow-lg shadow-black/40 lg:p-6">
+                        <h2 className="mb-4 text-lg font-semibold text-gray-100 lg:text-xl">
+                            Event Check-In
+                        </h2>
                         <div className="flex justify-center">
                             <QREventScanner />
                         </div>
-                    </main>
+                    </section>
 
-                    {/* Sidebar */}
-                    <aside className="w-1/3 max-w-md p-6 bg-gray-800 rounded-l-lg">
+                    {/* Right Panel – Event Management */}
+                    <section className="flex-1 rounded-xl border border-gray-800 bg-gray-900/60 p-4 shadow-lg shadow-black/40 lg:max-w-md lg:p-6">
                         <div className="space-y-6">
                             <div>
-                                <h2 className="text-xl font-semibold mb-4">Create New Event</h2>
+                                <h2 className="mb-3 text-lg font-semibold text-gray-100 lg:text-xl">
+                                    Create New Event
+                                </h2>
                                 <FormPopup />
                             </div>
-                            <div className="border-t border-gray-700 pt-6">
-                                <h2 className="text-xl font-semibold mb-4">Upcoming Events</h2>
+                            <div className="border-t border-gray-800 pt-5">
+                                <h2 className="mb-3 text-lg font-semibold text-gray-100 lg:text-xl">
+                                    Upcoming Events
+                                </h2>
                                 <EventList />
                             </div>
                         </div>
-                    </aside>
+                    </section>
                 </div>
-            </div>
+            </main>
         </div>
     );
 };
