@@ -1,6 +1,7 @@
 "use client";
 
-import { ucfMajors } from "@/app/data/majors";
+import { majorEnums } from "@/lib/database/schema";
+
 import { Button } from "@/components/ui/button"
 import {
   Field,
@@ -31,36 +32,33 @@ export default function SettingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [major, setMajor] = useState("");
 
-  // Fetch member profile
-  const { data: memberProfile} = trpc.member.getMyProfile.useQuery(
-    undefined,
-    {
-      enabled: !!session?.user,
-      retry: false,
-    }
-  );
-
-  // Update mutation
+  const utils = trpc.useUtils();
   const updateProfile = trpc.member.updateMyProfile.useMutation({
     onSuccess: () => {
       setSuccess("Profile updated successfully!");
       setIsSubmitting(false);
+      utils.member.getMyProfile.invalidate(); // refresh ya!
       setTimeout(() => setSuccess(null), 3000);
     },
     onError: (err) => {
-      setError(err.message || "Failed to update profile");
+      setError("Failed to update profile");
       setIsSubmitting(false);
     },
   });
+
+  const { data: memberProfile } = trpc.member.getMyProfile.useQuery(undefined, {
+    enabled: !!session?.user,
+    retry: true,
+  });
+
 
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/auth/signin");
     }
     if (status === "authenticated" && !session?.user?.memberId) {
-      router.push("/auth/register");
+      router.push("/auth/signin");
     }
    
   }, [status, session, router]);
@@ -79,15 +77,14 @@ export default function SettingsPage() {
     
     try {
       await updateProfile.mutateAsync({
-        firstName: formData.get("first_name") as string || undefined,
+        firstName: formData.get("first_name") as string,
         middleName: formData.get("middle_name") as string || undefined,
-        lastName: formData.get("last_name") as string || undefined,
+        lastName: formData.get("last_name") as string,
         biography: formData.get("biography") as string || undefined,
-        phoneNumber: formData.get("phone_number") as string || undefined,
-        major: formData.get("major") as string || undefined,
-        gender: formData.get("gender") as "M" | "F" | "NB" | "O" | "PNTS" || undefined,
+        phoneNumber: formData.get("phone_number") as string,
+        major: formData.get("major") as (typeof majorEnums)["enumValues"][number],
+        gender: formData.get("gender") as "M" | "F" | "NB" | "O" | "PNTS",
         graduationYear: formData.get("graduation_year") ? parseInt(formData.get("graduation_year") as string) : undefined,
-        resumeURL: formData.get("resume_url") as string || undefined,
         linkedinURL: formData.get("linkedin_url") as string || undefined,
         githubURL: formData.get("github_url") as string || undefined,
         websiteURL: formData.get("website_url") as string || undefined,
@@ -106,14 +103,14 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex flex-col justify-center min-h-screen items-center w-screen bg-black">
+    <div className="flex flex-col justify-center min-h-screen items-center w-screen bg-black ">
         <div className="py-30 bg-black  w-full ">
          <div className="absolute z-100 w-full h-fit inset-0 items-center px-5 ">
             <Navbar />
          
         </div>
 
-      <div className="flex flex-col rounded-lg shadow-lg bg-black p-10">
+      <div className="flex flex-col rounded-lg shadow-lg bg-black lg:p-10 p-5 ">
 
         <div className="absolute inset-0 bg-black opacity-70 blur-3xl rounded-lg pointer-events-none"/>
         
@@ -212,6 +209,7 @@ export default function SettingsPage() {
                           name="first_name"
                           defaultValue={memberProfile.firstName}
                           placeholder="First Name"
+                          required
                         />
                       </Field>
 
@@ -222,6 +220,7 @@ export default function SettingsPage() {
                           name="last_name"
                           defaultValue={memberProfile.lastName}
                           placeholder="Last Name"
+                          required
                         />
                       </Field>
                     </div>
@@ -238,7 +237,7 @@ export default function SettingsPage() {
 
                      <Field>
                       <FieldLabel htmlFor="gender">Gender</FieldLabel>
-                      <Select name="gender" defaultValue={memberProfile.gender}>
+                      <Select name="gender" defaultValue={memberProfile.gender} required>
                         <SelectTrigger id="gender">
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
@@ -255,12 +254,12 @@ export default function SettingsPage() {
 
                     <Field>
                       <FieldLabel htmlFor="major">Major</FieldLabel>
-                      <Select name="ucf_major" value={major} onValueChange={setMajor} required>
-                      <SelectTrigger id="ucf_major">
+                      <Select name="major" defaultValue={memberProfile.major} required>
+                      <SelectTrigger id="major">
                         <SelectValue placeholder="Select major" />
                       </SelectTrigger>
                       <SelectContent className="bg-white">
-                        {ucfMajors.map((option) => (
+                        {majorEnums.enumValues.map((option) => (
                           <SelectItem key={option} value={option}>
                             {option}
                           </SelectItem>
@@ -292,6 +291,7 @@ export default function SettingsPage() {
                         type="tel"
                         defaultValue={memberProfile.phoneNumber || ""}
                         placeholder="(407) 123-4567"
+                        required
                       />
                     </Field>
 
@@ -323,16 +323,6 @@ export default function SettingsPage() {
                     PROFESSIONAL LINKS
                   </h2>
                   <FieldGroup className="space-y-4">
-                    <Field>
-                      <FieldLabel htmlFor="resume_url">Resume URL</FieldLabel>
-                      <Input
-                        id="resume_url"
-                        name="resume_url"
-                        type="url"
-                        defaultValue={memberProfile.resumeURL || ""}
-                        placeholder="https://example.com/resume.pdf"
-                      />
-                    </Field>
 
                     <Field>
                       <FieldLabel htmlFor="linkedin_url">LinkedIn URL</FieldLabel>
