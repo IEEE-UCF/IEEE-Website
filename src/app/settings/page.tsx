@@ -31,6 +31,7 @@ export default function SettingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [major, setMajor] = useState("");
 
   // Fetch member profile
   const { data: memberProfile} = trpc.member.getMyProfile.useQuery(
@@ -254,7 +255,7 @@ export default function SettingsPage() {
 
                     <Field>
                       <FieldLabel htmlFor="major">Major</FieldLabel>
-                      <Select name="ucf_major" required>
+                      <Select name="ucf_major" value={major} onValueChange={setMajor} required>
                       <SelectTrigger id="ucf_major">
                         <SelectValue placeholder="Select major" />
                       </SelectTrigger>
