@@ -3,11 +3,17 @@ import fs from 'fs';
 import { Client } from 'pg';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import dotenv from 'dotenv';
 
-const DEFAULT_DB_URL = 'postgres://postgres:postgres@localhost:5432/ieee-website';
+// Load environment variables from root .env file
+dotenv.config({ path: path.join(__dirname, '../../../.env') });
+
+const DEFAULT_DB_URL = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/ieee-website';
 const DATA_DIR = path.join(__dirname, 'data');
 
 const SEED_ORDER = [
+	'users',
+	'accounts',
 	'members',
 	'sponsorships',
 	'committees',
@@ -43,7 +49,8 @@ async function seedDatabase(client: Client, tablesToSeed: string[]) {
 		}
 		const columns = Object.keys(data[0]);
 		const placeholders = columns.map((_, i) => `$${i + 1}`).join(', ');
-		const sql = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
+		const quotedColumns = columns.map(col => `"${col}"`).join(', ');
+		const sql = `INSERT INTO ${tableName} (${quotedColumns}) VALUES (${placeholders})`;
 		for (const row of data) {
 			await client.query(sql, columns.map(col => row[col]));
 		}
@@ -55,11 +62,10 @@ if (require.main === module) {
 	const parser = yargs(hideBin(process.argv))
 		.option('wipe', { type: 'boolean', default: false, describe: 'Wipe all tables before seeding.' })
 		.option('seed', { type: 'string', describe: 'Seed all tables (default) or only specified tables (comma-separated).' })
-		.option('dburl', { type: 'string', describe: 'Database URL to use.' })
-		.positional('dburl', { type: 'string', describe: 'Database URL to use.' });
+		.option('dburl', { type: 'string', describe: 'Database URL to use.' });
 	const argv = parser.parseSync();
-
-	const dbUrl = argv.dburl || String(argv._[0]) || DEFAULT_DB_URL;
+	
+	const dbUrl = argv.dburl || (argv._[0] ? String(argv._[0]) : DEFAULT_DB_URL);
 	const client = new Client({ connectionString: dbUrl });
 	client.connect().then(async () => {
 		if (argv.wipe) {

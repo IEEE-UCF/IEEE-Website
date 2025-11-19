@@ -1,18 +1,57 @@
 [
     {
         "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a21",
-        "company_name": "TechCorp",
-        "money_donated": 5000,
-        "description": "Leading provider of tech solutions.",
-        "tier": "gold",
-        "contact_email": "techcorp@email.com"
+        "company_name": "Lockheed Martin",
+        "money_donated": 10000,
+        "description": "Global security and aerospace company supporting engineering education.",
+        "tier": "Gold",
+        "company_logo_url": "https://example.com/logos/lockheed.png",
+        "website_url": "https://lockheedmartin.com",
+        "contact_email": "university.relations@lmco.com",
+        "active": true
     },
     {
         "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a22",
-        "company_name": "Innovate LLC",
-        "money_donated": 2500,
-        "description": "Startup focused on innovation.",
-        "tier": "silver",
-        "contact_email": "innovate@email.com"
+        "company_name": "Northrop Grumman",
+        "money_donated": 7500,
+        "description": "Leading global security company providing innovative systems and solutions.",
+        "tier": "Silver",
+        "company_logo_url": "https://example.com/logos/northrop.png",
+        "website_url": "https://northropgrumman.com",
+        "contact_email": "careers@ngc.com",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+        "company_name": "Amazon Web Services",
+        "money_donated": 5000,
+        "description": "Cloud computing platform supporting tech education and innovation.",
+        "tier": "Silver",
+        "company_logo_url": "https://example.com/logos/aws.png",
+        "website_url": "https://aws.amazon.com",
+        "contact_email": "university-programs@amazon.com",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a24",
+        "company_name": "Intel Corporation",
+        "money_donated": 3000,
+        "description": "Technology leader in semiconductor chip innovation.",
+        "tier": "Bronze",
+        "company_logo_url": "https://example.com/logos/intel.png",
+        "website_url": "https://intel.com",
+        "contact_email": "university@intel.com",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a25",
+        "company_name": "SpaceX",
+        "money_donated": 8000,
+        "description": "Advancing space exploration and satellite technology.",
+        "tier": "Silver",
+        "company_logo_url": "https://example.com/logos/spacex.png",
+        "website_url": "https://spacex.com",
+        "contact_email": "university@spacex.com",
+        "active": true
     }
 ]

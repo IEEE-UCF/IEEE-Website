@@ -1,14 +1,50 @@
 [
     {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a41",
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a51",
         "title": "IEEE Website",
         "slug": "ieee-website",
-        "overview": "The official website for the IEEE student chapter."
+        "overview": "The official website for the IEEE UCF student chapter. Built with Next.js, React, and PostgreSQL.",
+        "hardware_info": null,
+        "software_info": "Tech Stack: Next.js 15, React 19, TypeScript, Drizzle ORM, PostgreSQL, TailwindCSS, NextAuth.js",
+        "skills": "TypeScript, React, Next.js, PostgreSQL, Web Development, UI/UX Design",
+        "photo_urls": null,
+        "discord_role_id": "5678901234567890123",
+        "active": true
     },
     {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a42",
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a52",
         "title": "Micromouse Competition",
         "slug": "micromouse",
-        "overview": "Build a robot to solve a maze."
+        "overview": "Build an autonomous robot to solve a 16x16 maze as quickly as possible. Competing in IEEE Region 3 Micromouse competition.",
+        "hardware_info": "STM32 microcontroller, custom PCB, IR sensors, stepper motors, LiPo battery",
+        "software_info": "Embedded C, flood-fill algorithm, PID control, sensor fusion",
+        "skills": "Embedded Systems, PCB Design, Robotics, C Programming, Algorithm Design",
+        "photo_urls": null,
+        "discord_role_id": "6789012345678901234",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a53",
+        "title": "Smart Garden System",
+        "slug": "smart-garden",
+        "overview": "IoT-based automated garden monitoring and watering system with mobile app integration.",
+        "hardware_info": "ESP32, soil moisture sensors, water pumps, relay modules, solar panel",
+        "software_info": "Arduino, MQTT protocol, React Native mobile app, Firebase backend",
+        "skills": "IoT, Mobile Development, Embedded Systems, React Native, Firebase",
+        "photo_urls": null,
+        "discord_role_id": "7890123456789012345",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a54",
+        "title": "Solar Car",
+        "slug": "solar-car",
+        "overview": "Design and build a solar-powered vehicle for the American Solar Challenge competition.",
+        "hardware_info": "Solar panels, battery management system, custom chassis, brushless DC motors, telemetry system",
+        "software_info": "Real-time telemetry dashboard, battery optimization algorithms, CAN bus communication",
+        "skills": "Electrical Engineering, Mechanical Engineering, CAD, Embedded Systems, Team Collaboration",
+        "photo_urls": null,
+        "discord_role_id": "8901234567890123456",
+        "active": true
     }
 ]

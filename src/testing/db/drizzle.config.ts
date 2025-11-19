@@ -2,9 +2,9 @@ import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
 	dialect: "postgresql",
-	schema: "../../../src/lib/database/schema.ts",
+	schema: "../../lib/database/schema.ts",
 	out: "../../../drizzle",
 	dbCredentials: {
-		url: "postgres://postgres:postgres@localhost:5432/ieee-website",
+		url: process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/ieee-website",
 	},
 });

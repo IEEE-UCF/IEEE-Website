@@ -3,14 +3,32 @@
         "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
         "title": "Software Committee",
         "slug": "software",
-        "about": "Build and maintain software projects.",
-        "chair_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+        "about": "Build and maintain software projects including web development, mobile apps, and automation tools.",
+        "discord_role_id": "1234567890123456789",
+        "active": true
     },
     {
         "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
         "title": "Hardware Committee",
         "slug": "hardware",
-        "about": "Design and build hardware.",
-        "chair_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"
+        "about": "Design and build hardware projects including PCBs, embedded systems, and robotics.",
+        "discord_role_id": "2345678901234567890",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a33",
+        "title": "Workshops Committee",
+        "slug": "workshops",
+        "about": "Organize and conduct technical workshops on various engineering topics.",
+        "discord_role_id": "3456789012345678901",
+        "active": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a34",
+        "title": "Outreach Committee",
+        "slug": "outreach",
+        "about": "Connect with the community and promote STEM education.",
+        "discord_role_id": "4567890123456789012",
+        "active": true
     }
 ]

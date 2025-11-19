@@ -1,10 +1,42 @@
 [
     {
         "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a91",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14",
+        "granted_by_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "context_type": "global",
+        "context_id": null,
+        "permission": "scan_attendance",
+        "active": true,
+        "expires_at": null
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a92",
         "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
         "granted_by_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
         "context_type": "committee",
-        "context_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
-        "permission": "scan_attendance"
+        "context_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
+        "permission": "manage_context",
+        "active": true,
+        "expires_at": null
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a93",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a17",
+        "granted_by_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "context_type": "project",
+        "context_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a52",
+        "permission": "manage_context",
+        "active": true,
+        "expires_at": null
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a94",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15",
+        "granted_by_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "context_type": "global",
+        "context_id": null,
+        "permission": "view_statistics",
+        "active": true,
+        "expires_at": null
     }
 ]

@@ -1,20 +1,50 @@
 [
     {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a51",
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a41",
         "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
-        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
         "is_chair": true
     },
     {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a52",
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a42",
         "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
-        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13",
         "is_chair": false
     },
     {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a53",
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a43",
+        "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a16",
+        "is_chair": false
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a44",
         "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
-        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14",
+        "is_chair": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a45",
+        "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a16",
+        "is_chair": false
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a46",
+        "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a33",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14",
+        "is_chair": true
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a47",
+        "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a33",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a18",
+        "is_chair": false
+    },
+    {
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a48",
+        "committee_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a34",
+        "member_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a18",
         "is_chair": true
     }
 ]

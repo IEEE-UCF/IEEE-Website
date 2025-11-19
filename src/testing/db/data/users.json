@@ -1,0 +1,66 @@
+[
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a11",
+        "name": "johndoe",
+        "email": "john.doe@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/123456789/avatar1.png",
+        "discordID": "123456789012345678"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a12",
+        "name": "janesmith",
+        "email": "jane.smith@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/234567890/avatar2.png",
+        "discordID": "234567890123456789"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a13",
+        "name": "peterjones",
+        "email": "peter.jones@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/345678901/avatar3.png",
+        "discordID": "345678901234567890"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a14",
+        "name": "emilydavis",
+        "email": "emily.davis@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/456789012/avatar4.png",
+        "discordID": "456789012345678901"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a15",
+        "name": "michaelbrown",
+        "email": "michael.brown@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/567890123/avatar5.png",
+        "discordID": "567890123456789012"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a16",
+        "name": "sarahwilson",
+        "email": "sarah.wilson@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/678901234/avatar6.png",
+        "discordID": "678901234567890123"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a17",
+        "name": "davidlee",
+        "email": "david.lee@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/789012345/avatar7.png",
+        "discordID": "789012345678901234"
+    },
+    {
+        "id": "b1aabc99-1a1b-4ef8-aa1d-1aa1ad111a18",
+        "name": "jessicagarcia",
+        "email": "jessica.garcia@ucf.edu",
+        "email_verified": null,
+        "image": "https://cdn.discordapp.com/avatars/890123456/avatar8.png",
+        "discordID": "890123456789012345"
+    }
+]
