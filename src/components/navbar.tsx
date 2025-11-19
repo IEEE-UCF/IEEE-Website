@@ -150,8 +150,8 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
   const { data: auth } = trpc.auth.getAuthStatus.useQuery();
 
   return (
-    <div className="fixed inset-0 flex flex-col z-40 bg-black h-fit max-w-screen">
-      <div className="flex w-full grow flex-col mt-5 mb-5">
+    <div className="fixed inset-0 flex flex-col z-40 bg-black h-screen max-w-screen">
+      <div className="flex w-full grow flex-col mt-5 mb-5 overflow-y-auto">
           <div className="text-white font-[body-font] flex-row flex  gap-x-5 text-xl lg:text-2xl items-center gap-5 m-6 px-5">
             <Image className="object-contain" src="/iconography/ieeeucficon.png" alt="IEEE UCF Logo" width={70} height={70} />IEEE @ UCF Student Chapter
           </div>
