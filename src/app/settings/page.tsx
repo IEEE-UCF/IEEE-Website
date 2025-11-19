@@ -44,6 +44,7 @@ export default function SettingsPage() {
     onError: (err) => {
       setError("Failed to update profile");
       setIsSubmitting(false);
+      console.log(err);
     },
   });
 

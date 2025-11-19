@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc/client";
 
 export default function RegisterPage() {
