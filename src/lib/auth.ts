@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import { DrizzleAdapter } from '@auth/drizzle-adapter'; 
-import { db } from '@/lib/database/index'; 
+import { db } from '@/lib/database/client'; 
 import { Accounts, Users, Sessions, Members } from '@/lib/database/schema'; 
 import type { DiscordProfile } from "next-auth/providers/discord";
 import { eq } from "drizzle-orm";
@@ -77,6 +77,7 @@ export const authOptions: NextAuthOptions = {
 
     // fucking kill myself, this was the stupid bitching fucking solution to a 5 hour long bug session
     // stuuuuupid
+    // Please don't! We need our fearless (and scary) leader :D
     async redirect({ url, baseUrl }) {
 
        if (url.startsWith("/")) return `${baseUrl}${url}`;

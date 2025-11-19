@@ -22,27 +22,27 @@ import MemberQRCode from "@/components/pg/memberqrcode-gen";
 import { trpc } from "@/lib/trpc/client";
 
 
-const TestPage = () => {
+export const Member_QR_Code = () => {
   // ============================================
   // SAMPLE DATA
   // ============================================
   const { data: session, isLoading, isError } = trpc.auth.getSession.useQuery();
-	
-	if (isLoading) {
-		return (
-			<div className="min-h-screen bg-black flex items-center justify-center">
-				<p className="text-white text-xl">Loading session data...</p>
-			</div>
-		);
-	}
+    
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <p className="text-white text-xl">Loading session data...</p>
+            </div>
+        );
+    }
 
-	if (isError || !session?.user?.discordId) {
-		return (
-			<div className="min-h-screen bg-black flex items-center justify-center">
-				<p className="text-red-500 text-xl">Error loading session or Discord ID not found.</p>
-			</div>
-		);
-	}
+    if (isError || !session?.user?.discordId) {
+        return (
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <p className="text-red-500 text-xl">Error loading session or Discord ID not found.</p>
+            </div>
+        );
+    }
 
   /**
    * Sample member data object
@@ -82,17 +82,17 @@ const TestPage = () => {
   // ============================================
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    // <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-4xl mx-auto px-4">
         {/* ========== PAGE HEADER ========== */}
-        <h1 className="text-3xl font-bold text-center mb-8">QR Code Testing</h1>
+        {/* <h1 className="text-3xl font-bold text-center mb-8">QR Code Testing</h1> */}
 
         {/* ========== QR CODE EXAMPLES GRID ========== */}
         {/* 
           Two-column grid on desktop, single column on mobile
           Each card shows a different QR code configuration
         */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8"> */}
           {/* ========== EXAMPLE 1: QR Code with Member Data ========== */}
           {/* 
             This example demonstrates a standard QR code for member check-in
@@ -101,9 +101,9 @@ const TestPage = () => {
             - Shows the encoded data below for reference
           */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-4">
+            {/* <h2 className="text-xl font-semibold mb-4">
               QR Code with IEEE-UCF Logo
-            </h2>
+            </h2> */}
 
             {/* 
               MemberQRCode Component
@@ -123,53 +123,16 @@ const TestPage = () => {
             />
 
             {/* Display the raw data being encoded for debugging */}
-            <div className="mt-4 text-sm text-gray-600">
+            {/* <div className="mt-4 text-sm text-gray-600">
               <p>
                 <strong>Data:</strong> {memberInfoString}
               </p>
-            </div>
-          </div>
-
-          {/* ========== EXAMPLE 2: QR Code with Empty Data (Error Test) ========== */}
-          {/* 
-            This example tests the component's behavior with invalid/empty data
-            - Empty string as member info (should still generate a QR code)
-            - Demonstrates error handling
-            - Useful for testing edge cases
-          */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-4">QR Code with Icon</h2>
-
-            {/* 
-              MemberQRCode Component with empty data
-              
-              Props:
-              - memberInfo: Empty string (tests error handling)
-              - logoUrl: Path to the logo image
-              - logoSize: Custom size for the logo overlay (40px)
-              
-              This tests:
-              - How the component handles empty/invalid data
-              - Custom logo sizing
-              - Whether the component crashes or handles gracefully
-            */}
-            <MemberQRCode
-              memberInfo=""
-              logoUrl="/iconography/ieeeucficon.png"
-              logoSize={40}
-            />
-
-            {/* Indicates this is intentionally blank for testing */}
-            <div className="mt-4 text-sm text-gray-600">
-              <p>
-                <strong>Blank</strong>
-              </p>
-            </div>
+            </div> */}
           </div>
         </div>
-      </div>
-    </div>
+    //   </div>
+    // </div>
   );
 };
 
-export default TestPage;
+// export default Member_QR_Code;
