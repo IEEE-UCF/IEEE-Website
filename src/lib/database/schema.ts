@@ -200,11 +200,14 @@ export const EventAttendees = pgTable('event_attendees', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	eventId: uuid('event_id').notNull().references(() => Events.id, { onDelete: 'cascade' }),
 	memberId: uuid('member_id').notNull().references(() => Members.id, { onDelete: 'cascade' }),
+	scannerId: uuid('scanner_id').references(() => Members.id, { onDelete: 'set null' }), // Who performed the scan
 	timestamp: timestamp('timestamp', { withTimezone: true }).notNull().defaultNow(),
 }, (table) => [
 	index('event_attendees_idx_id').on(table.id),
 	index('event_attendees_idx_event_id').on(table.eventId),
 	index('event_attendees_idx_member_id').on(table.memberId),
+	index('event_attendees_idx_scanner_id').on(table.scannerId),
+	index('event_attendees_idx_timestamp').on(table.timestamp),
 	unique('event_attendee_unique').on(table.eventId, table.memberId),
 ]);
 
@@ -283,8 +286,7 @@ export const MembersRelations = relations(Members, ({ one, many }) => ({
 	eventAttendees: many(EventAttendees),
 	permissionsGranted: many(MemberPermissions, { relationName: 'grantedBy' }),
 	permissions: many(MemberPermissions, { relationName: 'hasPermission' }),
-	scannedSessions: many(ScanningSessions, { relationName: 'scanned' }),
-	scannerSessions: many(ScanningSessions, { relationName: 'scanner' }),
+	scannedAttendees: many(EventAttendees, { relationName: 'scanned' }),
 }));
 
 export const AccountRelations = relations(Accounts, ({ one }) => ({
@@ -318,7 +320,6 @@ export const CommitteeMembersRelations = relations(CommitteeMembers, ({ one }) =
 
 export const EventsRelations = relations(Events, ({ many }) => ({
 	attendees: many(EventAttendees),
-	scanningSessions: many(ScanningSessions),
 }));
 
 export const EventAttendeesRelations = relations(EventAttendees, ({ one }) => ({
@@ -328,6 +329,11 @@ export const EventAttendeesRelations = relations(EventAttendees, ({ one }) => ({
 	}),
 	member: one(Members, {
 		fields: [EventAttendees.memberId],
+		references: [Members.id],
+	}),
+	scanner: one(Members, {
+		relationName: 'scanned',
+		fields: [EventAttendees.scannerId],
 		references: [Members.id],
 	}),
 }));
@@ -365,21 +371,6 @@ export const MemberPermissions = pgTable('member_permissions', {
 	unique('member_permission_unique').on(table.memberId, table.contextType, table.contextId, table.permission),
 ]);
 
-// ScanningSessions: Audit trail for attendance scanning
-export const ScanningSessions = pgTable('scanning_sessions', {
-	id: uuid('id').primaryKey().defaultRandom(),
-	eventId: uuid('event_id').notNull().references(() => Events.id, { onDelete: 'cascade' }),
-	scannerId: uuid('scanner_id').references(() => Members.id, { onDelete: 'set null' }), // Who performed the scan
-	scannedMemberId: uuid('scanned_member_id').notNull().references(() => Members.id, { onDelete: 'cascade' }), // Who was scanned
-	method: varchar('method', { length: 32 }).notNull().default('qr'), // 'qr', 'manual', 'api'
-	timestamp: timestamp('timestamp', { withTimezone: true }).notNull().defaultNow(),
-}, (table) => [
-	index('scanning_sessions_idx_event').on(table.eventId),
-	index('scanning_sessions_idx_scanner').on(table.scannerId),
-	index('scanning_sessions_idx_scanned_member').on(table.scannedMemberId),
-	index('scanning_sessions_idx_timestamp').on(table.timestamp),
-]);
-
 export const MemberPermissionsRelations = relations(MemberPermissions, ({ one }) => ({
 	member: one(Members, {
 		relationName: 'hasPermission',
@@ -389,23 +380,6 @@ export const MemberPermissionsRelations = relations(MemberPermissions, ({ one })
 	grantedBy: one(Members, {
 		relationName: 'grantedBy',
 		fields: [MemberPermissions.grantedById],
-		references: [Members.id],
-	}),
-}));
-
-export const ScanningSessionsRelations = relations(ScanningSessions, ({ one }) => ({
-	event: one(Events, {
-		fields: [ScanningSessions.eventId],
-		references: [Events.id],
-	}),
-	scanner: one(Members, {
-		relationName: 'scanner',
-		fields: [ScanningSessions.scannerId],
-		references: [Members.id],
-	}),
-	scannedMember: one(Members, {
-		relationName: 'scanned',
-		fields: [ScanningSessions.scannedMemberId],
 		references: [Members.id],
 	}),
 }));
@@ -435,5 +409,3 @@ export type Sponsorship = typeof Sponsorships.$inferSelect;
 export type NewSponsorship = typeof Sponsorships.$inferInsert;
 export type MemberPermission = typeof MemberPermissions.$inferSelect;
 export type NewMemberPermission = typeof MemberPermissions.$inferInsert;
-export type ScanningSession = typeof ScanningSessions.$inferSelect;
-export type NewScanningSession = typeof ScanningSessions.$inferInsert;

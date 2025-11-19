@@ -122,7 +122,7 @@ export const authRouter = {
 
 
     let discordAvatar = userWithDiscord?.image || null;
-    
+
     if (!discordAvatar && userWithDiscord?.discordID) {
         discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordID) % 5}.png`;
     }
