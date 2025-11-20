@@ -97,10 +97,10 @@ const Form = () => {
                     />
                 </div>
 
-                <div className="input education">
+                 <div className="input education">
                     <EducationComponent 
-                        value={formData.education} 
-                        onChange={(next) => setFormData(prev => ({ ...prev, education: next }))} 
+                        educations={formData.education} 
+                        setFormData={setFormData} 
                     />
                 </div>
 
