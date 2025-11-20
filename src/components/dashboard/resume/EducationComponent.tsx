@@ -1,51 +1,44 @@
 import React, { useCallback } from "react";
-import type { Education } from "../../../lib/resume/interfaces";
-import { createEmptyEducation } from "../../../lib/resume/interfaces";
+import type { Education, Form } from "../interfaces";
+import { createEmptyEducation } from "../interfaces";
 
 type Props = {
-    value: Education[];
-    onChange: (next: Education[]) => void;
+    educations: Education[];
+    setFormData: React.Dispatch<React.SetStateAction<Form>>;
 };
 
-export default function EducationComponent({ value, onChange }: Props) {
+export default function EducationComponent({ educations, setFormData }: Props): React.ReactElement {
     const updateItem = useCallback(
         (index: number, patch: Partial<Education>) => {
-            onChange(value.map((it, i) => (i === index ? { ...it, ...patch } : it)));
+            setFormData((prev: Form) => ({
+                ...prev,
+                education: prev.education.map((it: Education, i: number) => (i === index ? { ...it, ...patch } : it))
+            }));
         },
-        [value, onChange]
-    );
-
-    const updateClub = useCallback(
-        (index: number, clubIndex: number, patch: Partial<Education["clubs"][number]>) => {
-            onChange(
-                value.map((it, i) =>
-                    i === index
-                        ? {
-                              ...it,
-                              clubs: it.clubs.map((c, ci) => (ci === clubIndex ? { ...c, ...patch } : c)),
-                          }
-                        : it
-                )
-            );
-        },
-        [value, onChange]
+        [setFormData]
     );
 
     const addItem = useCallback(() => {
-        onChange([...value, createEmptyEducation()]);
-    }, [value, onChange]);
+        setFormData((prev: Form) => ({
+            ...prev,
+            education: [...prev.education, createEmptyEducation()]
+        }));
+    }, [setFormData]);
 
     const removeItem = useCallback(
         (index: number) => {
-            onChange(value.filter((_, i) => i !== index));
+            setFormData((prev: Form) => ({
+                ...prev,
+                education: prev.education.filter((_: Education, i: number) => i !== index)
+            }));
         },
-        [value, onChange]
+        [setFormData]
     );
 
     return (
         <>
             <h3>Education</h3>
-            {value.map((education, index) => {
+            {educations.map((education, index) => {
                 return (
                     <div key={`education[${index}]`} className="education-entry">
                         <h4>Education {index + 1}</h4>
@@ -54,7 +47,7 @@ export default function EducationComponent({ value, onChange }: Props) {
                             name={`education[${index}].name`}
                             placeholder="School Name"
                             value={education.name}
-                            onChange={(e) =>
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                 updateItem(index, { name: e.target.value })
                             }
                         />
@@ -63,7 +56,7 @@ export default function EducationComponent({ value, onChange }: Props) {
                             name={`education[${index}].degree`}
                             placeholder="Degree"
                             value={education.degree}
-                            onChange={(e) =>
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                 updateItem(index, { degree: e.target.value })
                             }
                         />
@@ -72,7 +65,7 @@ export default function EducationComponent({ value, onChange }: Props) {
                             name={`education[${index}].gpa.gpa`}
                             placeholder="GPA"
                             value={education.gpa.gpa || ""}
-                            onChange={(e) =>
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                 updateItem(index, {
                                     gpa: { ...education.gpa, gpa: Number(e.target.value) },
                                 })
@@ -86,7 +79,7 @@ export default function EducationComponent({ value, onChange }: Props) {
                             name={`education[${index}].gpa.scale`}
                             placeholder="GPA Scale"
                             value={education.gpa.scale || ""}
-                            onChange={(e) =>
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                 updateItem(index, {
                                     gpa: { ...education.gpa, scale: Number(e.target.value) },
                                 })
@@ -100,7 +93,7 @@ export default function EducationComponent({ value, onChange }: Props) {
                                 name={`education[${index}].dates.start`}
                                 placeholder="Start Date"
                                 value={education.dates.start}
-                                onChange={(e) => {
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     if (e.target.value > education.dates.end && education.dates.end !== "") {
                                         alert("Start date cannot be after end date.");
                                         (document.getElementsByName(
@@ -116,7 +109,7 @@ export default function EducationComponent({ value, onChange }: Props) {
                                 name={`education[${index}].dates.end`}
                                 placeholder="End Date"
                                 value={education.dates.end}
-                                onChange={(e) => {
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     if (e.target.value < education.dates.start && education.dates.start !== "") {
                                         alert("Start date cannot be after end date.");
                                         (document.getElementsByName(
@@ -128,44 +121,6 @@ export default function EducationComponent({ value, onChange }: Props) {
                                 }}
                             />
                         </div>
-                        <div className="education-clubs">
-                            <h5>Clubs</h5>
-                            {education.clubs.map((club, clubIndex) => {
-                                return (
-                                    <div
-                                        key={`education[${index}].clubs[${clubIndex}]`}
-                                        className="club"
-                                    >
-                                        <input
-                                            type="text"
-                                            name={`education[${index}].clubs[${clubIndex}].name`}
-                                            placeholder="Club Name"
-                                            value={club.name}
-                                            onChange={(e) =>
-                                                updateClub(index, clubIndex, { name: e.target.value })
-                                            }
-                                        />
-                                        <input
-                                            type="text"
-                                            name={`education[${index}].clubs[${clubIndex}].title`}
-                                            placeholder="Your Title"
-                                            value={club.title}
-                                            onChange={(e) =>
-                                                updateClub(index, clubIndex, { title: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                );
-                            })}
-                            <input
-                                type="button"
-                                value="Add Education"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    addItem();
-                                }}
-                            />
-                        </div>
                         <div style={{ marginTop: 8 }}>
                             <button type="button" onClick={() => removeItem(index)}>
                                 Remove Entry
@@ -174,6 +129,14 @@ export default function EducationComponent({ value, onChange }: Props) {
                     </div>
                 );
             })}
+            <input
+                type="button"
+                value="Add Education"
+                onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+                    e.preventDefault();
+                    addItem();
+                }}
+            />
         </>
     );
 }
