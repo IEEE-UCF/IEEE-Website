@@ -13,7 +13,6 @@ const timeSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 	},
-
 });
 
 export const Time = mongoose.models.Time || mongoose.model('Time', timeSchema);

@@ -1,7 +1,7 @@
-import { Navbar } from "@/components/navbar";
-import { FormPopup } from "@/components/dashboard/newEventForm";
-import { EventList } from "@/components/dashboard/event-list";
-import { QREventScanner } from "@/components/admin/qr_event_scanner";
+import { Navbar } from '@/components/navbar';
+import { FormPopup } from '@/components/dashboard/newEventForm';
+import { EventList } from '@/components/dashboard/event-list';
+import { QREventScanner } from '@/components/admin/qr_event_scanner';
 
 export default function Dashboard() {
 	return (
@@ -45,4 +45,4 @@ export default function Dashboard() {
 			</main>
 		</div>
 	);
-};
+}

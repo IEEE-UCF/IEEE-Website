@@ -17,7 +17,8 @@ if (!connectionString) {
 const provider = process.env.DB_PROVIDER ?? 'neon'; // 'neon' | 'local'
 
 function createNeonDb() {
-	const { neon } = require('@neondatabase/serverless') as typeof import('@neondatabase/serverless');
+	const { neon } =
+		require('@neondatabase/serverless') as typeof import('@neondatabase/serverless');
 	const { drizzle } = require('drizzle-orm/neon-http') as typeof import('drizzle-orm/neon-http');
 
 	const sql = neon(connectionString);
@@ -26,13 +27,11 @@ function createNeonDb() {
 
 function createLocalDb() {
 	const postgres = require('postgres') as typeof import('postgres');
-	const { drizzle } = require('drizzle-orm/postgres-js') as typeof import('drizzle-orm/postgres-js');
+	const { drizzle } =
+		require('drizzle-orm/postgres-js') as typeof import('drizzle-orm/postgres-js');
 
 	const client = postgres(connectionString);
 	return drizzle(client, { schema });
 }
 
-export const db =
-	provider === 'local'
-		? createLocalDb()
-		: createNeonDb();
+export const db = provider === 'local' ? createLocalDb() : createNeonDb();

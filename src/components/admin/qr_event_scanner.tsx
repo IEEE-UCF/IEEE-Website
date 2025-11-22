@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import { Scanner } from "@yudiel/react-qr-scanner";
-import { useMemberScanner } from "@/components/pg/memberqrcode-scan";
+'use client';
+import React from 'react';
+import { Scanner } from '@yudiel/react-qr-scanner';
+import { useMemberScanner } from '@/components/pg/memberqrcode-scan';
 import { type Event } from '@/lib/database/schema';
 
 export function QREventScanner() {
@@ -20,48 +20,48 @@ export function QREventScanner() {
 		setIsScanning,
 	} = useMemberScanner();
 
-	const [apiStatus, setApiStatus] = React.useState<
-		"idle" | "loading" | "success" | "error"
-	>("idle");
+	const [apiStatus, setApiStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>(
+		'idle',
+	);
 	const [apiError, setApiError] = React.useState<string | null>(null);
 
 	const [events, setEvents] = React.useState<Event[]>([]);
-	const [selectedEventId, setSelectedEventId] = React.useState<string>("");
+	const [selectedEventId, setSelectedEventId] = React.useState<string>('');
 	const [eventsLoading, setEventsLoading] = React.useState<boolean>(true);
 	const [eventsError, setEventsError] = React.useState<string | null>(null);
 
 	React.useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await fetch("/api/events/getEvents");
+				const response = await fetch('/api/events/getEvents');
 				const result = await response.json();
 				if (result.success) {
 					setEvents(result.data);
 				} else {
-					setEventsError(result.error || "Failed to fetch events.");
+					setEventsError(result.error || 'Failed to fetch events.');
 				}
 			} catch (error) {
-				setEventsError("An error occurred while fetching events.");
-				console.error("Error fetching events:", error);
+				setEventsError('An error occurred while fetching events.');
+				console.error('Error fetching events:', error);
 			} finally {
 				setEventsLoading(false);
 			}
 		};
 
 		fetchEvents();
-
 	}, []);
 
 	React.useEffect(() => {
-		if (memberInfo && selectedEventId) { // Ensure both are present and selectedEventId is not empty
+		if (memberInfo && selectedEventId) {
+			// Ensure both are present and selectedEventId is not empty
 			const addAttendee = async () => {
-				setApiStatus("loading");
+				setApiStatus('loading');
 				setApiError(null);
 				try {
-					const response = await fetch("/api/events/addEventAttendee", {
-						method: "POST",
+					const response = await fetch('/api/events/addEventAttendee', {
+						method: 'POST',
 						headers: {
-							"Content-Type": "application/json",
+							'Content-Type': 'application/json',
 						},
 						body: JSON.stringify({
 							eventId: selectedEventId,
@@ -72,15 +72,15 @@ export function QREventScanner() {
 					const result = await response.json();
 
 					if (result.success) {
-						setApiStatus("success");
+						setApiStatus('success');
 					} else {
-						setApiStatus("error");
-						setApiError(result.error || "Failed to add attendee.");
+						setApiStatus('error');
+						setApiError(result.error || 'Failed to add attendee.');
 					}
 				} catch (error) {
-					setApiStatus("error");
-					setApiError("An error occurred while adding the attendee.");
-					console.error("Error adding event attendee:", error);
+					setApiStatus('error');
+					setApiError('An error occurred while adding the attendee.');
+					console.error('Error adding event attendee:', error);
 				}
 			};
 
@@ -97,9 +97,7 @@ export function QREventScanner() {
 			<div className="max-w-2xl mx-auto">
 				{/* ========== HEADER ========== */}
 				<div className="bg-white rounded-lg shadow-md p-6 mb-4">
-					<h1 className="text-2xl font-bold text-center mb-2">
-						IEEE Member Check-In
-					</h1>
+					<h1 className="text-2xl font-bold text-center mb-2">IEEE Member Check-In</h1>
 					<p className="text-sm text-gray-600 text-center mb-4">
 						Select an event and scan member QR codes to check in.
 					</p>
@@ -160,12 +158,12 @@ export function QREventScanner() {
 									onScan={handleScan}
 									onError={handleError}
 									constraints={{
-										facingMode: "environment",
+										facingMode: 'environment',
 									}}
 									styles={{
 										container: {
-											width: "100%",
-											height: "100%",
+											width: '100%',
+											height: '100%',
 										},
 									}}
 								/>
@@ -188,7 +186,7 @@ export function QREventScanner() {
 					/* ========== MEMBER INFO DISPLAY ========== */
 					memberInfo && (
 						<div className="bg-white rounded-lg shadow-md p-6 mb-4">
-							{apiStatus === "loading" && (
+							{apiStatus === 'loading' && (
 								<div className="text-center mb-4">
 									<div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-3">
 										<svg
@@ -218,7 +216,7 @@ export function QREventScanner() {
 								</div>
 							)}
 
-							{apiStatus === "success" && (
+							{apiStatus === 'success' && (
 								<div className="text-center mb-4">
 									<div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
 										<svg
@@ -241,7 +239,7 @@ export function QREventScanner() {
 								</div>
 							)}
 
-							{apiStatus === "error" && (
+							{apiStatus === 'error' && (
 								<div className="text-center mb-4">
 									<div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-3">
 										<svg
@@ -365,8 +363,8 @@ export function QREventScanner() {
 					<div className="bg-white rounded-lg shadow-md p-6 text-center">
 						<p className="text-gray-600 mb-4">
 							{selectedEventId
-								? "Ready to scan for the selected event."
-								: "Please select an event to begin scanning."}
+								? 'Ready to scan for the selected event.'
+								: 'Please select an event to begin scanning.'}
 						</p>
 						<button
 							onClick={resetScanner}

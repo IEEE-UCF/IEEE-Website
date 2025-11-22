@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { Calendar } from "@/components/calendar";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { Calendar } from '@/components/calendar';
 
 const Timer: React.FC = () => {
 	const [timeLeft, setTimeLeft] = useState({
@@ -17,7 +17,7 @@ const Timer: React.FC = () => {
 	}, []);
 
 	const fetchTimer = async () => {
-		const res = await fetch("/api/times?title=GBM", { method: "GET" });
+		const res = await fetch('/api/times?title=GBM', { method: 'GET' });
 		const timerRes = await res.json();
 		const timerData = timerRes.data?.[0];
 		const countDownDate = new Date(timerData.time).getTime();
@@ -54,7 +54,9 @@ const Timer: React.FC = () => {
 			<div className="flex flex-col lg:flex-row flex-wrap justify-between items-center gap-8">
 				<div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-center py-4">
 					<div className="p-4 w-full">
-						<h2 className="text-4xl text-white font-[subheading-font]">NEXT GENERAL BODY MEETING</h2>
+						<h2 className="text-4xl text-white font-[subheading-font]">
+							NEXT GENERAL BODY MEETING
+						</h2>
 						<p className="mt-2 text-2xl text-white font-[body-font]">
 							Join IEEE @ UCF for the upcoming GBM in Room TBD!
 						</p>
@@ -62,25 +64,33 @@ const Timer: React.FC = () => {
 					<div className="p-3 m-3 rounded-sm border-1 backdrop-blur-lg w-full h-fit">
 						<div className="flex justify-around items-center flex-row">
 							<div className="text-white">
-								<span className="font-[heading-font] text-5xl">{timeLeft.days}</span>
+								<span className="font-[heading-font] text-5xl">
+									{timeLeft.days}
+								</span>
 								<br />
 								<span className="text-sm text-white font-[body-font]">DAYS</span>
 							</div>
 							<span className="font-[subheading-font] text-white text-3xl">:</span>
 							<div className="text-white">
-								<span className="font-[heading-font] text-5xl">{timeLeft.hours}</span>
+								<span className="font-[heading-font] text-5xl">
+									{timeLeft.hours}
+								</span>
 								<br />
 								<span className="text-sm text-white font-[body-font]">HOURS</span>
 							</div>
 							<span className="font-[subheading-font] text-white text-3xl">:</span>
 							<div className="text-white">
-								<span className="font-[heading-font] text-5xl">{timeLeft.minutes}</span>
+								<span className="font-[heading-font] text-5xl">
+									{timeLeft.minutes}
+								</span>
 								<br />
 								<span className="text-sm text-white font-[body-font]">MINUTES</span>
 							</div>
 							<span className="font-[subheading-font] text-white text-3xl">:</span>
 							<div className="text-white">
-								<span className="font-[heading-font] text-5xl">{timeLeft.seconds}</span>
+								<span className="font-[heading-font] text-5xl">
+									{timeLeft.seconds}
+								</span>
 								<br />
 								<span className="text-sm text-white font-[body-font]">SECONDS</span>
 							</div>

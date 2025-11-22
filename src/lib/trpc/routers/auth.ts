@@ -1,8 +1,8 @@
-import type { TRPCRouterRecord } from "@trpc/server";
-import { db } from "@/lib/database/client";
-import { Members, Users } from "@/lib/database/schema";
-import { eq } from "drizzle-orm";
-import { publicProcedure } from "../trpc";
+import type { TRPCRouterRecord } from '@trpc/server';
+import { db } from '@/lib/database/client';
+import { Members, Users } from '@/lib/database/schema';
+import { eq } from 'drizzle-orm';
+import { publicProcedure } from '../trpc';
 // protectedprocedure not imported lol
 
 export const authRouter = {
@@ -104,41 +104,38 @@ export const authRouter = {
 				user: null,
 				member: null,
 				discordAvatar: null,
-
 			};
 		}
 
 		const [userWithDiscord] = await db
-				.select()
-				.from(Users)
-				.where(eq(Users.id, ctx.session.user.id))
-				.limit(1);
+			.select()
+			.from(Users)
+			.where(eq(Users.id, ctx.session.user.id))
+			.limit(1);
 
 		const [member] = await db
-				.select()
-				.from(Members)
-				.where(eq(Members.userId, ctx.session.user.id))
-				.limit(1);
-
+			.select()
+			.from(Members)
+			.where(eq(Members.userId, ctx.session.user.id))
+			.limit(1);
 
 		let discordAvatar = userWithDiscord?.image || null;
-		
+
 		if (!discordAvatar && userWithDiscord?.discordId) {
-				discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordId) % 5}.png`;
+			discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordId) % 5}.png`;
 		}
 
 		return {
-				isAuthenticated: true,
-				isMember: !!member,
-				isOfficer: member?.officerStatus || false,
-				isAdmin: member?.administrator || false,
-				hasPaidDues: member?.duesPaid || false,
-				officerRole: member?.officerRole || null,
-				user: ctx.session.user,
-				member: member || null,
-				profile: ctx.session?.user.discordId,
-				discordAvatar,
+			isAuthenticated: true,
+			isMember: !!member,
+			isOfficer: member?.officerStatus || false,
+			isAdmin: member?.administrator || false,
+			hasPaidDues: member?.duesPaid || false,
+			officerRole: member?.officerRole || null,
+			user: ctx.session.user,
+			member: member || null,
+			profile: ctx.session?.user.discordId,
+			discordAvatar,
 		};
 	}),
-
 } satisfies TRPCRouterRecord;

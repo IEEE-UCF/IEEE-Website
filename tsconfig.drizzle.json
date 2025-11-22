@@ -1,13 +1,13 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "Node",
-    "target": "ES2017",
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "strict": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
-  },
-  "include": ["drizzle.config.ts", "lib/**/*.ts"]
+	"compilerOptions": {
+		"moduleResolution": "Node",
+		"target": "ES2017",
+		"module": "ESNext",
+		"esModuleInterop": true,
+		"strict": true,
+		"noEmit": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true
+	},
+	"include": ["drizzle.config.ts", "lib/**/*.ts"]
 }

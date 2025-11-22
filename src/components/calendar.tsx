@@ -1,5 +1,5 @@
 interface CalendarProps {
-  className: string;
+	className: string;
 }
 
 const Calendar: React.FC<CalendarProps> = ({ className }) => {

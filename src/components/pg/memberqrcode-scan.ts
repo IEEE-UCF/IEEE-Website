@@ -13,8 +13,8 @@
  * // Access: scanner.isScanning, scanner.handleScan(), etc.
  */
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
 /**
  * Interface for scanned member data
@@ -57,7 +57,7 @@ export function useMemberScanner() {
 	 * Stores the raw string data from the scanned QR code
 	 * Used for debugging and displaying what was scanned
 	 */
-	const [scannedData, setScannedData] = useState<string>("");
+	const [scannedData, setScannedData] = useState<string>('');
 
 	/**
 	 * Stores the currently scanned member's information
@@ -70,7 +70,7 @@ export function useMemberScanner() {
 	 * Stores error messages (e.g., camera permission denied)
 	 * Empty string means no error
 	 */
-	const [error, setError] = useState<string>("");
+	const [error, setError] = useState<string>('');
 
 	/**
 	 * Array of all members scanned during this session
@@ -106,7 +106,7 @@ export function useMemberScanner() {
 			// Extract the actual string data from the QR code
 			const rawValue = result[0].rawValue;
 			setScannedData(rawValue);
-			setError("");
+			setError('');
 
 			// Try to parse the QR code data as JSON
 			// Our QR generator creates JSON like: {"id":"123","name":"John","chapter":"UCF"}
@@ -161,8 +161,8 @@ export function useMemberScanner() {
 	 * @param {any} error - Error object from the scanner
 	 */
 	const handleError = (error: any) => {
-		console.error("QR Scanner Error:", error);
-		setError("Camera access denied or not available");
+		console.error('QR Scanner Error:', error);
+		setError('Camera access denied or not available');
 	};
 
 	/**
@@ -172,9 +172,9 @@ export function useMemberScanner() {
 	 * Used after successfully checking in a member.
 	 */
 	const resetScanner = () => {
-		setScannedData("");
+		setScannedData('');
 		setMemberInfo(null);
-		setError("");
+		setError('');
 		setIsScanning(true); // Reactivate camera
 	};
 

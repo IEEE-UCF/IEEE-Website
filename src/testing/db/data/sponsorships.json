@@ -1,18 +1,18 @@
 [
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a21",
-        "company_name": "TechCorp",
-        "money_donated": 5000,
-        "description": "Leading provider of tech solutions.",
-        "tier": "gold",
-        "contact_email": "techcorp@email.com"
-    },
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a22",
-        "company_name": "Innovate LLC",
-        "money_donated": 2500,
-        "description": "Startup focused on innovation.",
-        "tier": "silver",
-        "contact_email": "innovate@email.com"
-    }
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a21",
+		"company_name": "TechCorp",
+		"money_donated": 5000,
+		"description": "Leading provider of tech solutions.",
+		"tier": "gold",
+		"contact_email": "techcorp@email.com"
+	},
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a22",
+		"company_name": "Innovate LLC",
+		"money_donated": 2500,
+		"description": "Startup focused on innovation.",
+		"tier": "silver",
+		"contact_email": "innovate@email.com"
+	}
 ]

@@ -1,22 +1,22 @@
 [
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a71",
-        "title": "IEEE GBM 1",
-        "location": "HEC-101",
-        "host_type": "club",
-        "host_id": null,
-        "start_time": "2025-09-01 18:00:00",
-        "description": "First General Body Meeting of the Fall 2025 semester.",
-        "duration": 60
-    },
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a72",
-        "title": "Workshop: Intro to PCB Design",
-        "location": "ENG1-286",
-        "host_type": "committee",
-        "host_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
-        "start_time": "2025-09-15 19:00:00",
-        "description": "Learn the basics of PCB design.",
-        "duration": 90
-    }
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a71",
+		"title": "IEEE GBM 1",
+		"location": "HEC-101",
+		"host_type": "club",
+		"host_id": null,
+		"start_time": "2025-09-01 18:00:00",
+		"description": "First General Body Meeting of the Fall 2025 semester.",
+		"duration": 60
+	},
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a72",
+		"title": "Workshop: Intro to PCB Design",
+		"location": "ENG1-286",
+		"host_type": "committee",
+		"host_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
+		"start_time": "2025-09-15 19:00:00",
+		"description": "Learn the basics of PCB design.",
+		"duration": 90
+	}
 ]

@@ -1,8 +1,8 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,14 +11,9 @@ const compat = new FlatCompat({
 	baseDirectory: __dirname,
 });
 
-const tseslintConfig = [
-	...tseslint.configs.recommended,
-	...tseslint.configs.stylistic,
-];
+const tseslintConfig = [...tseslint.configs.recommended, ...tseslint.configs.stylistic];
 const eslintConfig = eslint.configs.recommended;
-const nextConfig = [
-	...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+const nextConfig = [...compat.extends('next/core-web-vitals', 'next/typescript')];
 
 const customConfig = {
 	ignores: [
@@ -35,67 +30,99 @@ const customConfig = {
 		'postcss.config.mjs',
 	],
 	rules: {
-		'arrow-spacing': ['warn', {
-			before: true,
-			after: true,
-		}],
+		'arrow-spacing': [
+			'warn',
+			{
+				before: true,
+				after: true,
+			},
+		],
 
-		'brace-style': ['error', '1tbs', {
-			allowSingleLine: true,
-		}],
+		'brace-style': [
+			'error',
+			'1tbs',
+			{
+				allowSingleLine: true,
+			},
+		],
 
 		'comma-dangle': ['error', 'always-multiline'],
 		'comma-spacing': 'error',
 		'comma-style': 'error',
-		'curly': ['error', 'multi-line', 'consistent'],
+		curly: ['error', 'multi-line', 'consistent'],
 		'dot-location': ['error', 'property'],
 		'handle-callback-err': 'off',
-		'indent': ['error', 'tab', {
-			'SwitchCase': 1,
-		}],
+		indent: [
+			'error',
+			'tab',
+			{
+				SwitchCase: 1,
+			},
+		],
 		'keyword-spacing': 'error',
 
-		'max-nested-callbacks': ['error', {
-			max: 4,
-		}],
+		'max-nested-callbacks': [
+			'error',
+			{
+				max: 4,
+			},
+		],
 
-		'max-statements-per-line': ['error', {
-			max: 2,
-		}],
+		'max-statements-per-line': [
+			'error',
+			{
+				max: 2,
+			},
+		],
 
 		'no-console': 'off',
 
-		'no-empty-function': ['error', {
-			allow: ['arrowFunctions'],
-		}],
+		'no-empty-function': [
+			'error',
+			{
+				allow: ['arrowFunctions'],
+			},
+		],
 
 		'no-floating-decimal': 'error',
 		'no-lonely-if': 'error',
 		'no-mixed-spaces-and-tabs': 'warn',
 		'no-multi-spaces': 'error',
 
-		'no-multiple-empty-lines': ['error', {
-			max: 2,
-			maxEOF: 1,
-			maxBOF: 0,
-		}],
+		'no-multiple-empty-lines': [
+			'error',
+			{
+				max: 2,
+				maxEOF: 1,
+				maxBOF: 0,
+			},
+		],
 
-		'no-shadow': ['warn', {
-			allow: ['err', 'resolve', 'reject'],
-		}],
+		'no-shadow': [
+			'warn',
+			{
+				allow: ['err', 'resolve', 'reject'],
+			},
+		],
 
 		'no-trailing-spaces': ['error'],
 
-		'no-unused-vars': ['off', {
-			varsIgnorePattern: 'path',
-		}],
+		'no-unused-vars': [
+			'off',
+			{
+				varsIgnorePattern: 'path',
+			},
+		],
 
 		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-inferrable-types': 'off',
-		'@typescript-eslint/no-unused-vars': ['error', {
-			argsIgnorePattern: '^_',
-			varsIgnorePattern: '^_',
-		}],
+		'@typescript-eslint/no-unused-vars': [
+			'error',
+			{
+				argsIgnorePattern: '^_',
+				varsIgnorePattern: '^_',
+			},
+		],
 		'@typescript-eslint/prefer-optional-chain': 'error',
 		'@typescript-eslint/no-floating-promises': 'warn',
 		'@typescript-eslint/await-thenable': 'error',
@@ -109,20 +136,23 @@ const customConfig = {
 		'require-await': 'warn',
 		'object-curly-spacing': ['error', 'always'],
 		'prefer-const': 'error',
-		'semi': ['error', 'always'],
+		semi: ['error', 'always'],
 		'space-before-blocks': 'error',
 
-		'space-before-function-paren': ['error', {
-			anonymous: 'never',
-			named: 'never',
-			asyncArrow: 'always',
-		}],
+		'space-before-function-paren': [
+			'error',
+			{
+				anonymous: 'never',
+				named: 'never',
+				asyncArrow: 'always',
+			},
+		],
 
 		'space-in-parens': 'error',
 		'space-infix-ops': 'error',
 		'space-unary-ops': 'error',
 		'spaced-comment': 'error',
-		'yoda': 'error',
+		yoda: 'error',
 	},
 	languageOptions: {
 		parserOptions: {
@@ -132,11 +162,6 @@ const customConfig = {
 	},
 };
 
-const fullConfig = [
-	eslintConfig,
-	...nextConfig,
-	...tseslintConfig,
-	customConfig,
-];
+const fullConfig = [eslintConfig, ...nextConfig, ...tseslintConfig, customConfig];
 
 export default fullConfig;
