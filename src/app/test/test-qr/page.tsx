@@ -16,18 +16,17 @@
  * Navigate to /test-qr to view examples
  * Scan the QR codes with /scan-qr page to test the full flow
  */
-"use client";
-import React from "react";
-import MemberQRCode from "@/components/pg/memberqrcode-gen";
-import { trpc } from "@/lib/trpc/client";
-
+'use client';
+import React from 'react';
+import MemberQRCode from '@/components/pg/memberqrcode-gen';
+import { trpc } from '@/lib/trpc/client';
 
 const TestPage = () => {
 	// ============================================
 	// SAMPLE DATA
 	// ============================================
 	const { data: session, isLoading, isError } = trpc.auth.getSession.useQuery();
-	
+
 	if (isLoading) {
 		return (
 			<div className="min-h-screen bg-black flex items-center justify-center">
@@ -39,7 +38,9 @@ const TestPage = () => {
 	if (isError || !session?.user?.discordId) {
 		return (
 			<div className="min-h-screen bg-black flex items-center justify-center">
-				<p className="text-red-500 text-xl">Error loading session or Discord ID not found.</p>
+				<p className="text-red-500 text-xl">
+					Error loading session or Discord ID not found.
+				</p>
 			</div>
 		);
 	}
@@ -88,30 +89,28 @@ const TestPage = () => {
 				<h1 className="text-3xl font-bold text-center mb-8">QR Code Testing</h1>
 
 				{/* ========== QR CODE EXAMPLES GRID ========== */}
-				{/* 
+				{/*
 					Two-column grid on desktop, single column on mobile
 					Each card shows a different QR code configuration
 				*/}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					{/* ========== EXAMPLE 1: QR Code with Member Data ========== */}
-					{/* 
+					{/*
 						This example demonstrates a standard QR code for member check-in
 						- Contains JSON member data (id, name, chapter, etc.)
 						- Displays IEEE-UCF logo in the center
 						- Shows the encoded data below for reference
 					*/}
 					<div className="bg-white rounded-lg shadow-md p-6">
-						<h2 className="text-xl font-semibold mb-4">
-							QR Code with IEEE-UCF Logo
-						</h2>
+						<h2 className="text-xl font-semibold mb-4">QR Code with IEEE-UCF Logo</h2>
 
-						{/* 
+						{/*
 							MemberQRCode Component
-							
+
 							Props:
 							- memberInfo: JSON string of member data to encode
 							- logoUrl: Path to the logo image to overlay on QR code
-							
+
 							The component will:
 							1. Generate a QR code from the memberInfo string
 							2. Overlay the IEEE-UCF logo in the center
@@ -131,7 +130,7 @@ const TestPage = () => {
 					</div>
 
 					{/* ========== EXAMPLE 2: QR Code with Empty Data (Error Test) ========== */}
-					{/* 
+					{/*
 						This example tests the component's behavior with invalid/empty data
 						- Empty string as member info (should still generate a QR code)
 						- Demonstrates error handling
@@ -140,14 +139,14 @@ const TestPage = () => {
 					<div className="bg-white rounded-lg shadow-md p-6">
 						<h2 className="text-xl font-semibold mb-4">QR Code with Icon</h2>
 
-						{/* 
+						{/*
 							MemberQRCode Component with empty data
-							
+
 							Props:
 							- memberInfo: Empty string (tests error handling)
 							- logoUrl: Path to the logo image
 							- logoSize: Custom size for the logo overlay (40px)
-							
+
 							This tests:
 							- How the component handles empty/invalid data
 							- Custom logo sizing

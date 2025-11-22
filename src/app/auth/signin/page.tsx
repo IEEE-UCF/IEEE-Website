@@ -1,19 +1,19 @@
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { db } from "@/lib/database/client";
-import { Members } from "@/lib/database/schema";
-import { eq } from "drizzle-orm";
-import Signinblock from "@/components/signin";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { db } from '@/lib/database/client';
+import { Members } from '@/lib/database/schema';
+import { eq } from 'drizzle-orm';
+import Signinblock from '@/components/signin';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
 export default async function SignInPage() {
 	const session = await getServerSession(authOptions);
 
 	if (session) {
 		if (!session.user.discordId) {
-			redirect("/auth/error"); 
+			redirect('/auth/error');
 			return;
 		}
 
@@ -23,8 +23,8 @@ export default async function SignInPage() {
 			.where(eq(Members.discordID, session.user.discordId))
 			.limit(1);
 
-		if (member) redirect("/dashboard");
-		else redirect("/auth/register");
+		if (member) redirect('/dashboard');
+		else redirect('/auth/register');
 	}
 
 	return (

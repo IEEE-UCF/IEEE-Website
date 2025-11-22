@@ -1,12 +1,12 @@
 /**
  * @fileoverview API route for creating a new event.
- * 
+ *
  * This endpoint handles POST requests to create a new event in the database.
  * It validates that all required fields are present in the request body before insertion.
- * 
+ *
  * Endpoint: `/api/events/newEvent`
  * Method: `POST`
- * 
+ *
  * Request Body:
  * - `title`: string (required) - The title of the event.
  * - `location`: string (required) - The location where the event will take place.
@@ -15,15 +15,15 @@
  * - `endTime`: string (optional) - The end date and time of the event in ISO format.
  * - `committeeId`: string (UUID, optional) - The ID of the host committee.
  * - `requiresDues`: boolean (optional, defaults to false)
- * 
+ *
  * Functionality:
  * 1. Validates that `title`, `location`, `description`, and `startTime` are provided.
  * 2. Parses and converts `startTime` and `endTime` to ISO string format.
  * 3. Inserts the new event data into the `Events` table.
- * 
+ *
  * Success Response:
  * - `200 OK`: `{ success: true, data: newEvent }` - Returns the newly created event object.
- * 
+ *
  * Error Responses:
  * - `400 Bad Request`: `{ success: false, error: 'Missing required fields' }`
  *   - Occurs if any of the required fields are missing from the request body.
@@ -41,7 +41,10 @@ export async function POST(request: Request) {
 
 		// Validate required fields
 		if (!title || !location || !description || !startTime) {
-			return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
+			return NextResponse.json(
+				{ success: false, error: 'Missing required fields' },
+				{ status: 400 },
+			);
 		}
 
 		const values = {
@@ -58,10 +61,12 @@ export async function POST(request: Request) {
 		return NextResponse.json({ success: true, data: newEvent });
 	} catch (error) {
 		console.error(error);
-		return NextResponse.json({ success: false, error: 'Failed to create event' }, { status: 500 });
+		return NextResponse.json(
+			{ success: false, error: 'Failed to create event' },
+			{ status: 500 },
+		);
 	}
 }
-
 
 // Old Mongo collection
 // import { dbConnect } from '@/lib/mongodb';
