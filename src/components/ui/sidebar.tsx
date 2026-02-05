@@ -57,8 +57,8 @@ const SidebarProvider = React.forwardRef<
 		defaultOpen?: boolean;
 		open?: boolean;
 		onOpenChange?: (open: boolean) => void;
-				}
-			>(
+			}
+		>(
 				(
 				{
 					defaultOpen = true,
@@ -83,7 +83,7 @@ const SidebarProvider = React.forwardRef<
 							setOpenProp(openState);
 						} else {
 							_setOpen(openState);
-					}
+						}
 
 						document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
 					},
@@ -145,7 +145,7 @@ const SidebarProvider = React.forwardRef<
 					</SidebarContext.Provider>
 				);
 			},
-		);
+			);
 SidebarProvider.displayName = 'SidebarProvider';
 
 const Sidebar = React.forwardRef<

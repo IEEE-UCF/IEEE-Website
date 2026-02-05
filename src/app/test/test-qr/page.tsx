@@ -61,7 +61,7 @@ const TestPage = () => {
 	 * Note: Only uncommented fields will be included in the QR code
 	 */
 	const memberData = {
-		//id: "99688747573981184", // Required: Unique member ID
+		// id: "99688747573981184", // Required: Unique member ID
 		id: session.user.discordId,
 		// Add other member details as needed
 		// name: "John Doe",

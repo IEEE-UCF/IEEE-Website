@@ -2,7 +2,7 @@
 import React from 'react';
 import { trpc } from '@/lib/trpc/client';
 import MemberQRCode from '@/components/pg/memberqrcodegen';
-import { Navbar } from '@/components/navbar';
+// import { Navbar } from '@/components/navbar';
 
 const ShowIdPage = () => {
 	const { data: session, isLoading, isError } = trpc.auth.getSession.useQuery();
