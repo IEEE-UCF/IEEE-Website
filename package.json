@@ -19,6 +19,7 @@
 		"@emotion/styled": "^11.14.1",
 		"@heroicons/react": "^2.2.0",
 		"@mui/icons-material": "^7.3.7",
+		"@mui/material": "^7.3.7",
 		"@neondatabase/serverless": "^1.0.2",
 		"@radix-ui/react-accordion": "^1.2.12",
 		"@radix-ui/react-dialog": "^1.1.15",
@@ -49,7 +50,7 @@
 		"next-auth": "^4.24.13",
 		"next-sitemap": "^4.2.3",
 		"pg": "8.16.3",
-		"pg-core@latest": "link:drizzle-orm\\pg-core@latest",
+
 		"postgres": "^3.4.8",
 		"qrcode": "^1.5.4",
 		"react": "^19.2.4",
