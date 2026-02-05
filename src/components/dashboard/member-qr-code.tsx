@@ -61,7 +61,7 @@ export const Member_QR_Code = () => {
 	 * Note: Only uncommented fields will be included in the QR code
 	 */
 	const memberData = {
-		//id: "99688747573981184", // Required: Unique member ID
+		// id: "99688747573981184", // Required: Unique member ID
 		id: session.user.discordId,
 		// Add other member details as needed
 		// name: "John Doe",
@@ -89,13 +89,13 @@ export const Member_QR_Code = () => {
 			{/* <h1 className="text-3xl font-bold text-center mb-8">QR Code Testing</h1> */}
 
 			{/* ========== QR CODE EXAMPLES GRID ========== */}
-			{/* 
+			{/*
 					Two-column grid on desktop, single column on mobile
 					Each card shows a different QR code configuration
 				*/}
 			{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8"> */}
 			{/* ========== EXAMPLE 1: QR Code with Member Data ========== */}
-			{/* 
+			{/*
 						This example demonstrates a standard QR code for member check-in
 						- Contains JSON member data (id, name, chapter, etc.)
 						- Displays IEEE-UCF logo in the center
@@ -106,13 +106,13 @@ export const Member_QR_Code = () => {
 							QR Code with IEEE-UCF Logo
 						</h2> */}
 
-				{/* 
+				{/*
 							MemberQRCode Component
-							
+
 							Props:
 							- memberInfo: JSON string of member data to encode
 							- logoUrl: Path to the logo image to overlay on QR code
-							
+
 							The component will:
 							1. Generate a QR code from the memberInfo string
 							2. Overlay the IEEE-UCF logo in the center

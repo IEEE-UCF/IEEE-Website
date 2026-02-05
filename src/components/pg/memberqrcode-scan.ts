@@ -134,7 +134,7 @@ export function useMemberScanner() {
 				if (navigator.vibrate) {
 					navigator.vibrate(200); // Vibrate for 200ms
 				}
-			} catch (e) {
+			} catch {
 				// If parsing fails, the QR code contains plain text (not JSON)
 				// Treat the entire string as the member ID
 				const member: ScannedMember = {
@@ -160,8 +160,8 @@ export function useMemberScanner() {
 	 *
 	 * @param {any} error - Error object from the scanner
 	 */
-	const handleError = (error: any) => {
-		console.error('QR Scanner Error:', error);
+	const handleError = (err: any) => {
+		console.error('QR Scanner Error:', err);
 		setError('Camera access denied or not available');
 	};
 

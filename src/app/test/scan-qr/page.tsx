@@ -14,17 +14,17 @@
  * - Member information display after scan
  * - Session-based check-in history
  * - Haptic feedback on successful scan
- * 
+ *
  * To use
  * - Run the development server with HTTPS: npm run dev:https
  * - Navigate to /scan-qr to access the scanner page
  * - Scan member qr code found on /test-qr page
  */
 
-"use client";
-import React from "react";
-import { Scanner } from "@yudiel/react-qr-scanner";
-import { useMemberScanner } from "@/components/pg/memberqrcode-scan";
+'use client';
+import React from 'react';
+import { Scanner } from '@yudiel/react-qr-scanner';
+import { useMemberScanner } from '@/components/pg/memberqrcode-scan';
 import { type Event } from '@/lib/database/schema';
 
 export default function ScanQRPage() {
@@ -43,48 +43,47 @@ export default function ScanQRPage() {
 		setIsScanning,
 	} = useMemberScanner();
 
-	const [apiStatus, setApiStatus] = React.useState<
-		"idle" | "loading" | "success" | "error"
-	>("idle");
+	const [apiStatus, setApiStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>(
+		'idle',
+	);
 	const [apiError, setApiError] = React.useState<string | null>(null);
 
 	const [events, setEvents] = React.useState<Event[]>([]);
-	const [selectedEventId, setSelectedEventId] = React.useState<string>("");
+	const [selectedEventId, setSelectedEventId] = React.useState<string>('');
 	const [eventsLoading, setEventsLoading] = React.useState<boolean>(true);
 	const [eventsError, setEventsError] = React.useState<string | null>(null);
 
 	React.useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await fetch("/api/events/getEvents");
+				const response = await fetch('/api/events/getEvents');
 				const result = await response.json();
 				if (result.success) {
 					setEvents(result.data);
 				} else {
-					setEventsError(result.error || "Failed to fetch events.");
+					setEventsError(result.error || 'Failed to fetch events.');
 				}
 			} catch (error) {
-				setEventsError("An error occurred while fetching events.");
-				console.error("Error fetching events:", error);
+				setEventsError('An error occurred while fetching events.');
+				console.error('Error fetching events:', error);
 			} finally {
 				setEventsLoading(false);
 			}
 		};
 
 		fetchEvents();
-
 	}, []);
 
 	React.useEffect(() => {
 		if (memberInfo && selectedEventId) {
 			const addAttendee = async () => {
-				setApiStatus("loading");
+				setApiStatus('loading');
 				setApiError(null);
 				try {
-					const response = await fetch("/api/events/addEventAttendee", {
-						method: "POST",
+					const response = await fetch('/api/events/addEventAttendee', {
+						method: 'POST',
 						headers: {
-							"Content-Type": "application/json",
+							'Content-Type': 'application/json',
 						},
 						body: JSON.stringify({
 							eventId: selectedEventId,
@@ -95,15 +94,15 @@ export default function ScanQRPage() {
 					const result = await response.json();
 
 					if (result.success) {
-						setApiStatus("success");
+						setApiStatus('success');
 					} else {
-						setApiStatus("error");
-						setApiError(result.error || "Failed to add attendee.");
+						setApiStatus('error');
+						setApiError(result.error || 'Failed to add attendee.');
 					}
 				} catch (error) {
-					setApiStatus("error");
-					setApiError("An error occurred while adding the attendee.");
-					console.error("Error adding event attendee:", error);
+					setApiStatus('error');
+					setApiError('An error occurred while adding the attendee.');
+					console.error('Error adding event attendee:', error);
 				}
 			};
 
@@ -120,9 +119,7 @@ export default function ScanQRPage() {
 			<div className="max-w-2xl mx-auto">
 				{/* ========== HEADER ========== */}
 				<div className="bg-white rounded-lg shadow-md p-6 mb-4">
-					<h1 className="text-2xl font-bold text-center mb-2">
-						IEEE Member Check-In
-					</h1>
+					<h1 className="text-2xl font-bold text-center mb-2">IEEE Member Check-In</h1>
 					<p className="text-sm text-gray-600 text-center mb-4">
 						Select an event and scan member QR codes to check in.
 					</p>
@@ -164,9 +161,7 @@ export default function ScanQRPage() {
 					<div className="bg-white rounded-lg shadow-md p-6 mb-4">
 						<div className="mb-4">
 							<h2 className="text-lg font-semibold mb-2">Camera Scanner</h2>
-							<p className="text-sm text-gray-600 mb-4">
-								Point camera at member&apos;s QR code
-							</p>
+							<p className="text-sm text-gray-600 mb-4">Point camera at member&apos;s QR code</p>
 						</div>
 
 						{/* Show error message if camera access fails */}
@@ -180,12 +175,12 @@ export default function ScanQRPage() {
 									onScan={handleScan}
 									onError={handleError}
 									constraints={{
-										facingMode: "environment",
+										facingMode: 'environment',
 									}}
 									styles={{
 										container: {
-											width: "100%",
-											height: "100%",
+											width: '100%',
+											height: '100%',
 										},
 									}}
 								/>
@@ -208,7 +203,7 @@ export default function ScanQRPage() {
 					/* ========== MEMBER INFO DISPLAY ========== */
 					memberInfo && (
 						<div className="bg-white rounded-lg shadow-md p-6 mb-4">
-							{apiStatus === "loading" && (
+							{apiStatus === 'loading' && (
 								<div className="text-center mb-4">
 									<div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-3">
 										<svg
@@ -232,13 +227,11 @@ export default function ScanQRPage() {
 											></path>
 										</svg>
 									</div>
-									<h2 className="text-xl font-bold text-blue-600 mb-2">
-										Checking In...
-									</h2>
+									<h2 className="text-xl font-bold text-blue-600 mb-2">Checking In...</h2>
 								</div>
 							)}
 
-							{apiStatus === "success" && (
+							{apiStatus === 'success' && (
 								<div className="text-center mb-4">
 									<div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
 										<svg
@@ -255,13 +248,11 @@ export default function ScanQRPage() {
 											/>
 										</svg>
 									</div>
-									<h2 className="text-xl font-bold text-green-600 mb-2">
-										Check-In Successful!
-									</h2>
+									<h2 className="text-xl font-bold text-green-600 mb-2">Check-In Successful!</h2>
 								</div>
 							)}
 
-							{apiStatus === "error" && (
+							{apiStatus === 'error' && (
 								<div className="text-center mb-4">
 									<div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-3">
 										<svg
@@ -278,9 +269,7 @@ export default function ScanQRPage() {
 											></path>
 										</svg>
 									</div>
-									<h2 className="text-xl font-bold text-red-600 mb-2">
-										Check-In Failed
-									</h2>
+									<h2 className="text-xl font-bold text-red-600 mb-2">Check-In Failed</h2>
 									<p className="text-red-700">{apiError}</p>
 								</div>
 							)}
@@ -290,35 +279,27 @@ export default function ScanQRPage() {
 								<div className="space-y-2">
 									<div className="flex justify-between">
 										<span className="text-gray-600">Member ID:</span>
-										<span className="font-mono font-semibold">
-											{memberInfo.id}
-										</span>
+										<span className="font-mono font-semibold">{memberInfo.id}</span>
 									</div>
 									{memberInfo.data && (
 										<>
 											{memberInfo.data.name && (
 												<div className="flex justify-between">
 													<span className="text-gray-600">Name:</span>
-													<span className="font-semibold">
-														{memberInfo.data.name}
-													</span>
+													<span className="font-semibold">{memberInfo.data.name}</span>
 												</div>
 											)}
 											{memberInfo.data.chapter && (
 												<div className="flex justify-between">
 													<span className="text-gray-600">Chapter:</span>
-													<span className="font-semibold">
-														{memberInfo.data.chapter}
-													</span>
+													<span className="font-semibold">{memberInfo.data.chapter}</span>
 												</div>
 											)}
 										</>
 									)}
 									<div className="flex justify-between">
 										<span className="text-gray-600">Time:</span>
-										<span className="font-semibold">
-											{memberInfo.timestamp}
-										</span>
+										<span className="font-semibold">{memberInfo.timestamp}</span>
 									</div>
 								</div>
 							</div>
@@ -337,13 +318,8 @@ export default function ScanQRPage() {
 				{scanHistory.length > 0 && (
 					<div className="bg-white rounded-lg shadow-md p-6">
 						<div className="flex justify-between items-center mb-4">
-							<h2 className="text-lg font-semibold">
-								Check-In History ({scanHistory.length})
-							</h2>
-							<button
-								onClick={clearHistory}
-								className="text-sm text-red-600 hover:text-red-700"
-							>
+							<h2 className="text-lg font-semibold">Check-In History ({scanHistory.length})</h2>
+							<button onClick={clearHistory} className="text-sm text-red-600 hover:text-red-700">
 								Clear
 							</button>
 						</div>
@@ -356,17 +332,12 @@ export default function ScanQRPage() {
 								>
 									<div>
 										<p className="font-semibold">
-											{member.data?.name ||
-												`Member ${member.id.slice(0, 8)}...`}
+											{member.data?.name || `Member ${member.id.slice(0, 8)}...`}
 										</p>
 										<p className="text-xs text-gray-500">{member.timestamp}</p>
 									</div>
 									<div className="text-green-600">
-										<svg
-											className="w-5 h-5"
-											fill="currentColor"
-											viewBox="0 0 20 20"
-										>
+										<svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
 											<path
 												fillRule="evenodd"
 												d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -385,8 +356,8 @@ export default function ScanQRPage() {
 					<div className="bg-white rounded-lg shadow-md p-6 text-center">
 						<p className="text-gray-600 mb-4">
 							{selectedEventId
-								? "Ready to scan for the selected event."
-								: "Please select an event to begin scanning."}
+								? 'Ready to scan for the selected event.'
+								: 'Please select an event to begin scanning.'}
 						</p>
 						<button
 							onClick={resetScanner}
