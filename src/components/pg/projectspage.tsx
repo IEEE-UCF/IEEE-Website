@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { Navbar } from "@/components/navbar";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { useState, useEffect, useRef } from "react";
-import { ChevronRight, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Footer } from "@/components/footer";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from 'next/image';
+import { Navbar } from '@/components/navbar';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { useState, useEffect, useRef } from 'react';
+import { ChevronRight, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Footer } from '@/components/footer';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface Project {
-  _id: string
-  name: string
-  lead: string
-  overview: string
-  hardware: string[]
-  software: string[]
-  photo: string
+	_id: string;
+	name: string;
+	lead: string;
+	overview: string;
+	hardware: string[];
+	software: string[];
+	photo: string;
 }
 
 export default function ProjectsPage() {
@@ -41,11 +41,11 @@ export default function ProjectsPage() {
 					opacity: 1,
 					y: 0,
 					duration: 0.8,
-					ease: "power3.out",
+					ease: 'power3.out',
 					stagger: 0.15,
 					scrollTrigger: {
 						trigger: cardsRef.current[0].parentElement,
-						start: "top 20%",
+						start: 'top 20%',
 					},
 				},
 			);
@@ -61,7 +61,7 @@ export default function ProjectsPage() {
 	};
 
 	const fetchProjectData = async () => {
-		const res = await fetch("/api/projects", { method: "GET" });
+		const res = await fetch('/api/projects', { method: 'GET' });
 		const projects = await res.json();
 		setProjectData(projects.data);
 	};
@@ -77,7 +77,7 @@ export default function ProjectsPage() {
 		>
 			<div
 				className={`flex flex-col max-w-screen overflow-hidden bg-transparent transition-all duration-300 ${
-					selectedProject ? "blur-sm" : "blur-none"
+					selectedProject ? 'blur-sm' : 'blur-none'
 				}`}
 			>
 				<div className="relative w-full h-[120vh]">
@@ -88,13 +88,13 @@ export default function ProjectsPage() {
 					<div className="flex flex-row my-30 p-40 px-10 md:px-20 lg:px-40 justify-center lg:justify-end absolute z-3 w-screen">
 						<div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-y-5 w-full">
 							<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">
-                PROJECTS
+								PROJECTS
 							</div>
 							<div className="font-[body-font] text-white text-xl lg:text-2xl w-full lg:w-3/4">
-                Tackle real-world challenges by joining or leading IEEE @ UCF’s
-                hands-on projects. Members of all skill levels and backgrounds
-                can get involved to develop technical experience, collaborate
-                with others, and push the boundaries of engineering.
+								Tackle real-world challenges by joining or leading IEEE @ UCF’s
+								hands-on projects. Members of all skill levels and backgrounds can
+								get involved to develop technical experience, collaborate with
+								others, and push the boundaries of engineering.
 							</div>
 						</div>
 					</div>
@@ -146,7 +146,7 @@ export default function ProjectsPage() {
 									<CardContent className="">
 										<Image
 											className="object-center object-cover w-full h-80 rounded-sm mb-4 border-white"
-											src={project.photo || "/larry.png"}
+											src={project.photo || '/larry.png'}
 											alt={project.name}
 											width={2000}
 											height={2000}
@@ -156,7 +156,7 @@ export default function ProjectsPage() {
 											{project.name}
 										</div>
 										<div className="text-gray-300 mb-2">
-                      Project Lead: {project.lead}
+											Project Lead: {project.lead}
 										</div>
 										<div className="text-gray-400 mb-4">
 											{project.overview?.slice(0, 120)}...
@@ -165,8 +165,14 @@ export default function ProjectsPage() {
 										<div className="flex flex-wrap gap-2 mb-4">
 											{(() => {
 												const allSkills = [
-													...(project.hardware || []).map((s) => ({ label: s, type: "hw" })),
-													...(project.software || []).map((s) => ({ label: s, type: "sw" })),
+													...(project.hardware || []).map((s) => ({
+														label: s,
+														type: 'hw',
+													})),
+													...(project.software || []).map((s) => ({
+														label: s,
+														type: 'sw',
+													})),
 												];
 
 												const maxTotalItems = 6;
@@ -174,8 +180,12 @@ export default function ProjectsPage() {
 												let remainingCount = 0;
 
 												if (allSkills.length > maxTotalItems) {
-													visibleSkills = allSkills.slice(0, maxTotalItems - 1);
-													remainingCount = allSkills.length - visibleSkills.length;
+													visibleSkills = allSkills.slice(
+														0,
+														maxTotalItems - 1,
+													);
+													remainingCount =
+														allSkills.length - visibleSkills.length;
 												} else {
 													visibleSkills = allSkills;
 												}
@@ -186,9 +196,9 @@ export default function ProjectsPage() {
 															<div
 																key={idx}
 																className={`text-white rounded-sm w-fit px-3 py-1 text-sm ${
-																	skill.type === "hw"
-																		? "bg-[var(--ieee-light-grey)]"
-																		: "bg-[var(--ieee-grey)]"
+																	skill.type === 'hw'
+																		? 'bg-[var(--ieee-light-grey)]'
+																		: 'bg-[var(--ieee-grey)]'
 																}`}
 															>
 																{skill.label}
@@ -196,7 +206,7 @@ export default function ProjectsPage() {
 														))}
 														{remainingCount > 0 && (
 															<div className="text-white rounded-sm w-fit px-3 py-1 bg-[var(--ieee-dark-grey)] text-sm font-[subheading-font]">
-                                +{remainingCount} more
+																+{remainingCount} more
 															</div>
 														)}
 													</>
@@ -204,12 +214,11 @@ export default function ProjectsPage() {
 											})()}
 										</div>
 
-
 										<div
 											className="relative cursor-pointer flex flex-row justify-between w-full hover:scale-103 transition text-white hover:text-amber-300"
 											onClick={() => viewSidebar(project)}
 										>
-                      LEARN MORE
+											LEARN MORE
 											<ChevronRight />
 										</div>
 									</CardContent>
@@ -237,7 +246,7 @@ export default function ProjectsPage() {
 						<div className="mb-6">
 							<Image
 								className="w-full h-48 rounded-sm mb-4 object-cover"
-								src={selectedProject.photo ? selectedProject.photo : "/larry.png"}
+								src={selectedProject.photo ? selectedProject.photo : '/larry.png'}
 								alt={selectedProject.name}
 								width={600}
 								height={400}
@@ -246,20 +255,18 @@ export default function ProjectsPage() {
 						<div className="space-y-4 flex-1 overflow-auto">
 							<div>
 								<div className="text-lg font-semibold mb-2 text-[var(--ieee-bright-yellow)]">
-                  Project Lead
+									Project Lead
 								</div>
 								<div className="text-white">{selectedProject.lead}</div>
 							</div>
 							<div>
 								<div className="text-lg font-semibold mb-2 text-[var(--ieee-bright-yellow)]">
-                  Overview
+									Overview
 								</div>
 								<div className="text-white">{selectedProject.overview}</div>
 							</div>
 							<div>
-								<h3 className="text-lg text-white font-semibold mb-2">
-                  Hardware
-								</h3>
+								<h3 className="text-lg text-white font-semibold mb-2">Hardware</h3>
 								<div className="flex flex-wrap gap-2 text-white">
 									{selectedProject.hardware?.length ? (
 										selectedProject.hardware.map((item, itemIndex) => (
@@ -276,9 +283,7 @@ export default function ProjectsPage() {
 								</div>
 							</div>
 							<div>
-								<h3 className="text-lg text-white font-semibold mb-2">
-                  Software
-								</h3>
+								<h3 className="text-lg text-white font-semibold mb-2">Software</h3>
 								<div className="flex flex-wrap gap-2 text-white">
 									{selectedProject.software?.length ? (
 										selectedProject.software.map((item, itemIndex) => (

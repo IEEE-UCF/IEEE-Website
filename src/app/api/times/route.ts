@@ -1,10 +1,10 @@
 import { dbConnect } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
-import { MongoClient } from "mongodb";
+import { MongoClient } from 'mongodb';
 
 const uri = process.env.MONGODB_URI!;
 const client = new MongoClient(uri);
-const dbName = "IEEE-Website";
+const dbName = 'IEEE-Website';
 
 export async function GET() {
 	await dbConnect();
@@ -15,9 +15,10 @@ export async function GET() {
 	try {
 		const times = await db.collection('Times').find({}).toArray();
 		return NextResponse.json({ success: true, data: times });
-
 	} catch {
-		return NextResponse.json({ success: false, error: 'Failed to fetch times' }, { status: 500 });
+		return NextResponse.json(
+			{ success: false, error: 'Failed to fetch times' },
+			{ status: 500 },
+		);
 	}
-
 }

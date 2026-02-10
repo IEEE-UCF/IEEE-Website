@@ -1,9 +1,9 @@
 // i stole the component i made from another project... will edit later
 
-"use client";
-import Link from "next/link";
-import React from "react";
-import Image from "next/image";
+'use client';
+import Link from 'next/link';
+import React from 'react';
+import Image from 'next/image';
 
 // import { Github, Instagram, Linkedin, Youtube, Facebook } from 'lucide-react';
 
@@ -33,25 +33,67 @@ const Footer: React.FC = () => {
 				</div>
 				<div className="flex flex-col gap-y-1 w-full md:w-auto items-center md:items-start md:justify-center">
 					<div className="flex flex-wrap justify-center md:justify-start gap-x-3 gap-y-2 items-center text-xs md:text-sm">
-						<Link href={"/"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">HOME</Link>
+						<Link
+							href={'/'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							HOME
+						</Link>
 						<span className="text-xl font-[body-font] hidden md:inline">|</span>
-						<Link href={"/about"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">ABOUT</Link>
+						<Link
+							href={'/about'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							ABOUT
+						</Link>
 						<span className="text-xl font-[body-font] hidden md:inline">|</span>
-						<Link href={"/connect"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">CONTACT</Link>
+						<Link
+							href={'/connect'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							CONTACT
+						</Link>
 					</div>
 					<div className="flex flex-wrap justify-center md:justify-start gap-x-3 gap-y-2 items-center text-xs md:text-sm">
-						<Link href={"https://www.ieee.org/accessibility_statement.html"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">ACCESSIBILITY</Link>
+						<Link
+							href={'https://www.ieee.org/accessibility_statement.html'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							ACCESSIBILITY
+						</Link>
 						<span className="text-xl font-[body-font] hidden md:inline">|</span>
-						<Link href={"https://www.ieee.org/nondiscrimination"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">NONDISCRIMINATION POLICY</Link>
+						<Link
+							href={'https://www.ieee.org/nondiscrimination'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							NONDISCRIMINATION POLICY
+						</Link>
 						<span className="text-xl font-[body-font] hidden md:inline">|</span>
-						<Link href={"http://www.ieee-ethics-reporting.org"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">IEEE ETHICS REPORTING</Link>
+						<Link
+							href={'http://www.ieee-ethics-reporting.org'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							IEEE ETHICS REPORTING
+						</Link>
 						<span className="text-xl font-[body-font] hidden md:inline">|</span>
-						<Link href={"https://privacy.ieee.org/policies"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">IEEE PRIVACY POLICY</Link>
+						<Link
+							href={'https://privacy.ieee.org/policies'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							IEEE PRIVACY POLICY
+						</Link>
 						<span className="text-xl font-[body-font] hidden md:inline">|</span>
-						<Link href={"https://www.ieee.org/site_terms_conditions.html"} className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]">TERMS & DISCLOSURES</Link>
+						<Link
+							href={'https://www.ieee.org/site_terms_conditions.html'}
+							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+						>
+							TERMS & DISCLOSURES
+						</Link>
 					</div>
 					<div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center text-xs md:text-base text-center md:text-left w-full">
-                        © Copyright 2025 IEEE – All rights reserved. A public charity, IEEE is the world’s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
+						© Copyright 2025 IEEE – All rights reserved. A public charity, IEEE is the
+						world’s largest technical professional organization dedicated to advancing
+						technology for the benefit of humanity.
 					</div>
 				</div>
 			</div>

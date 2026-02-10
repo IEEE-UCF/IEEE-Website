@@ -1,35 +1,28 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useRef } from "react";
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { Timer } from "@/components/timer";
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Timer } from '@/components/timer';
 
-import Autoplay from "embla-carousel-autoplay";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-} from "@/components/ui/carousel";
-import {
-	Card,
-	CardContent,
-} from "@/components/ui/card";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Autoplay from 'embla-carousel-autoplay';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Card, CardContent } from '@/components/ui/card';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
 	gsap.registerPlugin(ScrollTrigger);
 }
 
 const carouselList = [
-	{ feature: "TECHNICAL WORKSHOPS", photo: "/committees/workshopgif.gif" },
-	{ feature: "EMBEDDED PROJECTS", photo: "/projects/sechardwaregif1.gif" },
-	{ feature: "SOCIAL EVENTS", photo: "/committees/socialgif1.gif" },
-	{ feature: "CAREER DEVELOPMENT", photo: "/committees/prodevgif.gif" },
-	{ feature: "COMMUNITY SERVICE", photo: "/committees/servicegif.gif" },
+	{ feature: 'TECHNICAL WORKSHOPS', photo: '/committees/workshopgif.gif' },
+	{ feature: 'EMBEDDED PROJECTS', photo: '/projects/sechardwaregif1.gif' },
+	{ feature: 'SOCIAL EVENTS', photo: '/committees/socialgif1.gif' },
+	{ feature: 'CAREER DEVELOPMENT', photo: '/committees/prodevgif.gif' },
+	{ feature: 'COMMUNITY SERVICE', photo: '/committees/servicegif.gif' },
 ];
 
 export default function Home() {
@@ -37,7 +30,7 @@ export default function Home() {
 	const eventsRef = useRef(null);
 
 	useEffect(() => {
-		if (typeof window !== "undefined") {
+		if (typeof window !== 'undefined') {
 			gsap.fromTo(
 				carouselRef.current,
 				{ opacity: 0, y: 100 },
@@ -45,10 +38,10 @@ export default function Home() {
 					opacity: 1,
 					y: 0,
 					duration: 1,
-					ease: "power3.out",
+					ease: 'power3.out',
 					scrollTrigger: {
 						trigger: carouselRef.current,
-						start: "top 80%",
+						start: 'top 80%',
 					},
 				},
 			);
@@ -60,10 +53,10 @@ export default function Home() {
 					opacity: 1,
 					y: 0,
 					duration: 1,
-					ease: "power3.out",
+					ease: 'power3.out',
 					scrollTrigger: {
 						trigger: eventsRef.current,
-						start: "top 85%",
+						start: 'top 85%',
 					},
 				},
 			);
@@ -82,14 +75,15 @@ export default function Home() {
 								<div className="flex flex-col items-start text-center xl:text-left justify-center self-center">
 									<div className="max-w-full my-8">
 										<div className="font-[display-font] text-[var(--ieee-bright-yellow)] text-7xl lg:text-8xl">
-                      IEEE @ UCF
+											IEEE @ UCF
 										</div>
 										<div className="font-[subheading-font] text-white text-4xl lg:text-5xl">
-                      STUDENT CHAPTER
+											STUDENT CHAPTER
 										</div>
 										<div className="text-white font-[body-italic-font] text-sm md:text-xl lg:text-2xl my-3 flex flex-wrap w-fit">
 											<div className="typewriter flex flex-wrap whitespace-normal break-words">
-                        From circuits to embedded systems, we engineer the future
+												From circuits to embedded systems, we engineer the
+												future
 											</div>
 										</div>
 									</div>
@@ -101,7 +95,7 @@ export default function Home() {
 											<div className="space-y-2">
 												<Link href="/about">
 													<p className="text-white text-xl font-[body-italic-font]">
-                            LEARN MORE
+														LEARN MORE
 													</p>
 												</Link>
 											</div>
@@ -128,7 +122,6 @@ export default function Home() {
 								<div className="particle"></div>
 							</div>
 						</div>
-
 					</div>
 					<div className="relative -translate-y-20 w-full overflow-hidden leading-none">
 						<svg
@@ -151,19 +144,15 @@ export default function Home() {
 							/>
 						</svg>
 					</div>
-
-
 				</div>
 
-
 				<div className="[background:radial-gradient(125%_125%_at_50%_10%,#3d3110_40%,#000000_100%)] -translate-y-20 ">
-
 					<div
 						ref={carouselRef}
 						className="relative z-10 -translate-y-1/2 flex justify-center w-full"
 					>
 						<Carousel
-							opts={{ align: "center" }}
+							opts={{ align: 'center' }}
 							plugins={[Autoplay({ delay: 2000 })]}
 							className="w-3/4"
 						>
@@ -177,7 +166,7 @@ export default function Home() {
 											<div className="cursor-grab group relative w-full overflow-hidden p-[3px] bg-transparent transition-transform hover:scale-102 rounded-sm">
 												<div
 													className="animated-border absolute inset-0 p-20 bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] transition-all duration-300 animate-spin -z-10 rounded-sm"
-													style={{ animationDuration: "6s" }}
+													style={{ animationDuration: '6s' }}
 												/>
 												<Card className="relative z-10 p-0 rounded-sm border-none w-65 h-90 sm:w-70 sm:h-70 md:h-85 md:w-85 xl:w-90 xl:h-90 transition shadow-md overflow-hidden group">
 													<CardContent className="flex flex-col justify-end h-full w-full p-0 ">
@@ -203,7 +192,6 @@ export default function Home() {
 							</CarouselContent>
 						</Carousel>
 					</div>
-
 				</div>
 
 				<div className="relative -translate-y-40 w-full overflow-hidden leading-none">
@@ -228,22 +216,15 @@ export default function Home() {
 					</svg>
 				</div>
 
-
-				<div
-					className="flex flex-col w-full p-5 bg-[#0d0a03] -mt-40"
-				>
+				<div className="flex flex-col w-full p-5 bg-[#0d0a03] -mt-40">
 					<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl lg:text-6xl text-center my-5">
-            UPCOMING EVENTS
+						UPCOMING EVENTS
 					</div>
 
-					<div
-						ref={eventsRef}>
-
+					<div ref={eventsRef}>
 						<div className="p-1 sm:p-9 flex flex-row items-center flex-wrap">
 							<Timer />
 						</div>
-
-
 					</div>
 				</div>
 

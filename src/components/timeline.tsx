@@ -1,12 +1,6 @@
 export default function timeline() {
-	return (
-		<div>
-
-            hi
-		</div>
-
-	);
-};
+	return <div>hi</div>;
+}
 // "use client";
 
 // import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
@@ -110,7 +104,6 @@ export default function timeline() {
 
 //       }
 
-
 //     });
 
 //       const transformedData: TimelineData[] = Object.keys(groupedEvents).map((month) => ({
@@ -129,7 +122,6 @@ export default function timeline() {
 //       });
 
 //       setTimelineData(transformedData);
-
 
 //   };
 //     return (
@@ -154,10 +146,8 @@ export default function timeline() {
 
 //             ))}
 
-
 //         </VerticalTimeline>
 //       </div>
-
 
 //     );
 

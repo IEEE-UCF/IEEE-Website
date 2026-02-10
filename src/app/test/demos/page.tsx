@@ -1,7 +1,7 @@
-import { Navbar } from "@/components/navbar";
-import { FormPopup } from "@/components/dashboard/newEventForm";
-import { EventList } from "@/components/dashboard/event-list";
-import { AddAttendeeButton } from "@/components/demos/AddAttendeeButton";
+import { Navbar } from '@/components/navbar';
+import { FormPopup } from '@/components/dashboard/newEventForm';
+import { EventList } from '@/components/dashboard/event-list';
+import { AddAttendeeButton } from '@/components/demos/AddAttendeeButton';
 
 export default function Dashboard() {
 	return (
@@ -18,4 +18,4 @@ export default function Dashboard() {
 			</div>
 		</div>
 	);
-};
+}

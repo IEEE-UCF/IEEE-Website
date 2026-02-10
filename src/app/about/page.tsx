@@ -1,14 +1,15 @@
-import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
+import { Footer } from '@/components/footer';
+import { Navbar } from '@/components/navbar';
 
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
-import AboutHeader from "@/components/pg/aboutheader";
-import AboutIEEE from "@/components/pg/aboutieee";
-import AboutOfficers from "@/components/pg/aboutofficers";
+import AboutHeader from '@/components/pg/aboutheader';
+import AboutIEEE from '@/components/pg/aboutieee';
+import AboutOfficers from '@/components/pg/aboutofficers';
 
-const pageTitle = "About | IEEE UCF";
-const pageDescription = "IEEE UCF is one of the largest IEEE student chapters in the nation, fostering collaboration, technical growth, and career success for over 300 members in diverse engineering fields.";
+const pageTitle = 'About | IEEE UCF';
+const pageDescription =
+	'IEEE UCF is one of the largest IEEE student chapters in the nation, fostering collaboration, technical growth, and career success for over 300 members in diverse engineering fields.';
 
 export const metadata: Metadata = {
 	title: pageTitle,
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: pageTitle,
 		description: pageDescription,
-		url: "https://www.ieeeucf.com/about",
-		type: "website",
+		url: 'https://www.ieeeucf.com/about',
+		type: 'website',
 	},
 };
 
@@ -28,7 +29,7 @@ export default function About() {
 				<div className="absolute z-4 w-full h-fit inset-0 items-center px-5">
 					<Navbar />
 				</div>
-				<AboutHeader/>
+				<AboutHeader />
 			</div>
 			<div className="relative -translate-y-20 w-full overflow-hidden leading-none">
 				<svg
@@ -53,8 +54,10 @@ export default function About() {
 			</div>
 			<div className="flex -translate-y-20  flex-col w-full justify-center gap-x-3 bg-black">
 				<div className="h-auto p-10 sm:p-20 sm:w-10/12 text-white place-self-center">
-					<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-4xl">IEEE @ UCF IN A NUTSHELL</div>
-					<AboutIEEE/>
+					<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-4xl">
+						IEEE @ UCF IN A NUTSHELL
+					</div>
+					<AboutIEEE />
 				</div>
 			</div>
 			<div className="relative -translate-y-40 w-full overflow-hidden leading-none">
@@ -79,11 +82,11 @@ export default function About() {
 				</svg>
 			</div>
 			<div className="bg-[#262522] -translate-y-40 ">
-				<AboutOfficers/>
+				<AboutOfficers />
 			</div>
 			<div className="-mt-40">
 				<Footer />
 			</div>
 		</div>
 	);
-};
+}

@@ -1,16 +1,16 @@
 [
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
-        "title": "Software Committee",
-        "slug": "software",
-        "about": "Build and maintain software projects.",
-        "chair_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
-    },
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
-        "title": "Hardware Committee",
-        "slug": "hardware",
-        "about": "Design and build hardware.",
-        "chair_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"
-    }
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a31",
+		"title": "Software Committee",
+		"slug": "software",
+		"about": "Build and maintain software projects.",
+		"chair_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+	},
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32",
+		"title": "Hardware Committee",
+		"slug": "hardware",
+		"about": "Design and build hardware.",
+		"chair_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"
+	}
 ]

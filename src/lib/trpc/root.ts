@@ -1,10 +1,10 @@
-import { memberRouter } from "@/lib/trpc/routers/member";
-import { createTRPCRouter, createCallerFactory } from "./trpc";
-import { authRouter } from "./routers/auth";
+import { memberRouter } from '@/lib/trpc/routers/member';
+import { createTRPCRouter, createCallerFactory } from './trpc';
+import { authRouter } from './routers/auth';
 
 export const appRouter = createTRPCRouter({
-  member: memberRouter,
-  auth: authRouter
+	member: memberRouter,
+	auth: authRouter,
 });
 
 export type AppRouter = typeof appRouter;

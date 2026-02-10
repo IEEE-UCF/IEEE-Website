@@ -1,6 +1,7 @@
 # Database Testing
 
 ## DB Setup
+
 ```bash
 docker compose up --detach
 bun seed.ts --wipe <db_url>
@@ -10,12 +11,13 @@ bun seed.ts --all <db_url>
 ```
 
 ### Seed Script Flags
+
 - `--wipe`: wipe all tables before seeding
 - `--seed`: seed all tables (default)
 - `--seed [comma-separated table names]`: seed only specified tables (e.g., `--seed members,events`)
 
-
 ## dbdiagram.io Code
+
 **DBML for Database Diagram (dbdiagram.io)**
 
 Copy and paste the code below into the editor at https://dbdiagram.io to generate a visual Entity-Relationship Diagram (ERD) of the database.
@@ -204,7 +206,7 @@ Ref: member_permissions.granted_by_id > members.id
 
 Ref: events.host_id > committees.id
 Ref: events.host_id > projects.id
-Ref: events.host_id > members.id 
+Ref: events.host_id > members.id
 
 Ref: member_permissions.context_id > committees.id
 Ref: member_permissions.context_id > projects.id

@@ -1,14 +1,14 @@
 [
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a41",
-        "title": "IEEE Website",
-        "slug": "ieee-website",
-        "overview": "The official website for the IEEE student chapter."
-    },
-    {
-        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a42",
-        "title": "Micromouse Competition",
-        "slug": "micromouse",
-        "overview": "Build a robot to solve a maze."
-    }
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a41",
+		"title": "IEEE Website",
+		"slug": "ieee-website",
+		"overview": "The official website for the IEEE student chapter."
+	},
+	{
+		"id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a42",
+		"title": "Micromouse Competition",
+		"slug": "micromouse",
+		"overview": "Build a robot to solve a maze."
+	}
 ]

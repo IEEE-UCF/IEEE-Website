@@ -1,8 +1,7 @@
-"use client";
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function AboutHeader() {
 	const [isFlipped, setIsFlipped] = useState<boolean>(true);
@@ -13,9 +12,13 @@ export default function AboutHeader() {
 
 			<div className="flex flex-row my-10 p-40 justify-center absolute z-3 w-screen">
 				<div className="flex flex-col items-center justify-center self-center text-center gap-y-3 float">
-					<div className=" font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">WHAT IS IEEE?</div>
+					<div className=" font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">
+						WHAT IS IEEE?
+					</div>
 
-					<div className="text-white font-[body-font] text-xl lg:text-3xl flex flex-wrap max-w-screen px-3">ieee • /aɪ ˈtɹɪp.əl iː/ • institute of electrical and electronics engineers</div>
+					<div className="text-white font-[body-font] text-xl lg:text-3xl flex flex-wrap max-w-screen px-3">
+						ieee • /aɪ ˈtɹɪp.əl iː/ • institute of electrical and electronics engineers
+					</div>
 
 					<div className="mt-[23vh]"></div>
 
@@ -32,16 +35,22 @@ export default function AboutHeader() {
 								{isFlipped ? (
 									<div>
 										<div className="font-[subheading-italic-font] text-[var(--ieee-bright-yellow)] text-xl sm:text-2xl">
-                                        We are the innovators of tomorrow.
+											We are the innovators of tomorrow.
 										</div>
 										<div className="font-[body-font] text-md sm:text-xl">
-                                        Located at the University of Central Florida, our IEEE student chapter is one of the largest in the nation and boasts over 300 active members. We foster technical experience through a collaborative environment, ultimately paving the way for successful careers in diverse engineering fields.
-
+											Located at the University of Central Florida, our IEEE
+											student chapter is one of the largest in the nation and
+											boasts over 300 active members. We foster technical
+											experience through a collaborative environment,
+											ultimately paving the way for successful careers in
+											diverse engineering fields.
 										</div>
 									</div>
 								) : (
 									<div>
-										<div className="font-[subheading-italic-font] text-2xl">Want to see our full story?</div>
+										<div className="font-[subheading-italic-font] text-2xl">
+											Want to see our full story?
+										</div>
 										<div className="my-6"></div>
 										<div className="place-self-center w-fit hover:scale-110 transition-transform hover:text-[var(--ieee-bright-yellow)] text-2xl font-[heading-font]">
 											<div className="relative group cursor-pointer">
@@ -72,9 +81,6 @@ export default function AboutHeader() {
 					height={2000}
 				/>
 			</div>
-
 		</div>
-
 	);
-
 }

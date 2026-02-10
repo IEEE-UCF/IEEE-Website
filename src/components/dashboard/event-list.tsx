@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { type Event } from '@/lib/database/schema';
 
@@ -32,9 +32,13 @@ export const EventList = () => {
 					) : (
 						events.map((event) => (
 							<li key={event.id} className="p-4">
-								<h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
+								<h3 className="text-xl font-semibold text-gray-800">
+									{event.title}
+								</h3>
 								<p className="text-gray-600">{event.location}</p>
-								<p className="text-gray-600">{new Date(event.startTime).toLocaleString()}</p>
+								<p className="text-gray-600">
+									{new Date(event.startTime).toLocaleString()}
+								</p>
 							</li>
 						))
 					)}

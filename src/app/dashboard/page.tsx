@@ -1,6 +1,6 @@
-import { Navbar } from "@/components/navbar";
-import { EventList } from "@/components/dashboard/event-list";
-import { Member_QR_Code } from "@/components/dashboard/member-qr-code";
+import { Navbar } from '@/components/navbar';
+import { EventList } from '@/components/dashboard/event-list';
+import { Member_QR_Code } from '@/components/dashboard/member-qr-code';
 
 export default function Dashboard() {
 	return (
@@ -34,4 +34,4 @@ export default function Dashboard() {
 			</main>
 		</div>
 	);
-};
+}
