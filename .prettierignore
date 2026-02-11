@@ -1,0 +1,14 @@
+**/node_modules
+**/.next
+**/.vercel
+**/drizzle
+**/components.json
+**/drizzle.config.ts
+**/eslint.config.mjs
+**/next.config.ts
+**/package-lock.json
+**/package.json
+**/pnpm-lock.yaml
+**/postcss.config.mjs
+**/tsconfig.drizzle.json
+**/tsconfig.json
