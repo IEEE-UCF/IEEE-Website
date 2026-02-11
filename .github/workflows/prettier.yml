@@ -20,6 +20,6 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        run: pnpm ci
+        run: npm ci
       - name: Run Prettier check
-        run: pnpm run format:check
+        run: npm run format:check
