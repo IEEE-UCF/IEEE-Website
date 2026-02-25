@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
       authorization: "https://discord.com/api/oauth2/authorize?scope=identify+email",
+      allowDangerousEmailAccountLinking: true,
       profile: (profile: DiscordProfile) => {
         return {
           id: profile.id,
@@ -44,11 +45,28 @@ export const authOptions: NextAuthOptions = {
       }
 
       try {
-        const [account] = await db
+        let account = null;
+
+        /*
+        on slow networks, sometimes oauth callback has completed and nextauth makes the session but the accounts table may have not fully completed before the callback fires so sometimes account is NULL
+        and that's why ppl see no discord error even tho they are authenticated bc the registration page is checking for the session object
+        */
+        for(let i=0; i<3; i++) {
+          const [result] = await db
           .select()
           .from(Accounts)
           .where(eq(Accounts.userId, user.id)) // u.id is the providerAccountId
           .limit(1);
+
+          if(result) {
+            account = result;
+            break;
+            
+          }
+
+          if (i < 2) await new Promise(r => setTimeout(r, 200 * (i + 1)));
+
+        }
 
         // get member info if exists
         const [member] = await db

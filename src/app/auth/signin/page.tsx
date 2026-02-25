@@ -8,13 +8,19 @@ import Signinblock from "@/components/signin";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
+export const dynamic = 'force-dynamic';
+
 export default async function SignInPage() {
-  const session = await getServerSession(authOptions);
+  let session = null;
+  for (let i = 0; i < 3; i++) {
+    session = await getServerSession(authOptions);
+    if (session) break;
+    await new Promise(r => setTimeout(r, 300 * (i + 1)));
+  }
 
   if (session) {
     if (!session.user.discordId) {
-      redirect("/auth/error"); 
-      return;
+      redirect("/auth/error");
     }
 
     const [member] = await db

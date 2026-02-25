@@ -65,7 +65,7 @@ export const memberRouter = createTRPCRouter({
 
         // collect the discord id from the user or session created when they logged in with discord auth
         const discordID = ctx.session.user.discordId || ctx.session.user.id;
-        
+
         // insert the new member
         const newMember = await db
           .insert(Members)
