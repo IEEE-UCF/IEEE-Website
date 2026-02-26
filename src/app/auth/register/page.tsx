@@ -25,6 +25,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc/client";
+const { data: session, status, update } = useSession(); 
 
 export default function RegisterPage() {
   const { data: session, status } = useSession();
@@ -46,8 +47,17 @@ export default function RegisterPage() {
   });
 
   useEffect(() => {
-    if (status === "authenticated" && session?.user?.memberId) {
-      router.push("/dashboard");
+    if (status === "loading") return;
+
+    if (status === "unauthenticated") return;
+
+    if (status === "authenticated") {
+      update();
+
+      if(session?.user?.memberId) {
+        router.push("/dashboard");
+
+      }
     }
   }, [status, session, router]);
 

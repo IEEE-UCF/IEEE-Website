@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { db } from "@/lib/database/index";
-import { Members } from "@/lib/database/schema";
+import { Members, Users } from "@/lib/database/schema";
 import { eq } from "drizzle-orm";
 import { 
   protectedProcedure, 
@@ -65,7 +65,20 @@ export const memberRouter = createTRPCRouter({
         }
 
         // collect the discord id from the user or session created when they logged in with discord auth
-        const discordID = ctx.session.user.discordId || ctx.session.user.id;
+        // const discordID = ctx.session.user.discordId || ctx.session.user.id; not safe
+        const [userRecord] = await db
+          .select({ discordId: Users.discordId })
+          .from(Users)
+          .where(eq(Users.id, ctx.session.user.id))
+          .limit(1);
+
+        const discordID = userRecord?.discordId ?? ctx.session.user.discordId ?? null;
+        if (!discordID) {
+          throw new TRPCError({
+            code: "PRECONDITION_FAILED",
+            message: "Discord account not linked. Please sign out and sign in again with Discord.",
+          });
+        }
         
         // insert the new member
         const newMember = await db

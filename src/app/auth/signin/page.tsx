@@ -13,7 +13,7 @@ export default async function SignInPage() {
 
   if (session?.user) {
     const [member] = await db
-      .select()
+      .select({id: Members.id})
       .from(Members)
       .where(eq(Members.userId, session.user.id))
       .limit(1);

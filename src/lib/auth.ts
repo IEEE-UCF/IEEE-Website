@@ -5,6 +5,7 @@ import { db } from '@/lib/database/index';
 import { Accounts, Users, Sessions, Members } from '@/lib/database/schema'; 
 import type { DiscordProfile } from "next-auth/providers/discord";
 import { eq } from "drizzle-orm";
+import { User } from "lucide-react";
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db, {
@@ -38,17 +39,60 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
+
+    async signIn({user, account}) {
+      if(account?.provider==="discord" && account.providerAccountId && user.id) {
+        try {
+          await db.update(Users).set({discordId: account.providerAccountId}).where(eq(Users.id, user.id));
+
+        } catch (e) {
+          console.log("DiscordID syncing unfortunately failed ", e);
+
+        }
+
+      }
+      return true;
+
+    },
+
     async session({ session, user }) {
       if (!user) {
         return session;
       }
 
       try {
-        const [account] = await db
-          .select()
-          .from(Accounts)
-          .where(eq(Accounts.userId, user.id)) // u.id is the providerAccountId
-          .limit(1);
+        let account = null;
+        for(let i=0; i<3; i++) {
+          const[foundAccount] = await db
+            .select()
+            .from(Accounts)
+            .where(eq(Accounts.userId, user.id)) // u.id is the providerAccountId
+            .limit(1);
+          if(foundAccount) {
+            account = foundAccount;
+            break;
+
+          }
+          if (i<2) await new Promise(r => setTimeout(r, 150 * (i+1)));
+
+        }
+          
+        // sync discordid onto users row
+        if (account?.providerAccountId) {
+          const [existingUser] = await db
+            .select({ discordId: Users.discordId })
+            .from(Users)
+            .where(eq(Users.id, user.id))
+            .limit(1);
+
+          if (!existingUser?.discordId) {
+            await db
+              .update(Users)
+              .set({ discordId: account.providerAccountId })
+              .where(eq(Users.id, user.id));
+          }
+        }
+
 
         // get member info if exists
         const [member] = await db
