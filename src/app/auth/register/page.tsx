@@ -1,7 +1,9 @@
 "use client";
-
+//pls deploy
 // import { TRPCClientError } from "@trpc/client";
 // import { AppRouter } from "@/lib/trpc/root";
+
+import { majorEnums } from "@/lib/database/schema";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,6 +14,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
+  // please deploy
   Select,
   SelectContent,
   SelectItem,
@@ -20,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc/client";
 
 export default function RegisterPage() {
@@ -28,11 +31,17 @@ export default function RegisterPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [major, setMajor] = useState("");
 
   const completeRegistration = trpc.member.completeRegistration.useMutation({
     onSuccess: () => {
-      router.push("/");
+      window.location.href =("/");
     },
+    onError: (err) => {
+      console.error("Registration error:", err);
+      setError(err.message || "Failed to complete registration");
+      setIsSubmitting(false);
+    }
     
   });
 
@@ -42,14 +51,14 @@ export default function RegisterPage() {
     }
   }, [status, session, router]);
 
-  const handleDiscordSignIn = async () => {
+  const handleDiscordSignIn = useCallback(async() => {
     await signIn("discord", { 
       callbackUrl: "/auth/register",
       redirect: true 
     });
-  };
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) =>  {
     e.preventDefault();
     
     if (!session?.user) {
@@ -78,19 +87,19 @@ export default function RegisterPage() {
         phoneNumber: formData.get("phone_num") as string || undefined,
         gender: formData.get("gender") as "M" | "F" | "NB" | "O" | "PNTS",
         graduationYear: parseInt(formData.get("ucf_grad_year") as string),
-        major: formData.get("ucf_major") as string,
+        major: formData.get("major") as (typeof majorEnums)["enumValues"][number],
       });
     } catch (err) {
       console.error("Registration error:", err);
       setIsSubmitting(false);
     }
-  };
+ },  []);
 
 
   return (
-    <div className="flex justify-center min-h-screen items-center bg-black [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
+    <div className="flex justify-center min-h-screen items-center bg-[var(--ieee-dark-grey)]">
 
-       <div className="relative w-full max-w-lg p-5 m-20 rounded-lg shadow-lg  bg-black h-[80vh] border ">
+       <div className="relative w-full max-w-lg p-5 lg:m-10 rounded-lg shadow-lg  bg-black sm:h-[90vh] justify-center border ">
         
         <div className="absolute inset-0  bg-black opacity-70 blur-3xl rounded-lg pointer-events-none"/>
         <div className="relative z-10 max-h-full overflow-y-auto">
@@ -313,15 +322,21 @@ export default function RegisterPage() {
                   </Field>
                   
                   <Field>
-                    <FieldLabel htmlFor="ucf_major">
+                    <FieldLabel htmlFor="major">
                       Major
                     </FieldLabel>
-                    <Input
-                      id="ucf_major"
-                      name="ucf_major"
-                      placeholder="Electrical Engineering"
-                      required
-                    />
+                    <Select name="major" value={major} onValueChange={setMajor} required>
+                      <SelectTrigger id="major">
+                        <SelectValue placeholder="Select major" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        {majorEnums.enumValues.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </Field>
                 </FieldGroup>
 

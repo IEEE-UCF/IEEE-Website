@@ -11,20 +11,18 @@ import { Footer } from "@/components/footer";
 export default async function SignInPage() {
   const session = await getServerSession(authOptions);
 
-  if (session) {
-    if (!session.user.discordId) {
-      redirect("/auth/error"); 
-      return;
-    }
-
+  if (session?.user) {
     const [member] = await db
       .select()
       .from(Members)
-      .where(eq(Members.discordID, session.user.discordId))
+      .where(eq(Members.userId, session.user.id))
       .limit(1);
 
-    if (member) redirect("/dashboard");
-    else redirect("/auth/register");
+    if (member) {
+      redirect("/dashboard");
+    } else {
+      redirect("/auth/register");
+    }
   }
 
   return (

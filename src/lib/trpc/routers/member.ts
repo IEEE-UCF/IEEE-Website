@@ -11,6 +11,8 @@ import {
   // publicProcedure
 } from "../trpc";
 
+import { majorEnums } from "@/lib/database/schema";
+
 // Validation schemas
 const memberRegistrationSchema = z.object({
   firstName: z.string().min(1, "First name is required").max(255),
@@ -22,7 +24,7 @@ const memberRegistrationSchema = z.object({
   phoneNumber: z.string().max(20).optional(),
   gender: z.enum(["M", "F", "NB", "O", "PNTS"]),
   graduationYear: z.number().int().min(2020).max(2035),
-  major: z.string().min(1, "Major is required").max(255),
+  major: z.enum(majorEnums.enumValues),
 });
 
 const memberUpdateSchema = z.object({
@@ -31,10 +33,9 @@ const memberUpdateSchema = z.object({
   lastName: z.string().min(1).max(255).optional(),
   biography: z.string().optional(),
   phoneNumber: z.string().max(20).optional(),
-  major: z.string().max(255).optional(),
+  major: z.enum(majorEnums.enumValues),
   graduationYear: z.number().int().min(2020).max(2035).optional(),
   gender: z.enum(["M", "F", "NB", "O", "PNTS"]).optional(),
-  resumeURL: z.string().url().optional(),
   linkedinURL: z.string().url().optional(),
   githubURL: z.string().url().optional(),
   websiteURL: z.string().url().optional(),
