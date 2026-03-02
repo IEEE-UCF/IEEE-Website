@@ -125,8 +125,8 @@ export default function SponsorshipsPage() {
 
 
 
-            <div className="p-10 bg-black m-10 rounded-xl">
-                <iframe src="/IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" width="100%" height="700px"/>
+            <div className="p-10 bg-black lg:m-10 rounded-xl">
+                <iframe id="pdf-js-viewer" src="/IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" width="100%" height="700px"/>
                 <div className="my-10"></div>
                 
                 <a href="/IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" download="IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" className="text-white flex flex-row align-middle place-self-center lg:place-self-start items-center gap-x-5 lg:gap-x-10">
