@@ -72,27 +72,31 @@ export const memberRouter = createTRPCRouter({
           .where(eq(Users.id, ctx.session.user.id))
           .limit(1);
 
-        const discordID = userRecord?.discordId ?? ctx.session.user.discordId ?? null;
-        if (!discordID) {
+        // Also check Accounts table as a secondary source
+        const discordId =
+          userRecord?.discordId ??
+          ctx.session.user.discordId ??
+          null;
+
+        if (!discordId) {
           throw new TRPCError({
             code: "PRECONDITION_FAILED",
-            message: "Discord account not linked. Please sign out and sign in again with Discord.",
+            message: "Discord account not linked. Please sign out and sign back in with Discord.",
           });
         }
-        
-        // insert the new member
+
         const newMember = await db
           .insert(Members)
           .values({
             userId: ctx.session.user.id,
-            discordID: discordID,
+            discordID: discordId,
             firstName: input.firstName,
-            middleName: input.middleName || null,
+            middleName: input.middleName ?? null,
             lastName: input.lastName,
             personalEmail: input.personalEmail,
             ucfEmail: input.ucfEmail,
             dateOfBirth: input.dateOfBirth,
-            phoneNumber: input.phoneNumber || null,
+            phoneNumber: input.phoneNumber ?? null,
             gender: input.gender,
             graduationYear: input.graduationYear,
             major: input.major,
@@ -108,22 +112,18 @@ export const memberRouter = createTRPCRouter({
             websiteURL: null,
           })
           .returning();
-          
 
         return {
           success: true,
           member: newMember[0],
         };
       } catch (error) {
-        
-        // error with completion
         if (error instanceof TRPCError) throw error;
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: error instanceof Error ? error.message : "Failed to complete registration",
         });
       }
-
     }),
 
   updateMyProfile: memberProcedure

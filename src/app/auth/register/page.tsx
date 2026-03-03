@@ -48,38 +48,41 @@ export default function RegisterPage() {
   useEffect(() => {
     if (status === "loading") return;
 
-    if (status === "unauthenticated") return;
-
     if (status === "authenticated") {
-      update();
-
-      if(session?.user?.memberId) {
+      if (session?.user?.memberId) {
         router.push("/dashboard");
+        return;
+      }
 
+      if (!session?.user?.discordId) {
+        const timer = setTimeout(() => router.refresh(), 1000);
+        return () => clearTimeout(timer);
       }
     }
+
   }, [status, session, router]);
 
-  const handleDiscordSignIn = useCallback(async() => {
-    await signIn("discord", { 
+  const handleDiscordSignIn = useCallback(async () => {
+    await signIn("discord", {
       callbackUrl: "/auth/register",
-      redirect: true 
+      redirect: true,
     });
   }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) =>  {
     e.preventDefault();
     
-    if (!session?.user) {
-      setError("Please sign in with Discord first");
+    if (!session?.user?.discordId) {
+      setError("Discord account not fully linked yet. Please wait a moment and try again.");
+      router.refresh();
       return;
     }
 
-    setIsSubmitting(true);
+     setIsSubmitting(true);
     setError(null);
 
     const formData = new FormData(e.currentTarget);
-    
+
     const dobMonth = formData.get("dob_month") as string;
     const dobDay = formData.get("dob_day") as string;
     const dobYear = formData.get("dob_year") as string;
@@ -99,10 +102,21 @@ export default function RegisterPage() {
         major: formData.get("major") as (typeof majorEnums)["enumValues"][number],
       });
     } catch (err) {
-      console.error("Registration error:", err);
+      console.error("Unexpected registration error:", err);
       setIsSubmitting(false);
     }
- },  []);
+  }, [session, completeRegistration, router]);
+
+
+  if (status === "loading" || (status === "authenticated" && !session?.user?.discordId)) {
+    return (
+      <div className="flex justify-center min-h-screen items-center bg-[var(--ieee-dark-grey)]">
+        <div className="text-white text-lg font-[heading-font] animate-pulse">
+          Connecting...
+        </div>
+      </div>
+    );
+  }
 
 
   return (

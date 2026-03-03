@@ -19,13 +19,20 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
       authorization: "https://discord.com/api/oauth2/authorize?scope=identify+email",
+      allowDangerousEmailAccountLinking: true,
       profile: (profile: DiscordProfile) => {
+        let avatarUrl: string | null = null;
+        if (profile.avatar) {
+          const ext = profile.avatar.startsWith('a_') ? 'gif' : 'png';
+          avatarUrl = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.${ext}`;
+        }
+
         return {
           id: profile.id,
           name: profile.username,
           email: profile.email,
           image: profile.avatar 
-            ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
+            ? avatarUrl
             : null,
         };
       },
@@ -41,15 +48,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
 
     async signIn({user, account}) {
-      if(account?.provider==="discord" && account.providerAccountId && user.id) {
+       if (account?.provider === "discord" && account.providerAccountId && user.id) {
         try {
-          await db.update(Users).set({discordId: account.providerAccountId}).where(eq(Users.id, user.id));
-
+          await db
+            .update(Users)
+            .set({ discordId: account.providerAccountId })
+            .where(eq(Users.id, user.id));
         } catch (e) {
-          console.log("DiscordID syncing unfortunately failed ", e);
-
+          console.error("discordId sync in signIn callback failed:", e);
         }
-
       }
       return true;
 
@@ -61,38 +68,40 @@ export const authOptions: NextAuthOptions = {
       }
 
       try {
-        let account = null;
-        for(let i=0; i<3; i++) {
-          const[foundAccount] = await db
+         let account = null;
+        for (let i = 0; i < 3; i++) {
+          const [foundAccount] = await db
             .select()
             .from(Accounts)
-            .where(eq(Accounts.userId, user.id)) // u.id is the providerAccountId
+            .where(eq(Accounts.userId, user.id))
             .limit(1);
-          if(foundAccount) {
+
+          if (foundAccount) {
             account = foundAccount;
             break;
-
           }
-          if (i<2) await new Promise(r => setTimeout(r, 150 * (i+1)));
+
+          if (i < 2) await new Promise(r => setTimeout(r, 150 * (i + 1)));
 
         }
           
-        // sync discordid onto users row
-        if (account?.providerAccountId) {
-          const [existingUser] = await db
+        let discordId = account?.providerAccountId ?? null;
+        if (!discordId) {
+          const [userRow] = await db
             .select({ discordId: Users.discordId })
             .from(Users)
             .where(eq(Users.id, user.id))
             .limit(1);
-
-          if (!existingUser?.discordId) {
-            await db
-              .update(Users)
-              .set({ discordId: account.providerAccountId })
-              .where(eq(Users.id, user.id));
-          }
+          discordId = userRow?.discordId ?? null;
         }
 
+        if (account?.providerAccountId && !discordId) {
+          await db
+            .update(Users)
+            .set({ discordId: account.providerAccountId })
+            .where(eq(Users.id, user.id));
+          discordId = account.providerAccountId;
+        }
 
         // get member info if exists
         const [member] = await db
@@ -106,11 +115,11 @@ export const authOptions: NextAuthOptions = {
           user: {
             ...session.user,
             id: user.id,
-            discordId: account?.providerAccountId || null,
-            memberId: member?.id || null,
-            officerStatus: member?.officerStatus || false,
-            officerRole: member?.officerRole || null,
-            administrator: member?.administrator || false,
+            discordId,
+            memberId: member?.id ?? null,
+            officerStatus: member?.officerStatus ?? false,
+            officerRole: member?.officerRole ?? null,
+            administrator: member?.administrator ?? false,
           },
         };
       } catch (error) {

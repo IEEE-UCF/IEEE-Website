@@ -121,10 +121,16 @@ export const authRouter = {
         .limit(1);
 
 
-    let discordAvatar = userWithDiscord?.image || null;
-    
+     let discordAvatar = userWithDiscord?.image ?? null;
+
     if (!discordAvatar && userWithDiscord?.discordId) {
-        discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordId) % 5}.png`;
+      try {
+        const avatarIndex = Number(BigInt(userWithDiscord.discordId) % BigInt(6));
+        discordAvatar = `https://cdn.discordapp.com/embed/avatars/${avatarIndex}.png`;
+      } catch {
+        // Fallback for any edge case where discordId isn't a valid BigInt
+        discordAvatar = `https://cdn.discordapp.com/embed/avatars/0.png`;
+      }
     }
 
     return {
