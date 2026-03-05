@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/navbar';
 import { FormPopup } from '@/components/dashboard/newEventForm';
 import { EventList } from '@/components/dashboard/event-list';
+import { Card, CardHeader } from '@/components/ui/card';
 import { QREventScanner } from '@/components/admin/qr_event_scanner';
 
 export default function Dashboard() {
@@ -23,6 +24,11 @@ export default function Dashboard() {
 							<QREventScanner />
 						</div>
 					</section>
+
+					<Card>
+						<CardHeader></CardHeader>
+						Event Check-In
+					</Card>
 
 					{/* Right Panel – Event Management */}
 					<section className="flex-1 rounded-xl border border-gray-800 bg-gray-900/60 p-4 shadow-lg shadow-black/40 lg:max-w-md lg:p-6">

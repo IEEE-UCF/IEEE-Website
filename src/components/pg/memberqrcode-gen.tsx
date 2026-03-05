@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { Card, CardTitle } from '@/components/ui/card';
 
 interface MemberQRCodeProps {
 	memberInfo: string;
@@ -123,8 +124,22 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 
 	// Render the QR code image
 	return (
-		<div className="flex flex-col items-center p-4">
-			<h3 className="text-lg font-semibold mb-2">Member QR Code</h3>
+		// <div className="flex flex-col items-center p-4">
+		// 	<h3 className="text-lg font-semibold mb-2">Member QR Code</h3>
+		// 	{qrCodeUrl && (
+		// 		<img
+		// 			src={qrCodeUrl}
+		// 			alt="Member QR Code"
+		// 			className="border rounded-lg shadow-md"
+		// 			data-testid="qr-code-image"
+		// 		/>
+		// 	)}
+		// 	<p className="text-sm text-gray-600 mt-2">Scan to access member info</p>
+		// </div>
+		<Card>
+			<CardTitle className="text-lg text-white font-[subheading-font]">
+				Member QR Code
+			</CardTitle>
 			{qrCodeUrl && (
 				<img
 					src={qrCodeUrl}
@@ -133,8 +148,8 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 					data-testid="qr-code-image"
 				/>
 			)}
-			<p className="text-sm text-gray-600 mt-2">Scan to access member info</p>
-		</div>
+			<p className="text-gray-300  mb-4">Scan to access member info</p>
+		</Card>
 	);
 };
 

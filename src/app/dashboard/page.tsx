@@ -23,7 +23,7 @@ export default function Dashboard() {
           </section> */}
 
           {/* Left Panel – Upcoming Events */}
-          <Card className="flex-1 rounded-xl border border-gray-800 bg-gray-900/60 p-4 shadow-lg shadow-black/40 lg:p-6">
+          <Card className="flex-1 rounded-xl border border-gray-800 bg-[--ieee-dark-grey] p-4 shadow-lg shadow-black/40 lg:p-6">
             <CardHeader>
               <CardTitle className="mb-4 text-lg font-semibold text-gray-100 lg:text-xl">
                 Upcoming Events!
@@ -42,7 +42,7 @@ export default function Dashboard() {
             </div>
           </section> */}
 
-          <Card className="flex-1 rounded-xl border border-gray-800 bg-gray-900/60 p-4 shadow-lg shadow-black/40 lg:p-6">
+          <Card className="flex-1 rounded-xl border border-gray-800 bg-[var(--ieee-black)]  p-4 shadow-lg shadow-black/40 lg:p-6">
             <CardHeader>
               <CardTitle className="mb-4 text-lg font-semibold text-gray-100 lg:text-xl">
                 Your Check-In QR
