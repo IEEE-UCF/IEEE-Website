@@ -21,14 +21,22 @@ export default function Dashboard() {
             </h2>
             <EventList />
           </section> */}
+          <Card className="flex-1 rounded-xl border border-gray-800 bg-[var(--ieee-black)]  p-4 shadow-lg shadow-black/40 lg:p-6">
+            <CardHeader>
+              <CardTitle className="mb-1 text-lg font-semibold text-gray-100 lg:text-xl">
+                Your Check-In QR
+              </CardTitle>
+            </CardHeader>
+            <div className="flex justify-center">
+              <Member_QR_Code />
+            </div>
+          </Card>
 
           {/* Left Panel – Upcoming Events */}
           <Card className="flex-1 rounded-xl border border-gray-800 bg-[--ieee-dark-grey] p-4 shadow-lg shadow-black/40 lg:p-6">
-            <CardHeader>
-              <CardTitle className="mb-4 text-lg font-semibold text-gray-100 lg:text-xl">
-                Upcoming Events!
-              </CardTitle>
-            </CardHeader>
+            <CardTitle className="-mb-4 text-lg font-semibold text-gray-100 lg:text-xl">
+              Upcoming Events
+            </CardTitle>
             <EventList />
           </Card>
 
@@ -41,17 +49,6 @@ export default function Dashboard() {
               <Member_QR_Code />
             </div>
           </section> */}
-
-          <Card className="flex-1 rounded-xl border border-gray-800 bg-[var(--ieee-black)]  p-4 shadow-lg shadow-black/40 lg:p-6">
-            <CardHeader>
-              <CardTitle className="mb-4 text-lg font-semibold text-gray-100 lg:text-xl">
-                Your Check-In QR
-              </CardTitle>
-            </CardHeader>
-            <div className="flex justify-center">
-              <Member_QR_Code />
-            </div>
-          </Card>
         </div>
       </main>
     </div>
