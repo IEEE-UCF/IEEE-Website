@@ -8,9 +8,9 @@ import { projectRouter } from './routers/project';
 export const appRouter = createTRPCRouter({
 	member: memberRouter,
 	auth: authRouter,
-  event: eventRouter,
-  officer: officerRouter,
-  project: projectRouter,
+	event: eventRouter,
+	officer: officerRouter,
+	project: projectRouter,
 });
 
 export type AppRouter = typeof appRouter;

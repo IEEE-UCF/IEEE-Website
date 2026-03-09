@@ -13,7 +13,7 @@ const compat = new FlatCompat({
 
 const tseslintConfig = [...tseslint.configs.recommended, ...tseslint.configs.stylistic];
 const eslintConfig = eslint.configs.recommended;
-const nextConfig = [...compat.extends('next/core-web-vitals', 'next/typescript')];
+const nextConfig = [...compat.extends('next/core-web-vitals')];
 
 const customConfig = {
 	ignores: [
