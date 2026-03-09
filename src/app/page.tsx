@@ -91,27 +91,27 @@ export default function Home() {
 									<div className="relative group cursor-pointer self-center xl:self-start">
 										<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)]  blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
 
-                    <div className="relative px-12 py-5 bg-[#0c0a09] ring-1 rounded-sm ring-gray-900/5 leading-none flex items-top justify-start space-x-6">
-                      <div className="space-y-2">
-                        <Link href="/about">
-                          <p className="text-white text-xl font-[body-italic-font]">
+										<div className="relative px-12 py-5 bg-[#0c0a09] ring-1 rounded-sm ring-gray-900/5 leading-none flex items-top justify-start space-x-6">
+											<div className="space-y-2">
+												<Link href="/about">
+													<p className="text-white text-xl font-[body-italic-font]">
                             LEARN MORE!
-                          </p>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <Image
-                    className="object-contain mt-10 h-60 w-auto lg:h-110 lg:w-9/12 place-self-center"
-                    src="/iconography/ieeeucfsymbol.png"
-                    alt="IEEE UCF Logo"
-                    width={3000}
-                    height={3000}
-                  />
-                </div>
-              </div>
+													</p>
+												</Link>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<Image
+										className="object-contain mt-10 h-60 w-auto lg:h-110 lg:w-9/12 place-self-center"
+										src="/iconography/ieeeucfsymbol.png"
+										alt="IEEE UCF Logo"
+										width={3000}
+										height={3000}
+									/>
+								</div>
+							</div>
 
 							<div className="absolute w-full left-0 particles-container">
 								<div className="particle"></div>
