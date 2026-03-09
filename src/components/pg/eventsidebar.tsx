@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MapPin, CalendarIcon as Calendar1, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -24,28 +24,25 @@ export default function EventSidebar() {
 	const [currentMonth] = useState(currentMonthName);
 	const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
 	const [showEventOnMobile, setShowEventOnMobile] = useState(false);
+	const featuredRef = useRef<HTMLDivElement>(null);
+	const [featuredHeight, setFeaturedHeight] = useState<number | null>(null);
 
 	const now = new Date();
 
-	// trpc.event.getAll already returns Eastern-formatted strings and active-only events
 	const { data: rawEvents = [] } = trpc.event.getAll.useQuery();
 
-	// Map and filter to future events only
 	const eventData: Event[] = rawEvents
 		.filter((e) => {
-			// Use startTimeRaw (ISO UTC) for reliable Date parsing — never parse the
-			// Eastern-formatted display string ("March 9, 2026 7:30 PM") with new Date()
-			// because that format is not reliably parseable across browsers.
 			const parsed = new Date(e.startTimeRaw);
 			return !isNaN(parsed.getTime()) ? parsed > now : true;
 		})
 		.map((e) => ({
 			eventName: e.title,
-			eventDate: e.startTime, // formatted Eastern string — display only
+			eventDate: e.startTime,
 			eventDesc: e.description,
 			eventAddress: e.location,
 			eventFlyer: e.flyerUrl ?? null,
-			_sortDate: new Date(e.startTimeRaw).getTime(), // always valid ISO → reliable sort
+			_sortDate: new Date(e.startTimeRaw).getTime(),
 		}))
 		.sort((a, b) => a._sortDate - b._sortDate);
 
@@ -54,6 +51,18 @@ export default function EventSidebar() {
 			setCurrentEvent(eventData[0]);
 		}
 	}, [eventData, currentEvent]);
+
+	// Measure featured panel height after render
+	useEffect(() => {
+		if (!featuredRef.current) return;
+		const observer = new ResizeObserver(() => {
+			if (featuredRef.current) {
+				setFeaturedHeight(featuredRef.current.offsetHeight);
+			}
+		});
+		observer.observe(featuredRef.current);
+		return () => observer.disconnect();
+	}, [currentEvent]);
 
 	const handleEventSelect = (event: Event) => {
 		setCurrentEvent(event);
@@ -79,11 +88,14 @@ export default function EventSidebar() {
 						and beyond. Click on each event to learn more.
 					</div>
 				</div>
-				<div className="flex flex-row h-fit w-full justify-between">
+				<div className="flex flex-row h-fit w-full justify-between items-start">
 					{/* Main event display */}
-					<div className={`lg:block w-3/4 ${showEventOnMobile ? 'hidden' : 'hidden lg:block'}`}>
+					<div
+						ref={featuredRef}
+						className={`lg:block w-3/4 ${showEventOnMobile ? 'hidden' : 'hidden lg:block'}`}
+					>
 						{currentEvent ? (
-							<div className="relative group h-[60vh] lg:h-[90vh]">
+							<div className="relative group h-fit">
 								<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-50"></div>
 								<div className="relative h-full bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-sm leading-none flex items-top justify-start space-x-6">
 									<div className="flex flex-row h-full rounded-sm p-10 gap-x-10 w-[70vw] xl:w-full">
@@ -116,8 +128,8 @@ export default function EventSidebar() {
 								</div>
 							</div>
 						) : (
-							<div className="flex flex-col items-center justify-center h-[60vh] lg:h-[70vh]">
-								<span>No event selected.</span>
+							<div className="flex flex-col items-center justify-center h-64">
+								<span className="text-white">No event selected.</span>
 							</div>
 						)}
 					</div>
@@ -166,8 +178,11 @@ export default function EventSidebar() {
 						</div>
 					)}
 
-					{/* Sidebar list */}
-					<div className={`flex flex-col h-[60vh] lg:h-[90vh] overflow-y-scroll p-6 ${showEventOnMobile ? 'hidden lg:flex' : 'w-full lg:w-auto'}`}>
+					{/* Sidebar list — height locked to featured panel, scrollable */}
+					<div
+						className={`flex flex-col overflow-y-auto p-6 ${showEventOnMobile ? 'hidden lg:flex' : 'w-full lg:w-auto'}`}
+						style={featuredHeight ? { height: `${featuredHeight}px` } : { height: 'auto' }}
+					>
 						{eventData.map((item, idx) => (
 							<div
 								className="hover:scale-102 transition hover:opacity-80 hover:z-100"

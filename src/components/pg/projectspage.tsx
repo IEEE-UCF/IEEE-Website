@@ -121,7 +121,7 @@ export default function ProjectsPage() {
 							>
 								<div className="relative group cursor-pointer hover:scale-102 transition-transform">
 									<div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-25 group-hover:opacity-100 transition duration-300 group-hover:duration-200"></div>
-									<Card className="relative bg-black border-0 h-[95vh]">
+									<Card className="relative bg-black border-0 h-fit">
 										<CardContent>
 											<Image
 												className="object-center object-cover w-full h-80 rounded-sm mb-4 border-white"
