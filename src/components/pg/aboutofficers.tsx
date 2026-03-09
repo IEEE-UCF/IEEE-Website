@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { SiLinkedin } from 'react-icons/si';
+import { FaLinkedin } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
@@ -81,7 +81,7 @@ export default function AboutOfficers() {
 				<span className="text-sm font-[body-font]">{officer.year}</span>
 				<span className="text-sm font-[body-font]">{officer.major}</span>
 				<Link href={officer.linkedin} className="mt-2 inline-block">
-					<SiLinkedin size={25} color="white" />
+					<FaLinkedin size={25} color="white" />
 				</Link>
 			</div>
 		</div>
