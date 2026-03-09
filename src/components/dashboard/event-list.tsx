@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { type Event } from "@/lib/database/schema";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 
 export const EventList = () => {
 	const [events, setEvents] = useState<Event[]>([]);
@@ -39,8 +38,8 @@ export const EventList = () => {
                 No events found.
 							</p>
 						) : (
-							events.map((event, index) => (
-								<Card className="rounded-md border-[var(--ieee-grey)] mb-4">
+							events.map((event) => (
+								<Card key={event.id} className="rounded-md border-[var(--ieee-grey)] mb-4">
 									<div className="p-4">
 										<h3 className="text-xl font-semibold text-white">
 											{event.title}

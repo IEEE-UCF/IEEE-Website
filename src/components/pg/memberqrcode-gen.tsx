@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import QRCode from "qrcode";
 import { Card, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc/client";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 
 interface MemberQRCodeProps {
@@ -22,7 +22,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 	const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>("");
-	const { data: session, status } = useSession();
+	const { data: session } = useSession();
 
 	// Fetch member profile
 	const { data: memberProfile } = trpc.member.getMyProfile.useQuery(undefined, {
@@ -140,21 +140,9 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 
 	// Render the QR code image
 	return (
-	// <div className="flex flex-col items-center p-4">
-	// 	<h3 className="text-lg font-semibold mb-2">Member QR Code</h3>
-	// 	{qrCodeUrl && (
-	// 		<img
-	// 			src={qrCodeUrl}
-	// 			alt="Member QR Code"
-	// 			className="border rounded-lg shadow-md"
-	// 			data-testid="qr-code-image"
-	// 		/>
-	// 	)}
-	// 	<p className="text-sm text-gray-600 mt-2">Scan to access member info</p>
-	// </div>
 		<Card>
 			<CardTitle className="text-lg text-white font-[subheading-font]">
-				{getFirstName()}'s QR Code
+				{getFirstName()}&apos;s QR Code
 			</CardTitle>
 			{qrCodeUrl && (
 				<img
