@@ -1,12 +1,16 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import QRCode from 'qrcode';
+"use client";
+import React, { useState, useEffect } from "react";
+import QRCode from "qrcode";
+import { Card, CardTitle } from "@/components/ui/card";
+import { trpc } from "@/lib/trpc/client";
+import { useSession } from "next-auth/react";
+
 
 interface MemberQRCodeProps {
-	memberInfo: string;
-	size?: number;
-	logoUrl?: string;
-	logoSize?: number;
+  memberInfo: string;
+  size?: number;
+  logoUrl?: string;
+  logoSize?: number;
 }
 
 const MemberQRCode: React.FC<MemberQRCodeProps> = ({
@@ -15,19 +19,26 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 	logoUrl,
 	logoSize = Math.floor(size * 0.2), // Default to 20% of QR code size
 }) => {
-	const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
+	const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string>('');
+	const [error, setError] = useState<string>("");
+	const { data: session } = useSession();
+
+	// Fetch member profile
+	const { data: memberProfile } = trpc.member.getMyProfile.useQuery(undefined, {
+		enabled: !!session?.user,
+		retry: false,
+	});
 
 	const generateQRCode = async (text: string) => {
 		try {
 			setLoading(true);
-			setError('');
+			setError("");
 
 			// Generate base QR code
 			const qrDataUrl = await QRCode.toDataURL(text, {
 				width: size,
-				errorCorrectionLevel: 'H',
+				errorCorrectionLevel: "H",
 				margin: 2,
 			});
 
@@ -38,16 +49,16 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 			}
 
 			// Create canvas for logo overlay
-			const canvas = document.createElement('canvas');
-			const ctx = canvas.getContext('2d');
-			if (!ctx) throw new Error('Canvas not supported');
+			const canvas = document.createElement("canvas");
+			const ctx = canvas.getContext("2d");
+			if (!ctx) throw new Error("Canvas not supported");
 
 			canvas.width = size;
 			canvas.height = size;
 
 			// Load and draw QR code
 			const qrImage = new Image();
-			qrImage.crossOrigin = 'anonymous';
+			qrImage.crossOrigin = "anonymous";
 
 			await new Promise((resolve, reject) => {
 				qrImage.onload = resolve;
@@ -59,12 +70,12 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 
 			// Load and draw logo
 			const logoImage = new Image();
-			logoImage.crossOrigin = 'anonymous'; // Handle CORS for external images
+			logoImage.crossOrigin = "anonymous"; // Handle CORS for external images
 
 			await new Promise((resolve) => {
 				logoImage.onload = resolve;
 				logoImage.onerror = () => {
-					console.warn('Logo failed to load, using QR without logo');
+					console.warn("Logo failed to load, using QR without logo");
 					resolve(null);
 				};
 				logoImage.src = logoUrl;
@@ -77,7 +88,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 				const logoRadius = logoSize / 2;
 
 				// Draw white circular background
-				ctx.fillStyle = 'white';
+				ctx.fillStyle = "white";
 				ctx.beginPath();
 				ctx.arc(centerX, centerY, logoRadius + 4, 0, 2 * Math.PI);
 				ctx.fill();
@@ -99,8 +110,8 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 
 			setQrCodeUrl(canvas.toDataURL());
 		} catch (err) {
-			console.error('QR Code generation error:', err);
-			setError('Failed to generate QR code');
+			console.error("QR Code generation error:", err);
+			setError("Failed to generate QR code");
 		} finally {
 			setLoading(false);
 		}
@@ -121,10 +132,18 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 		return <div className="text-red-500 p-4">Error: {error}</div>;
 	}
 
+	// Extract first name from memberInfo
+	const getFirstName = () => {
+		if (memberProfile?.firstName) return memberProfile.firstName;
+		else return "Member";
+	};
+
 	// Render the QR code image
 	return (
-		<div className="flex flex-col items-center p-4">
-			<h3 className="text-lg font-semibold mb-2">Member QR Code</h3>
+		<Card>
+			<CardTitle className="text-lg text-white font-[subheading-font]">
+				{getFirstName()}&apos;s QR Code
+			</CardTitle>
 			{qrCodeUrl && (
 				<img
 					src={qrCodeUrl}
@@ -133,8 +152,8 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 					data-testid="qr-code-image"
 				/>
 			)}
-			<p className="text-sm text-gray-600 mt-2">Scan to access member info</p>
-		</div>
+			<p className="text-gray-300  mb-4">Scan to access member info</p>
+		</Card>
 	);
 };
 
