@@ -79,13 +79,13 @@ export default function ConnectPage() {
 						<div className="text-[var(--ieee-bright-yellow)] font-[heading-font] text-4xl">
 							FOLLOW OUR SOCIALS
 						</div>
-						<div className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] flex-wrap">
+						<div className="flex flex-col lg:flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] flex-wrap">
 							ieee.ucf@gmail.com | ieee@ucf.edu
 						</div>
 
 						<Link
 							href={'https://discord.com/invite/WBcKem9kCq'}
-							className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
+							className="flex flex-row font-bold text-white text-base lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
 						>
 							JOIN OUR DISCORD
 							<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
@@ -95,7 +95,7 @@ export default function ConnectPage() {
 
 						<Link
 							href={'https://www.instagram.com/ieeeucf/?hl=en'}
-							className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
+							className="flex flex-row font-bold text-white text-base lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
 						>
 							FOLLOW US ON INSTAGRAM
 							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
@@ -105,7 +105,7 @@ export default function ConnectPage() {
 
 						<Link
 							href={'https://www.youtube.com/@ieeeucf2287'}
-							className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
+							className="flex flex-row font-bold text-white text-base lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
 						>
 							SUBSCRIBE TO OUR YOUTUBE
 							<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
@@ -115,7 +115,7 @@ export default function ConnectPage() {
 
 						<Link
 							href={'https://www.linkedin.com/company/ieee-ucf/'}
-							className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
+							className="flex flex-row font-bold text-white text-base lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
 						>
 							CONNECT WITH US ON LINKEDIN
 							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
@@ -125,7 +125,7 @@ export default function ConnectPage() {
 
 						<Link
 							href={'https://www.facebook.com/ieeeatucf/'}
-							className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
+							className="flex flex-row font-bold text-white text-base lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
 						>
 							FRIEND US ON FACEBOOK
 							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
@@ -135,7 +135,7 @@ export default function ConnectPage() {
 
 						<Link
 							href={'https://github.com/IEEE-UCF'}
-							className="flex flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
+							className="flex flex-row font-bold text-white text-base lg:text-2xl items-center gap-x-5 font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)] transition-colors"
 						>
 							ADD US ON GITHUB
 							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
