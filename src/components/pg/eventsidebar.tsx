@@ -1,94 +1,58 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MapPin, CalendarIcon as Calendar1, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-
-interface EventData {
-	_id: string;
-	committee: string;
-	title: string;
-	time: Date;
-	address: string;
-	description: string;
-	flyer: string;
-	rsvp?: string;
-	photos?: {
-		type?: string;
-		[key: string]: unknown;
-	};
-}
+import { trpc } from '@/lib/trpc/client';
 
 interface Event {
 	eventName: string;
 	eventDate: string;
 	eventDesc: string;
 	eventAddress: string;
-	eventCommittee: string;
-	eventFlyer: string;
-	_sortDate?: number;
+	eventFlyer: string | null;
+	_sortDate: number;
 }
 
 export default function EventSidebar() {
-	const [eventData, setEventData] = useState<Event[]>([]);
-
 	const monthNames = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
+		'January', 'February', 'March', 'April', 'May', 'June',
+		'July', 'August', 'September', 'October', 'November', 'December',
 	];
-
 	const currentMonthName = monthNames[new Date().getMonth()];
 	const [currentMonth] = useState(currentMonthName);
-
 	const [currentEvent, setCurrentEvent] = useState<Event | null>(null);
 	const [showEventOnMobile, setShowEventOnMobile] = useState(false);
 
-	const currentDate = new Date();
+	const now = new Date();
+
+	// trpc.event.getAll already returns Eastern-formatted strings and active-only events
+	const { data: rawEvents = [] } = trpc.event.getAll.useQuery();
+
+	// Map and filter to future events only
+	const eventData: Event[] = rawEvents
+		.filter((e) => {
+			// startTime is already an Eastern-formatted string like "March 9, 2026 2:00 PM"
+			// Re-parse for comparison. Fall back gracefully if parse fails.
+			const parsed = new Date(e.startTime);
+			return !isNaN(parsed.getTime()) ? parsed > now : true;
+		})
+		.map((e) => ({
+			eventName: e.title,
+			eventDate: e.startTime,
+			eventDesc: e.description,
+			eventAddress: e.location,
+			eventFlyer: e.flyerUrl ?? null,
+			_sortDate: new Date(e.startTime).getTime() || 0,
+		}))
+		.sort((a, b) => a._sortDate - b._sortDate);
 
 	useEffect(() => {
-		fetchTimelineData();
-	}, []);
-
-	const fetchTimelineData = async () => {
-		const res = await fetch('/api/events', { method: 'GET' });
-		const events = await res.json();
-
-		const mappedEvents: Event[] = events.data
-			.filter((event: EventData) => new Date(event.time).getTime() > currentDate.getTime())
-			.map((event: EventData) => {
-				const eventDateObj = new Date(event.time);
-				const newDate = eventDateObj.toLocaleString('default', {
-					month: 'long',
-					day: 'numeric',
-					hour: 'numeric',
-					minute: 'numeric',
-				});
-				return {
-					eventName: event.title,
-					eventDate: newDate,
-					eventDesc: event.description,
-					eventAddress: event.address,
-					eventCommittee: event.committee,
-					eventFlyer: event.flyer,
-					_sortDate: eventDateObj.getTime(),
-				};
-			});
-
-		mappedEvents.sort((a, b) => (a._sortDate ?? 0) - (b._sortDate ?? 0));
-
-		setEventData(mappedEvents);
-	};
+		if (!currentEvent && eventData.length > 0) {
+			setCurrentEvent(eventData[0]);
+		}
+	}, [eventData, currentEvent]);
 
 	const handleEventSelect = (event: Event) => {
 		setCurrentEvent(event);
@@ -98,12 +62,6 @@ export default function EventSidebar() {
 	const handleBackToSidebar = () => {
 		setShowEventOnMobile(false);
 	};
-
-	useEffect(() => {
-		if (!currentEvent && eventData.length > 0) {
-			setCurrentEvent(eventData[0]);
-		}
-	}, [eventData, currentEvent]);
 
 	return (
 		<div className="">
@@ -115,16 +73,14 @@ export default function EventSidebar() {
 					<div className="font-[body-font] text-white text-xl lg:text-2xl lg:text-left text-center">
 						Experience IEEE @ UCF&rsquo;s exciting lineup of events this
 						<span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]">
-							{' '}
-							{currentMonth}{' '}
+							{' '}{currentMonth}{' '}
 						</span>
 						and beyond. Click on each event to learn more.
 					</div>
 				</div>
 				<div className="flex flex-row h-fit w-full justify-between">
-					<div
-						className={`lg:block w-3/4 ${showEventOnMobile ? 'hidden' : 'hidden lg:block'}`}
-					>
+					{/* Main event display */}
+					<div className={`lg:block w-3/4 ${showEventOnMobile ? 'hidden' : 'hidden lg:block'}`}>
 						{currentEvent ? (
 							<div className="relative group h-[60vh] lg:h-[90vh]">
 								<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-50"></div>
@@ -132,12 +88,8 @@ export default function EventSidebar() {
 									<div className="flex flex-row h-full rounded-sm p-10 gap-x-10 w-[70vw] xl:w-full">
 										<Image
 											className="object-cover rounded-sm w-[40vh] sm:w-[50vh] h-100vh"
-											src={
-												currentEvent.eventFlyer
-													? currentEvent.eventFlyer
-													: '/larry.png'
-											}
-											alt="Photo"
+											src={currentEvent.eventFlyer ?? '/larry.png'}
+											alt="Event Flyer"
 											width={2000}
 											height={2000}
 										/>
@@ -148,7 +100,7 @@ export default function EventSidebar() {
 											<div className="text-xl text-white">
 												{currentEvent.eventDesc}
 											</div>
-											<div className="flex flex-col justify-between ">
+											<div className="flex flex-col justify-between">
 												<div className="flex text-lg flex-row gap-x-2 text-white">
 													<Calendar1 />
 													{currentEvent.eventDate}
@@ -169,6 +121,7 @@ export default function EventSidebar() {
 						)}
 					</div>
 
+					{/* Mobile event detail */}
 					{showEventOnMobile && currentEvent && (
 						<div className="w-full lg:hidden">
 							<div className="relative group h-fit">
@@ -183,12 +136,8 @@ export default function EventSidebar() {
 									<div className="flex flex-col lg:flex-row h-full rounded-sm p-6 lg:p-10 gap-6 lg:gap-x-10">
 										<Image
 											className="object-cover rounded-sm w-full lg:w-[50vh] h-fit lg:h-100vh mt-15"
-											src={
-												currentEvent.eventFlyer
-													? currentEvent.eventFlyer
-													: '/larry.png'
-											}
-											alt="Photo"
+											src={currentEvent.eventFlyer ?? '/larry.png'}
+											alt="Event Flyer"
 											width={2000}
 											height={2000}
 										/>
@@ -216,9 +165,8 @@ export default function EventSidebar() {
 						</div>
 					)}
 
-					<div
-						className={`flex flex-col h-[60vh] lg:h-[90vh] overflow-y-scroll p-6 ${showEventOnMobile ? 'hidden lg:flex' : 'w-full lg:w-auto'}`}
-					>
+					{/* Sidebar list */}
+					<div className={`flex flex-col h-[60vh] lg:h-[90vh] overflow-y-scroll p-6 ${showEventOnMobile ? 'hidden lg:flex' : 'w-full lg:w-auto'}`}>
 						{eventData.map((item, idx) => (
 							<div
 								className="hover:scale-102 transition hover:opacity-80 hover:z-100"
@@ -227,42 +175,27 @@ export default function EventSidebar() {
 								<div
 									className="group relative w-full overflow-hidden rounded-sm p-[3px] bg-transparent cursor-pointer transition-transform hover:scale-102"
 									onMouseEnter={(e) => {
-										const el =
-											e.currentTarget.querySelector<HTMLDivElement>(
-												'.animated-border',
-											);
+										const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
 										if (el) el.style.animationPlayState = 'running';
 									}}
 									onMouseLeave={(e) => {
-										const el =
-											e.currentTarget.querySelector<HTMLDivElement>(
-												'.animated-border',
-											);
+										const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
 										if (el) el.style.animationPlayState = 'paused';
 									}}
 								>
 									<div
 										className="animated-border pointer-events-none absolute inset-0 z-0 rounded-sm bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 animate-spin"
-										style={{
-											animationPlayState: 'paused',
-											animationDuration: '6s',
-										}}
+										style={{ animationPlayState: 'paused', animationDuration: '6s' }}
 									/>
 									<button
 										onClick={() => handleEventSelect(item)}
 										className="relative z-10 flex flex-row cursor-pointer bg-black rounded-sm w-full text-white hover:text-[var(--ieee-bright-yellow)]"
 									>
-										<div className="m-5 flex flex-col justify-center ">
+										<div className="m-5 flex flex-col justify-center">
 											<div className="flex flex-col justify-between">
-												<div className="text-left font-bold text-lg ">
-													{item.eventName}
-												</div>
-												<div className="flex text-left gap-x-2 text-md ">
-													{item.eventDate}
-												</div>
-												<div className="flex text-left text-md ">
-													{item.eventAddress}
-												</div>
+												<div className="text-left font-bold text-lg">{item.eventName}</div>
+												<div className="flex text-left gap-x-2 text-md">{item.eventDate}</div>
+												<div className="flex text-left text-md">{item.eventAddress}</div>
 											</div>
 										</div>
 									</button>

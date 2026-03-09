@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { db } from "@/lib/database/index";
+import { db } from "@/lib/database/client";
 import { Members } from "@/lib/database/schema";
 import { eq } from "drizzle-orm";
 import {

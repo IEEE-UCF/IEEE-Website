@@ -5,14 +5,10 @@ import postgres from 'postgres';
 import * as schema from './schema';
 
 if (!process.env.DATABASE_URL) {
-	throw new Error('DATABASE_URL must be a Neon postgres connection string');
+	throw new Error('DATABASE_URL must be set');
 }
 
 const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-	throw new Error('DATABASE_URL is required');
-}
-
 const provider = process.env.DB_PROVIDER ?? 'neon'; // 'neon' | 'local'
 
 function createNeonDb() {

@@ -361,6 +361,7 @@ export const Projects = pgTable('projects', {
 	title: varchar('title', { length: 255 }).notNull(),
 	slug: varchar('slug', { length: 64 }).unique(), // URL-friendly identifier, smth like "software" committee or "solarcar" project
 	overview: text('overview').notNull(),
+	projectLead: text('project_lead'), // Temporary plain-text lead name until ProjectMembers join is sufficient
 	hardwareInfo: text('hardware_info'),
 	softwareInfo: text('software_info'),
 	skills: text('skills'), // Comma-separated list of skills (e.g. "Python, C++, Machine Learning")

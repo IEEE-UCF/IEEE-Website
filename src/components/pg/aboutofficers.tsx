@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,23 +10,131 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface Officer {
 	name: string;
-	type: string;
+	type: 'Executive' | 'Chair';
 	role: string;
 	major: string;
 	year: string;
 	linkedin: string;
-	bio: string;
 	photo: string;
 }
 
+const OFFICERS: Officer[] = [
+	// Executive Board
+	{
+		name: 'Alexandra Rivera',
+		type: 'Executive',
+		role: 'Executive Chair',
+		major: 'Computer Engineering',
+		year: 'Class of 2025',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Marcus Johnson',
+		type: 'Executive',
+		role: 'Vice Chair',
+		major: 'Electrical Engineering',
+		year: 'Class of 2025',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Priya Patel',
+		type: 'Executive',
+		role: 'Treasurer',
+		major: 'Computer Science',
+		year: 'Class of 2026',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Jordan Lee',
+		type: 'Executive',
+		role: 'Secretary',
+		major: 'Computer Engineering',
+		year: 'Class of 2026',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+
+	// Chairs
+	{
+		name: 'Ethan Brooks',
+		type: 'Chair',
+		role: 'Software Chair',
+		major: 'Computer Science',
+		year: 'Class of 2026',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Sofia Nguyen',
+		type: 'Chair',
+		role: 'Marketing Chair',
+		major: 'Computer Engineering',
+		year: 'Class of 2027',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Daniel Kim',
+		type: 'Chair',
+		role: 'Workshop Chair',
+		major: 'Electrical Engineering',
+		year: 'Class of 2026',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Camille Dubois',
+		type: 'Chair',
+		role: 'Outreach Chair',
+		major: 'Computer Science',
+		year: 'Class of 2027',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Ryan Torres',
+		type: 'Chair',
+		role: 'Social Chair',
+		major: 'Computer Engineering',
+		year: 'Class of 2026',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Aisha Washington',
+		type: 'Chair',
+		role: 'Professional Development Chair',
+		major: 'Electrical Engineering',
+		year: 'Class of 2025',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Noah Chen',
+		type: 'Chair',
+		role: 'Conference Chair',
+		major: 'Computer Science',
+		year: 'Class of 2027',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+	{
+		name: 'Isabella Morales',
+		type: 'Chair',
+		role: 'Service Chair',
+		major: 'Computer Engineering',
+		year: 'Class of 2026',
+		linkedin: 'https://linkedin.com',
+		photo: '/larry.png',
+	},
+];
+
 export default function AboutOfficers() {
-	const [officers, setOfficers] = useState<Officer[]>([]);
 	const executiveRef = useRef<HTMLDivElement | null>(null);
 	const chairRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		fetchOfficers();
-	}, []);
 
 	useEffect(() => {
 		const animateRows = (containerRef: React.RefObject<HTMLDivElement | null>) => {
@@ -52,13 +160,7 @@ export default function AboutOfficers() {
 
 		animateRows(executiveRef);
 		animateRows(chairRef);
-	}, [officers]);
-
-	const fetchOfficers = async () => {
-		const res = await fetch('/api/officers', { method: 'GET' });
-		const data = await res.json();
-		setOfficers(data.data);
-	};
+	}, []);
 
 	const groupOfficers = (officersList: Officer[], perRow = 4) => {
 		const rows: Officer[][] = [];
@@ -73,9 +175,13 @@ export default function AboutOfficers() {
 			key={index}
 			className="w-70 h-110 m-2 relative rounded-sm border-1 border-white overflow-hidden shadow-lg transition-transform hover:scale-102"
 		>
-			<Image src={officer.photo} alt={officer.name} fill className="object-cover" />
-
-			<div className="absolute inset-0 hover:bg-black/0 transition-colors bg-black/40 flex flex-col justify-end p-4 text-white ">
+			<Image
+				src={officer.photo}
+				alt={officer.name}
+				fill
+				className="object-cover"
+			/>
+			<div className="absolute inset-0 hover:bg-black/0 transition-colors bg-black/40 flex flex-col justify-end p-4 text-white">
 				<span className="text-xl font-[heading-font]">{officer.name.toUpperCase()}</span>
 				<span className="text-md font-[heading-font]">{officer.role.toUpperCase()}</span>
 				<span className="text-sm font-[body-font]">{officer.year}</span>
@@ -96,23 +202,26 @@ export default function AboutOfficers() {
 		));
 	};
 
+	const executives = OFFICERS.filter((o) => o.type === 'Executive');
+	const chairs = OFFICERS.filter((o) => o.type === 'Chair');
+
 	return (
 		<div className="flex flex-col items-center justify-center p-10 w-full gap-10">
-			<div className="">
+			<div>
 				<div className="text-center text-white font-[heading-font] text-3xl my-5">
 					EXECUTIVE BOARD
 				</div>
 				<div ref={executiveRef} className="flex flex-col w-full gap-4">
-					{renderRows(officers.filter((officer) => officer.type === 'Executive'))}
+					{renderRows(executives)}
 				</div>
 			</div>
 
-			<div className="">
+			<div>
 				<div className="text-center text-white font-[heading-font] text-3xl my-5">
 					CHAIRS
 				</div>
 				<div ref={chairRef} className="flex flex-col w-full gap-4">
-					{renderRows(officers.filter((officer) => officer.type === 'Chair'))}
+					{renderRows(chairs)}
 				</div>
 			</div>
 		</div>
