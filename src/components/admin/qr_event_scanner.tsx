@@ -31,7 +31,9 @@ export function QREventScanner() {
 		},
 	});
 
-	// Trigger check-in whenever a member is scanned and event is selected
+	// Trigger check-in whenever a member is scanned and event is selected.
+	// addAttendee is intentionally omitted from deps — its reference changes every
+	// render and including it would cause an infinite loop.
 	React.useEffect(() => {
 		if (memberInfo && selectedEventId) {
 			setCheckInStatus('loading');
@@ -41,10 +43,8 @@ export function QREventScanner() {
 				discordId: memberInfo.id,
 			});
 		}
-		// addAttendee.mutate is intentionally excluded — including it would cause
-		// infinite re-renders since the mutation object reference changes each render.
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [memberInfo, selectedEventId]);
+
 
 	return (
 		<div className="bg-gray-50 p-4 rounded-lg shadow-md">
