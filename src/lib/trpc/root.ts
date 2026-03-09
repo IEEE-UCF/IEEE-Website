@@ -4,7 +4,6 @@ import { authRouter } from './routers/auth';
 import { eventRouter } from './routers/event';
 import { officerRouter } from './routers/officer';
 import { projectRouter } from './routers/project';
-import { committeeRouter } from './routers/committee';
 
 export const appRouter = createTRPCRouter({
 	member: memberRouter,
@@ -12,7 +11,6 @@ export const appRouter = createTRPCRouter({
   event: eventRouter,
   officer: officerRouter,
   project: projectRouter,
-  commmittee: committeeRouter
 });
 
 export type AppRouter = typeof appRouter;
