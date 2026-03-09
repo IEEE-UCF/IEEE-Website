@@ -6,8 +6,7 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -16,8 +15,7 @@ import { Footer } from "@/components/footer";
 
 export default function SettingsPage() {
 	const { data: session } = useSession();
-	const router = useRouter();
-const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<string | null>(null);
 
@@ -36,7 +34,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 		onSuccess: () => {
 			setSuccess("Profile updated successfully!");
 			setIsSubmitting(false);
-			utils.member.getMyProfile.invalidate();
+			void utils.member.getMyProfile.invalidate();
 			setTimeout(() => setSuccess(null), 3000);
 		},
 		onError: (err) => {

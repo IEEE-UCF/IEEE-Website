@@ -18,10 +18,10 @@ function toEasternTime(time: string): string {
 	// Replace the space between date and time with 'T' to make it valid ISO 8601.
 	// Also normalise "+00" → "+00:00" if present (Postgres sometimes omits the minutes).
 	const iso = time
-		.replace(' ', 'T')                    // "2026-03-09 19:30:00+00" → "2026-03-09T19:30:00+00"
-		.replace(/([+-]\d{2})$/, '$1:00');     // "+00" → "+00:00"  (no-op if already "+00:00")
+		.replace(' ', 'T') // "2026-03-09 19:30:00+00" → "2026-03-09T19:30:00+00"
+		.replace(/([+-]\d{2})$/, '$1:00'); // "+00" → "+00:00"  (no-op if already "+00:00")
 
-	const dt = DateTime.fromISO(iso);         // Luxon reads the offset from the string itself
+	const dt = DateTime.fromISO(iso); // Luxon reads the offset from the string itself
 
 	if (!dt.isValid) {
 		console.warn('[toEasternTime] Failed to parse timestamp:', time, '→', iso, dt.invalidReason);

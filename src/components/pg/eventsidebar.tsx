@@ -41,7 +41,7 @@ export default function EventSidebar() {
 		})
 		.map((e) => ({
 			eventName: e.title,
-			eventDate: e.startTime,           // formatted Eastern string — display only
+			eventDate: e.startTime, // formatted Eastern string — display only
 			eventDesc: e.description,
 			eventAddress: e.location,
 			eventFlyer: e.flyerUrl ?? null,

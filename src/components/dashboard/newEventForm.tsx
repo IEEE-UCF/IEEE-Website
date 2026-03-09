@@ -19,7 +19,11 @@ interface EventFormData {
 
 const formatDateTimeLocal = (isoString: string | null | undefined): string => {
 	if (!isoString) return '';
-	try { return isoString.slice(0, 16); } catch { return ''; }
+	try {
+		return isoString.slice(0, 16);
+	} catch {
+		return '';
+	}
 };
 
 export const FormPopup: React.FC = () => {
@@ -41,7 +45,7 @@ export const FormPopup: React.FC = () => {
 
 	const createEvent = trpc.event.create.useMutation({
 		onSuccess: () => {
-			utils.event.getAll.invalidate();
+			void utils.event.getAll.invalidate();
 			setIsOpen(false);
 			setFormData({
 				title: '', location: '', hostType: '', hostId: '',

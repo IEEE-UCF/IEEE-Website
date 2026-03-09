@@ -41,6 +41,8 @@ export function QREventScanner() {
 				discordId: memberInfo.id,
 			});
 		}
+		// addAttendee.mutate is intentionally excluded — including it would cause
+		// infinite re-renders since the mutation object reference changes each render.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [memberInfo, selectedEventId]);
 
