@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
 					</Link>
 				</div>
 
-				<div className="justify-end justify-items-end sm:flex hidden">
+				<div className="justify-end items-center sm:flex hidden gap-x-1">
 					{routes.map((route, index) => (
 						<Link
 							key={index}
@@ -103,31 +103,16 @@ const Navbar: React.FC = () => {
 					)}
 
 					{auth?.isMember && auth?.discordAvatar ? (
-						<div className="">
-							{/* <Image
-								className="object-cover rounded-full h-10 w-10 border border-white"
-								src={auth?.discordAvatar}
-								alt="Profile"
-								width={2000}
-								height={2000}
-						/> */}
-
-							<AvatarMenu image={auth?.discordAvatar}></AvatarMenu>
+						<div className="flex items-center ml-3">
+							<AvatarMenu image={auth?.discordAvatar} />
 						</div>
 					) : (
-						<div>
+						<div className="flex items-center ml-3">
 							<Link
 								href="/auth/signin"
-								className="relative group font-[heading-font] text-base lg:px-4 md:px-2 sm:px-1
-							bg-[var(--ieee-dark-yellow)] text-white items-center inline-flex h-fit py-3
-							rounded-sm w-fit transition"
+								className="relative group font-[heading-font] text-sm lg:px-4 md:px-2 sm:px-1 bg-[var(--ieee-dark-yellow)] text-white items-center inline-flex h-fit py-2 rounded-sm w-fit transition"
 							>
-								<div
-									className="absolute inset-0 bg-gradient-to-r from-[var(--ieee-bright-yellow)]
-							to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-25
-							group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
-								></div>
-
+								<div className="absolute inset-0 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
 								<div className="relative px-2">SIGN IN</div>
 							</Link>
 						</div>
@@ -137,7 +122,6 @@ const Navbar: React.FC = () => {
 				{/* <Image className="object-contain" src="/ieeemasterbrand.png" alt="IEEE UCF Logo" width={70} height={70} /> */}
 			</div>
 
-			{menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 			{menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
 			<button
@@ -235,7 +219,6 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 					</div>
 				</div>
 
-				{/* Mobile ADMIN section for admins */}
 				{auth?.isAdmin && (
 					<div className="flex flex-col ml-6 p-5">
 						<div className="text-[var(--ieee-dark-yellow)] font-[heading-font] text-xl">
@@ -264,7 +247,6 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 					</div>
 				)}
 
-				{/* Mobile ACCOUNT section */}
 				{auth?.isMember ? (
 					<div className="flex flex-col ml-6  p-5">
 						<div className="text-[var(--ieee-dark-yellow)] font-[heading-font]  text-xl">

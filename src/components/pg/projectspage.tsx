@@ -13,8 +13,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { trpc } from '@/lib/trpc/client';
 import type { Project } from '@/lib/database/schema';
 
-// The router extends Project with a joined lead name
 type ProjectWithLead = Project & { lead: string | null };
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,8 +47,6 @@ export default function ProjectsPage() {
 	const viewSidebar = (project: ProjectWithLead) => setSelectedProject(project);
 	const closeSidebar = () => setSelectedProject(null);
 
-	// Skills come from hardwareInfo / softwareInfo text fields in PostgreSQL
-	// They're stored as comma-separated strings
 	const parseSkills = (info: string | null): string[] =>
 		info ? info.split(',').map((s) => s.trim()).filter(Boolean) : [];
 
@@ -113,9 +111,7 @@ export default function ProjectsPage() {
 						const maxVisible = 6;
 						const visibleSkills = allSkills.slice(0, maxVisible - 1);
 						const remaining = allSkills.length > maxVisible ? allSkills.length - visibleSkills.length : 0;
-						const photoUrl = Array.isArray(project.photoUrls) && project.photoUrls.length > 0
-							? project.photoUrls[0]
-							: null;
+						const photoUrl = Array.isArray(project.photoUrls) ? (project.photoUrls[0] ?? null) : (project.photoUrls ?? null);
 
 						return (
 							<div
@@ -185,9 +181,7 @@ export default function ProjectsPage() {
 							<Image
 								className="w-full h-48 rounded-sm mb-4 object-cover"
 								src={
-									Array.isArray(selectedProject.photoUrls) && selectedProject.photoUrls.length > 0
-										? selectedProject.photoUrls[0]
-										: '/larry.png'
+									(Array.isArray(selectedProject.photoUrls) ? (selectedProject.photoUrls[0] ?? '/larry.png') : (selectedProject.photoUrls ?? '/larry.png'))
 								}
 								alt={selectedProject.title}
 								width={600}
