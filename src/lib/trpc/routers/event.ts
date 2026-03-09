@@ -6,11 +6,29 @@ import { eq, asc, and } from 'drizzle-orm';
 import { publicProcedure, adminProcedure, officerProcedure, createTRPCRouter } from '../trpc';
 import { DateTime } from 'luxon';
 
-// Helper to convert UTC timestamp to Eastern time string
+// Helper to convert a Postgres timestamptz string to an Eastern time display string.
+//
+// schema.ts uses mode: 'string' on all timestamp columns, so Drizzle returns the raw
+// Postgres wire format: "2026-03-09 19:30:00+00" — note the SPACE instead of 'T'.
+// DateTime.fromISO() requires ISO 8601 with a 'T' separator and will return Invalid
+// if given a space-separated string, producing wrong/blank times on the frontend.
+//
+// Fix: normalise to ISO 8601 before parsing, then let Luxon handle the timezone offset.
 function toEasternTime(time: string): string {
-	return DateTime.fromISO(time, { zone: 'utc' })
-		.setZone('America/New_York')
-		.toFormat('MMMM d, yyyy h:mm a');
+	// Replace the space between date and time with 'T' to make it valid ISO 8601.
+	// Also normalise "+00" → "+00:00" if present (Postgres sometimes omits the minutes).
+	const iso = time
+		.replace(' ', 'T')                    // "2026-03-09 19:30:00+00" → "2026-03-09T19:30:00+00"
+		.replace(/([+-]\d{2})$/, '$1:00');     // "+00" → "+00:00"  (no-op if already "+00:00")
+
+	const dt = DateTime.fromISO(iso);         // Luxon reads the offset from the string itself
+
+	if (!dt.isValid) {
+		console.warn('[toEasternTime] Failed to parse timestamp:', time, '→', iso, dt.invalidReason);
+		return time; // fall back to raw string rather than showing nothing
+	}
+
+	return dt.setZone('America/New_York').toFormat('MMMM d, yyyy h:mm a');
 }
 
 // Validation schemas
@@ -39,8 +57,12 @@ export const eventRouter = createTRPCRouter({
 				.orderBy(asc(Events.startTime));
 			return events.map((event) => ({
 				...event,
+				// Human-readable Eastern string for display: "March 9, 2026 7:30 PM"
 				startTime: toEasternTime(event.startTime),
 				endTime: event.endTime ? toEasternTime(event.endTime) : null,
+				// Raw ISO UTC string for reliable JS Date parsing/sorting/filtering
+				startTimeRaw: event.startTime,
+				endTimeRaw: event.endTime ?? null,
 			}));
 		} catch (error) {
 			throw new TRPCError({
@@ -67,6 +89,8 @@ export const eventRouter = createTRPCRouter({
 				...event,
 				startTime: toEasternTime(event.startTime),
 				endTime: event.endTime ? toEasternTime(event.endTime) : null,
+				startTimeRaw: event.startTime,
+				endTimeRaw: event.endTime ?? null,
 			};
 		}),
 
@@ -87,6 +111,8 @@ export const eventRouter = createTRPCRouter({
 				...event,
 				startTime: toEasternTime(event.startTime),
 				endTime: event.endTime ? toEasternTime(event.endTime) : null,
+				startTimeRaw: event.startTime,
+				endTimeRaw: event.endTime ?? null,
 			};
 		}),
 

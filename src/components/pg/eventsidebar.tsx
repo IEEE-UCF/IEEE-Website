@@ -33,18 +33,19 @@ export default function EventSidebar() {
 	// Map and filter to future events only
 	const eventData: Event[] = rawEvents
 		.filter((e) => {
-			// startTime is already an Eastern-formatted string like "March 9, 2026 2:00 PM"
-			// Re-parse for comparison. Fall back gracefully if parse fails.
-			const parsed = new Date(e.startTime);
+			// Use startTimeRaw (ISO UTC) for reliable Date parsing — never parse the
+			// Eastern-formatted display string ("March 9, 2026 7:30 PM") with new Date()
+			// because that format is not reliably parseable across browsers.
+			const parsed = new Date(e.startTimeRaw);
 			return !isNaN(parsed.getTime()) ? parsed > now : true;
 		})
 		.map((e) => ({
 			eventName: e.title,
-			eventDate: e.startTime,
+			eventDate: e.startTime,           // formatted Eastern string — display only
 			eventDesc: e.description,
 			eventAddress: e.location,
 			eventFlyer: e.flyerUrl ?? null,
-			_sortDate: new Date(e.startTime).getTime() || 0,
+			_sortDate: new Date(e.startTimeRaw).getTime(), // always valid ISO → reliable sort
 		}))
 		.sort((a, b) => a._sortDate - b._sortDate);
 
