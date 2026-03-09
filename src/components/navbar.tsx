@@ -60,18 +60,30 @@ const Navbar: React.FC = () => {
 					</Link>
 				</div>
 
-				<div className="lg:flex hidden items-center justify-end gap-5">
-					{routes.map((route, index) => (
-						<Link
-							key={index}
-							href={route.href}
-							className={
-								'font-[body-font] text-sm items-center inline-flex text-white hover:text-[var(--ieee-dark-yellow)] transition'
-							}
-						>
-							{route.title.toUpperCase()}
-						</Link>
-					))}
+        <div className="justify-end justify-items-end sm:flex hidden">
+        {routes.map((route, index) => (
+            <Link
+            key={index}
+            href={route.href}
+            className={
+                route.title === "CONNECT"
+                ? "relative group font-[heading-font] text-base lg:px-4 md:px-2 sm:px-1 bg-[var(--ieee-dark-yellow)] text-white items-center inline-flex h-fit py-1 rounded-sm my-18 w-fit transition"
+                : "font-[body-font] lg:px-5 md:px-3 sm:px-1.5 text-sm items-center inline-flex text-white hover:text-[var(--ieee-dark-yellow)] transition"
+            }
+            >
+            {route.title === "CONNECT" && (
+                <>
+                <div
+                    className="absolute inset-0 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+                ></div>
+                <div className="relative p-2  rounded-lg">
+                    {route.title}
+                </div>
+                </>
+            )}
+            {route.title !== "CONNECT" && route.title}
+            </Link>
+        ))}
 
 					{auth?.isAdmin && (
 						<div className="flex items-center gap-3 border-l border-gray-700 pl-4 ml-2">
@@ -125,6 +137,7 @@ const Navbar: React.FC = () => {
 				{/* <Image className="object-contain" src="/ieeemasterbrand.png" alt="IEEE UCF Logo" width={70} height={70} /> */}
 			</div>
 
+			{menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 			{menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
 			<button
