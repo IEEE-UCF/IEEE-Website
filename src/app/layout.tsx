@@ -19,10 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@5.5.207/wasm/openjpeg_nowasm_fallback.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pdfjs-dist@5.5.207/web/pdf_viewer.min.css"></link>
-      </head>
       <body>
          <Providers>{children}</Providers>
       </body>

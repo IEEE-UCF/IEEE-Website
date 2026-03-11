@@ -124,15 +124,16 @@ export default function SponsorshipsPage() {
 </div>
 
 
-
+            <div className="flex justify-center font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl text-center">SPONSORSHIP PACKET</div>
             <div className="p-10 bg-black lg:m-10 rounded-xl">
-                <iframe id="pdf-js-viewer" src="/IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" width="100%" height="700px"/>
+                <iframe className="hidden lg:block" src="/IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" width="100%" height="700px"/>
                 <div className="my-10"></div>
                 
+                <div className="flex justify-center">
                 <a href="/IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" download="IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" className="text-white flex flex-row align-middle place-self-center lg:place-self-start items-center gap-x-5 lg:gap-x-10">
 
                     <div className="relative group cursor-pointer">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                                 
                         <div className="relative px-7 py-3 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
                             <div className="space-y-2">
@@ -144,7 +145,7 @@ export default function SponsorshipsPage() {
                     
 
                     <div className="relative group cursor-pointer">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                                 
                         <div className="relative px-7 py-3 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
                             <div className="space-y-2">
@@ -154,6 +155,7 @@ export default function SponsorshipsPage() {
                     </div>
 
                 </a>
+                </div>
             </div>
 
             <Footer/>
