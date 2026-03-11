@@ -102,7 +102,7 @@ const OFFICERS: Officer[] = [
 		major: 'Electrical Engineering',
 		year: '3rd Year',
 		linkedin: 'http://www.linkedin.com/in/francesca-fmp',
-		photo: '/iconography/ieeeucfsymbol.png',
+		photo: '/officers/matthew.png',
 	},
 	{
 		name: 'Adrian James',
