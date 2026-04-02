@@ -160,7 +160,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 						<div className="text-white font-[heading-font] text-xl">
 							{auth.member
 								? `${auth.member.firstName.toUpperCase()} ${auth.member.lastName.toUpperCase()}`
-								: auth.user?.name?.toUpperCase()}
+								: ''}
 						</div>
 					</div>
 				) : (
