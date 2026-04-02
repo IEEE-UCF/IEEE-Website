@@ -60,28 +60,16 @@ const Navbar: React.FC = () => {
 					</Link>
 				</div>
 
-				<div className="justify-end items-center sm:flex hidden gap-x-1">
+				<div className="lg:flex hidden items-center justify-end gap-5">
 					{routes.map((route, index) => (
 						<Link
 							key={index}
 							href={route.href}
 							className={
-								route.title === "CONNECT"
-									? "relative group font-[heading-font] text-base lg:px-4 md:px-2 sm:px-1 bg-[var(--ieee-dark-yellow)] text-white items-center inline-flex h-fit py-1 rounded-sm my-18 w-fit transition"
-									: "font-[body-font] lg:px-5 md:px-3 sm:px-1.5 text-sm items-center inline-flex text-white hover:text-[var(--ieee-dark-yellow)] transition"
+								'font-[body-font] text-sm items-center inline-flex text-white hover:text-[var(--ieee-dark-yellow)] transition'
 							}
 						>
-							{route.title === "CONNECT" && (
-								<>
-									<div
-										className="absolute inset-0 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
-									></div>
-									<div className="relative p-2  rounded-lg">
-										{route.title}
-									</div>
-								</>
-							)}
-							{route.title !== "CONNECT" && route.title}
+							{route.title.toUpperCase()}
 						</Link>
 					))}
 
@@ -102,24 +90,27 @@ const Navbar: React.FC = () => {
 						</div>
 					)}
 
-					{auth?.isMember && auth?.discordAvatar ? (
-						<div className="flex items-center ml-3">
-							<AvatarMenu image={auth?.discordAvatar} />
-						</div>
+					{auth?.isAuthenticated ? (
+						<AvatarMenu image={auth.discordAvatar ?? '/iconography/ieeeucficon.png'} />
 					) : (
-						<div className="flex items-center ml-3">
+						<div>
 							<Link
 								href="/auth/signin"
-								className="relative group font-[heading-font] text-sm lg:px-4 md:px-2 sm:px-1 bg-[var(--ieee-dark-yellow)] text-white items-center inline-flex h-fit py-2 rounded-sm w-fit transition"
+								className="relative group font-[heading-font] text-base lg:px-4 md:px-2 sm:px-1
+							bg-[var(--ieee-dark-yellow)] text-white items-center inline-flex h-fit py-3
+							rounded-sm w-fit transition"
 							>
-								<div className="absolute inset-0 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+								<div
+									className="absolute inset-0 bg-gradient-to-r from-[var(--ieee-bright-yellow)]
+							to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-25
+							group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+								></div>
+
 								<div className="relative px-2">SIGN IN</div>
 							</Link>
 						</div>
 					)}
 				</div>
-
-				{/* <Image className="object-contain" src="/ieeemasterbrand.png" alt="IEEE UCF Logo" width={70} height={70} /> */}
 			</div>
 
 			{menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
@@ -155,19 +146,21 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 					IEEE @ UCF Student Chapter
 				</div>
 
-				{/* <div className="flex w-full justify-between m-6">
-				<div className="flex justify-start items-center">
-					<Link href={"/"} className="text-white font-[body-font] flex-row flex align-middle justify-center items-center gap-x-5 text-xl lg:text-2xl hover:text-[var(--ieee-dark-yellow)] transition">
-						<Image className="object-contain" src="/iconography/ieeeucficon.png" alt="IEEE UCF Logo" width={70} height={70} />IEEE @ UCF Student Chapter
-					</Link>
-				</div> */}
-				{auth?.isMember ? (
-					<div className="flex flex-col bg-[var(--ieee-dark-yellow)] p-5">
-						<div className="">
-							<div className="text-white font-[heading-font] text-xl">
-								{auth?.member?.firstName.toUpperCase()}{' '}
-								{auth?.member?.lastName.toUpperCase()}
-							</div>
+				{auth?.isAuthenticated ? (
+					<div className="flex flex-row items-center gap-4 bg-[var(--ieee-dark-yellow)] p-5">
+						{auth.discordAvatar && (
+							<Image
+								className="object-cover rounded-full h-10 w-10 border border-white"
+								src={auth.discordAvatar}
+								alt="Profile"
+								width={40}
+								height={40}
+							/>
+						)}
+						<div className="text-white font-[heading-font] text-xl">
+							{auth.member
+								? `${auth.member.firstName.toUpperCase()} ${auth.member.lastName.toUpperCase()}`
+								: auth.user?.name?.toUpperCase()}
 						</div>
 					</div>
 				) : (
@@ -219,6 +212,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 					</div>
 				</div>
 
+				{/* Mobile ADMIN section for admins */}
 				{auth?.isAdmin && (
 					<div className="flex flex-col ml-6 p-5">
 						<div className="text-[var(--ieee-dark-yellow)] font-[heading-font] text-xl">
@@ -247,9 +241,10 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 					</div>
 				)}
 
-				{auth?.isMember ? (
-					<div className="flex flex-col ml-6  p-5">
-						<div className="text-[var(--ieee-dark-yellow)] font-[heading-font]  text-xl">
+				{/* Mobile ACCOUNT section */}
+				{auth?.isAuthenticated ? (
+					<div className="flex flex-col ml-6 p-5">
+						<div className="text-[var(--ieee-dark-yellow)] font-[heading-font] text-xl">
 							ACCOUNT
 						</div>
 

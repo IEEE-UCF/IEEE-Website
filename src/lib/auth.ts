@@ -2,7 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { db } from '@/lib/database/client';
-import { Accounts, Users, Sessions, Members } from '@/lib/database/schema';
+import { Users, Accounts, Sessions, Members } from '@/lib/database/schema';
 import type { DiscordProfile } from 'next-auth/providers/discord';
 import { eq } from 'drizzle-orm';
 
@@ -37,52 +37,63 @@ export const authOptions: NextAuthOptions = {
 	pages: {
 		signIn: '/auth/signin',
 	},
+	events: {
+		// linkAccount fires after the adapter has already created the User row
+		// and linked the OAuth account — safe to write discordId here.
+		// This replaces the signIn callback approach which ran BEFORE the adapter
+		// wrote the User row, causing the update to target a non-existent row
+		// and throwing a Callback error.
+		async linkAccount({ user, account, profile }) {
+			if (account.provider === 'discord' && user.id) {
+				const discordProfile = profile as DiscordProfile;
+				try {
+					await db
+						.update(Users)
+						.set({ discordId: discordProfile.id })
+						.where(eq(Users.id, user.id));
+				} catch (error) {
+					console.error('Failed to write discordId to Users:', error);
+					// Events don't block sign-in, so this is safe to swallow
+				}
+			}
+		},
+	},
 	callbacks: {
 		async session({ session, user }) {
-			if (!user) {
-				return session;
-			}
+			// Always set user.id first — if the DB queries below fail we still want
+			// the user to appear authenticated rather than losing their session.
+			if (!user?.id) return session;
+			session.user.id = user.id;
 
 			try {
-				const [account] = await db
+				const [dbUser] = await db
 					.select()
-					.from(Accounts)
-					.where(eq(Accounts.userId, user.id)) // u.id is the providerAccountId
+					.from(Users)
+					.where(eq(Users.id, user.id))
 					.limit(1);
 
-				// get member info if exists
 				const [member] = await db
 					.select()
 					.from(Members)
 					.where(eq(Members.userId, user.id))
 					.limit(1);
 
-				return {
-					...session,
-					user: {
-						...session.user,
-						id: user.id,
-						discordId: account?.providerAccountId || null,
-						memberId: member?.id || null,
-						officerStatus: member?.officerStatus || false,
-						officerRole: member?.officerRole || null,
-						administrator: member?.administrator || false,
-					},
-				};
+				session.user.discordId = dbUser?.discordId ?? undefined;
+				session.user.memberId = member?.id ?? undefined;
+				session.user.officerStatus = member?.officerStatus ?? false;
+				session.user.officerRole = member?.officerRole ?? undefined;
+				session.user.administrator = member?.administrator ?? false;
+
+				return session;
 			} catch (error) {
 				console.error('Session callback error:', error);
 				return session;
 			}
 		},
 
-		// fucking kill myself, this was the stupid bitching fucking solution to a 5 hour long bug session
-		// stuuuuupid
-		// Please don't! We need our fearless (and scary) leader :D
 		async redirect({ url, baseUrl }) {
 			if (url.startsWith('/')) return `${baseUrl}${url}`;
-
 			if (url.startsWith(baseUrl)) return url;
-
 			return baseUrl;
 		},
 	},

@@ -9,33 +9,23 @@ import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/database/client';
 import { Members } from '@/lib/database/schema';
 import { eq } from 'drizzle-orm';
-/**
- * Isomorphic Session getter for API requests
- */
-const isomorphicGetSession = async (headers: Headers): Promise<Session | null> => {
-	const authToken = headers.get('Authorization');
-
-	if (authToken) {
-		return getServerSession(authOptions);
-	}
-
-	return getServerSession(authOptions);
-};
 
 /**
  * 1. CONTEXT
+ *
+ * Uses the session passed in from the caller if available to avoid
+ * double-fetching and potential race conditions where two independent
+ * getServerSession calls resolve against different DB states.
  */
 export const createTRPCContext = async (opts: { headers: Headers; session: Session | null }) => {
-	const authToken = opts.headers.get('Authorization') ?? null;
-	const session = await isomorphicGetSession(opts.headers);
+	// Prefer the session passed in; only fetch if not provided
+	const session = opts.session ?? await getServerSession(authOptions);
 	const source = opts.headers.get('x-trpc-source') ?? 'unknown';
 
-	console.log('>>> tRPC Request from', source, 'by', session?.user);
+	console.log('>>> tRPC Request from', source, 'by', session?.user?.id);
 
 	return {
 		session,
-		opts,
-		token: authToken,
 		db,
 	};
 };
@@ -185,7 +175,7 @@ export const memberProcedure = protectedProcedure.use(async ({ ctx, next }) => {
 	return next({
 		ctx: {
 			session: ctx.session,
-			member: member[0], // Includes officerStatus, officerRole, administrator
+			member: member[0],
 		},
 	});
 });

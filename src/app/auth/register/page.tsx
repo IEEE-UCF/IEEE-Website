@@ -1,7 +1,4 @@
 "use client";
-// pls deploy
-// import { TRPCClientError } from "@trpc/client";
-// import { AppRouter } from "@/lib/trpc/root";
 
 import { majorEnums } from "@/lib/database/schema";
 
@@ -14,7 +11,6 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
-	// please deploy
 	Select,
 	SelectContent,
 	SelectItem,
@@ -42,10 +38,14 @@ export default function RegisterPage() {
 			setError(err.message || "Failed to complete registration");
 			setIsSubmitting(false);
 		},
-
 	});
 
 	useEffect(() => {
+		// Don't act until NextAuth has finished resolving the session —
+		// "authenticated" can fire before the custom session fields (memberId,
+		// discordId, etc.) have been hydrated, causing a false "not connected" state.
+		if (status === "loading") return;
+
 		if (status === "authenticated" && session?.user?.memberId) {
 			router.push("/dashboard");
 		}
@@ -93,7 +93,7 @@ export default function RegisterPage() {
 			console.error("Registration error:", err);
 			setIsSubmitting(false);
 		}
-	}, []);
+	}, [session, completeRegistration]);
 
 
 	return (
@@ -124,7 +124,11 @@ export default function RegisterPage() {
 									</div>
 								)}
 
-								{!session?.user ? (
+								{status === "loading" ? (
+									<div className="flex justify-center items-center py-8">
+										<div className="text-white">Loading...</div>
+									</div>
+								) : !session?.user ? (
 									<div className="flex flex-col justify-center items-center">
 										<div className="relative group cursor-pointer ">
 											<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] blur-md opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 rounded-md"></div>

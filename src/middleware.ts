@@ -8,8 +8,10 @@ export async function middleware(request: NextRequest) {
 	const protectedRoutes = ['/dashboard', '/settings', '/scan-qr'];
 	const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-	// Admin routes protected by admin permissions
-	// So far set to do /admin and /test
+	// Admin routes — cookie presence is checked here; actual admin authorization
+	// is enforced by adminProcedure in tRPC (runs in trusted server context).
+	// The previous fetch-based session check was racy: the secondary /api/auth/session
+	// request could resolve against a different DB state than the original request.
 	const adminRoutes = ['/admin', '/test'];
 	const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
 
@@ -22,36 +24,10 @@ export async function middleware(request: NextRequest) {
 		return NextResponse.redirect(signInUrl);
 	}
 
-	if (isAdminRoute) {
-		if (!sessionCookie) {
-			const homeUrl = new URL('/', request.url);
-			return NextResponse.redirect(homeUrl);
-		}
-
-		try {
-			const sessionUrl = new URL('/api/auth/session', request.url);
-			const response = await fetch(sessionUrl, {
-				headers: {
-					cookie: request.headers.get('cookie') || '',
-				},
-			});
-
-			if (!response.ok) {
-				const homeUrl = new URL('/', request.url);
-				return NextResponse.redirect(homeUrl);
-			}
-
-			const session = await response.json();
-
-			if (Object.keys(session).length === 0 || !session.user?.administrator) {
-				const homeUrl = new URL('/', request.url);
-				return NextResponse.redirect(homeUrl);
-			}
-		} catch (error) {
-			console.error('Middleware error:', error);
-			const homeUrl = new URL('/', request.url);
-			return NextResponse.redirect(homeUrl);
-		}
+	// Gate admin routes on cookie presence only — tRPC adminProcedure handles
+	// the real authorization check server-side where it's safe and non-racy.
+	if (isAdminRoute && !sessionCookie) {
+		return NextResponse.redirect(new URL('/', request.url));
 	}
 
 	return NextResponse.next();
