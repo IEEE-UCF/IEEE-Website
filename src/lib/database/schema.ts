@@ -6,151 +6,151 @@ import { relations } from "drizzle-orm";
 
 export const majorEnums = pgEnum("major_enum", [
 // Arts and Humanities
-    "Art (BA)",
-    "Bachelor of Design in Architecture (BDes)",
-    "Emerging Media (BFA)",
-    "English (BA)",
-    "French and Francophone Studies (BA)",
-    "History (BA)",
-    "Humanities and Cultural Studies (BA)",
-    "Latin American Caribbean and Latinx Studies (BA)",
-    "Music (BA)",
-    "Music Education (BME)",
-    "Music: Performance (BM)",
-    "Philosophy (BA)",
-    "Religion and Cultural Studies (BA)",
-    "Spanish (BA)",
-    "Studio Art (BFA)",
-    "Theatre (BA)",
-    "Theatre (BFA)",
-    "Writing and Rhetoric (BA)",
+	"Art (BA)",
+	"Bachelor of Design in Architecture (BDes)",
+	"Emerging Media (BFA)",
+	"English (BA)",
+	"French and Francophone Studies (BA)",
+	"History (BA)",
+	"Humanities and Cultural Studies (BA)",
+	"Latin American Caribbean and Latinx Studies (BA)",
+	"Music (BA)",
+	"Music Education (BME)",
+	"Music: Performance (BM)",
+	"Philosophy (BA)",
+	"Religion and Cultural Studies (BA)",
+	"Spanish (BA)",
+	"Studio Art (BFA)",
+	"Theatre (BA)",
+	"Theatre (BFA)",
+	"Writing and Rhetoric (BA)",
 
-    // Business
-    "Accounting (BSBA)",
-    "Business Economics (BSBA)",
-    "Economics (BS)",
-    "Finance (BSBA)",
-    "Integrated Business (BSBA)",
-    "Management (BSBA)",
-    "Marketing (BSBA)",
-    "Real Estate (BSBA)",
+	// Business
+	"Accounting (BSBA)",
+	"Business Economics (BSBA)",
+	"Economics (BS)",
+	"Finance (BSBA)",
+	"Integrated Business (BSBA)",
+	"Management (BSBA)",
+	"Marketing (BSBA)",
+	"Real Estate (BSBA)",
 
-    // Community Innovation and Education
-    "Career and Technical Education (BS)",
-    "Criminal Justice (BA)",
-    "Criminal Justice (BS)",
-    "Early Childhood Development and Education (BS)",
-    "Elementary Education (BS)",
-    "Emergency Management (BA)",
-    "Emergency Management (BS)",
-    "Environmental Science (BS)",
-    "Exceptional Student Education (BS)",
-    "Health Informatics (BS)",
-    "Health Informatics and Information Management (BS)",
-    "Health Information Management (BS)",
-    "Health Services Administration (BS)",
-    "Integrative General Studies (BGS)",
-    "Interdisciplinary Studies (BA)",
-    "Interdisciplinary Studies (BS)",
-    "Leadership (BA)",
-    "Leadership (BS)",
-    "Legal Studies (BA)",
-    "Legal Studies (BS)",
-    "Nonprofit Management (BA)",
-    "Nonprofit Management (BS)",
-    "Public Administration (BA)",
-    "Public Administration (BS)",
-    "Secondary Education (BS)",
-    "Sustainability (BA)",
-    "Sustainability (BS)",
-    "Teacher Education (BS)",
+	// Community Innovation and Education
+	"Career and Technical Education (BS)",
+	"Criminal Justice (BA)",
+	"Criminal Justice (BS)",
+	"Early Childhood Development and Education (BS)",
+	"Elementary Education (BS)",
+	"Emergency Management (BA)",
+	"Emergency Management (BS)",
+	"Environmental Science (BS)",
+	"Exceptional Student Education (BS)",
+	"Health Informatics (BS)",
+	"Health Informatics and Information Management (BS)",
+	"Health Information Management (BS)",
+	"Health Services Administration (BS)",
+	"Integrative General Studies (BGS)",
+	"Interdisciplinary Studies (BA)",
+	"Interdisciplinary Studies (BS)",
+	"Leadership (BA)",
+	"Leadership (BS)",
+	"Legal Studies (BA)",
+	"Legal Studies (BS)",
+	"Nonprofit Management (BA)",
+	"Nonprofit Management (BS)",
+	"Public Administration (BA)",
+	"Public Administration (BS)",
+	"Secondary Education (BS)",
+	"Sustainability (BA)",
+	"Sustainability (BS)",
+	"Teacher Education (BS)",
 
-    // Engineering and Computer Science
-    "Aerospace Engineering (BSAE)",
-    "Civil Engineering (BSCE)",
-    "Computer Engineering (BSCpE)",
-    "Computer Science (BS)",
-    "Construction Engineering (BSConE)",
-    "Electrical Engineering (BSEE)",
-    "Environmental Engineering (BSVE)",
-    "Industrial Engineering (BSIE)",
-    "Information Technology (BS)",
-    "Materials Science and Engineering (BS)",
-    "Mechanical Engineering (BSME)",
+	// Engineering and Computer Science
+	"Aerospace Engineering (BSAE)",
+	"Civil Engineering (BSCE)",
+	"Computer Engineering (BSCpE)",
+	"Computer Science (BS)",
+	"Construction Engineering (BSConE)",
+	"Electrical Engineering (BSEE)",
+	"Environmental Engineering (BSVE)",
+	"Industrial Engineering (BSIE)",
+	"Information Technology (BS)",
+	"Materials Science and Engineering (BS)",
+	"Mechanical Engineering (BSME)",
 
-    // Health Professions and Sciences
-    "Communication Sciences and Disorders (BS)",
-    "General Health Studies (BS)",
-    "Health Sciences (BS)",
-    "Interdisciplinary Healthcare Studies (BS)",
-    "Kinesiology (BS)",
-    "Social Work (BSW)",
+	// Health Professions and Sciences
+	"Communication Sciences and Disorders (BS)",
+	"General Health Studies (BS)",
+	"Health Sciences (BS)",
+	"Interdisciplinary Healthcare Studies (BS)",
+	"Kinesiology (BS)",
+	"Social Work (BSW)",
 
-    // Hospitality Management
-    "Entertainment Management (BS)",
-    "Event Management (BS)",
-    "Hospitality Management (BS)",
-    "Lifestyle Community Management (BS)",
-    "Lodging and Restaurant Management (BS)",
-    "Senior Living Management (BS)",
-    "Theme Park and Attraction Management (BS)",
+	// Hospitality Management
+	"Entertainment Management (BS)",
+	"Event Management (BS)",
+	"Hospitality Management (BS)",
+	"Lifestyle Community Management (BS)",
+	"Lodging and Restaurant Management (BS)",
+	"Senior Living Management (BS)",
+	"Theme Park and Attraction Management (BS)",
 
-    // Medicine
-    "Biomedical Sciences (BS)",
-    "Biotechnology (BS)",
-    "Medical Laboratory Sciences (BS)",
-    "Molecular and Cellular Biology (BS)",
-    "Molecular Microbiology (BS)",
+	// Medicine
+	"Biomedical Sciences (BS)",
+	"Biotechnology (BS)",
+	"Medical Laboratory Sciences (BS)",
+	"Molecular and Cellular Biology (BS)",
+	"Molecular Microbiology (BS)",
 
-    // Nursing
-    "Nursing (BSN)",
-    "Nursing RN (BSN)",
+	// Nursing
+	"Nursing (BSN)",
+	"Nursing RN (BSN)",
 
-    // Optics and Photonics
-    "Photonic Science and Engineering (BSPSE)",
+	// Optics and Photonics
+	"Photonic Science and Engineering (BSPSE)",
 
-    // Sciences
-    "Actuarial Science (BS)",
-    "Advertising / Public Relations (BA)",
-    "Anthropology (BA)",
-    "Biology (BS)",
-    "Chemistry (BA)",
-    "Chemistry (BS)",
-    "Communication (BA)",
-    "Communication and Conflict (BA)",
-    "Data Science (BS)",
-    "Digital Media (BA)",
-    "Film (BA)",
-    "Film (BFA)",
-    "Forensic Science (BS)",
-    "Integrated Sciences and Technology (BS)",
-    "International and Global Studies (BA)",
-    "Journalism (BA)",
-    "Mathematics (BS)",
-    "Media Production and Management (BA)",
-    "Physics (BA)",
-    "Physics (BS)",
-    "Political Science (BA)",
-    "Psychology (BS)",
-    "Social Sciences (BS)",
-    "Sociology (BA)",
-    "Sociology (BS)",
-    "Statistics (BS)",
+	// Sciences
+	"Actuarial Science (BS)",
+	"Advertising / Public Relations (BA)",
+	"Anthropology (BA)",
+	"Biology (BS)",
+	"Chemistry (BA)",
+	"Chemistry (BS)",
+	"Communication (BA)",
+	"Communication and Conflict (BA)",
+	"Data Science (BS)",
+	"Digital Media (BA)",
+	"Film (BA)",
+	"Film (BFA)",
+	"Forensic Science (BS)",
+	"Integrated Sciences and Technology (BS)",
+	"International and Global Studies (BA)",
+	"Journalism (BA)",
+	"Mathematics (BS)",
+	"Media Production and Management (BA)",
+	"Physics (BA)",
+	"Physics (BS)",
+	"Political Science (BA)",
+	"Psychology (BS)",
+	"Social Sciences (BS)",
+	"Sociology (BA)",
+	"Sociology (BS)",
+	"Statistics (BS)",
 
-    // Pre-professional Programs
-    "Biology (BS) - Pre-Health Professional",
-    "Biology (BS) - Zoology and Pre-Veterinarian Science",
-    "Business Economics (BSBA) - Pre-Law",
-    "Pre-chiropractic",
-    "Pre-dental",
-    "Health Sciences (BS) - Pre-Clinical Track",
-    "Pre-medical",
-    "Pre-optometry",
-    "Pre-osteopathy",
-    "Pre-pharmacy",
-    "Pre-podiatry",
-    "Political Science (BA) - Prelaw",
-    "Undecided"
+	// Pre-professional Programs
+	"Biology (BS) - Pre-Health Professional",
+	"Biology (BS) - Zoology and Pre-Veterinarian Science",
+	"Business Economics (BSBA) - Pre-Law",
+	"Pre-chiropractic",
+	"Pre-dental",
+	"Health Sciences (BS) - Pre-Clinical Track",
+	"Pre-medical",
+	"Pre-optometry",
+	"Pre-osteopathy",
+	"Pre-pharmacy",
+	"Pre-podiatry",
+	"Political Science (BA) - Prelaw",
+	"Undecided",
 
 ]);
 
@@ -207,7 +207,7 @@ export const Users = pgTable("users", {
   	email: varchar("email", { length: 255 }).notNull().unique(),
   	emailVerified: timestamp("email_verified", { withTimezone: true }),
   	image: text("image"), // pull from discord
-  	discordId: varchar("discordId", { length: 64 }),
+  	discordId: varchar("discord_id", { length: 64 }),
 });
 
 export const Accounts = pgTable("accounts", {
@@ -243,7 +243,7 @@ export const Members = pgTable('members', {
 	officerStatus: boolean('officer_status').notNull().default(false),
 	biography: text('biography'),
 	duesPaid: boolean('dues_paid').notNull().default(false),
-	discordID: varchar('discordId', { length: 64 }).unique(),
+	discordId: varchar('discord_id', { length: 64 }).unique(),
 	dateOfBirth: date('date_of_birth').notNull(),
 	personalEmail: varchar('personal_email', { length: 255 }).notNull().unique(),
 	ucfEmail: varchar('ucf_email', { length: 255 }).notNull().unique(),
@@ -261,7 +261,7 @@ export const Members = pgTable('members', {
 	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
 }, (table) => [
 	index('members_idx_id').on(table.id),
-	index('members_idx_discordId').on(table.discordID),
+	index('members_idx_discordId').on(table.discordId),
 	index('members_idx_personal_email').on(table.personalEmail),
 	index('members_idx_ucf_email').on(table.ucfEmail),
 	index('members_idx_officer_status').on(table.officerStatus),
@@ -361,6 +361,7 @@ export const Projects = pgTable('projects', {
 	title: varchar('title', { length: 255 }).notNull(),
 	slug: varchar('slug', { length: 64 }).unique(), // URL-friendly identifier, smth like "software" committee or "solarcar" project
 	overview: text('overview').notNull(),
+	projectLead: text('project_lead'), // Temporary plain-text lead name until ProjectMembers join is sufficient
 	hardwareInfo: text('hardware_info'),
 	softwareInfo: text('software_info'),
 	skills: text('skills'), // Comma-separated list of skills (e.g. "Python, C++, Machine Learning")
@@ -425,40 +426,49 @@ export const MembersRelations = relations(Members, ({ one }) => ({
 		fields: [Members.userId],
 		references: [Users.id],
 	}),
-}))
+}));
 
 export const AccountRelations = relations(Accounts, ({ one }) => ({
-	user: one(Users, { 
-		fields: [Accounts.userId], 
-		references: [Users.id] 
+	user: one(Users, {
+		fields: [Accounts.userId],
+		references: [Users.id],
 	}),
 }));
 
 export const SessionRelations = relations(Sessions, ({ one }) => ({
-  	user: one(Users, { 
-		fields: [Sessions.userId], 
-		references: [Users.id] 
+	user: one(Users, {
+		fields: [Sessions.userId],
+		references: [Users.id],
 	}),
 }));
 
-
-
 // MemberPermissions: Delegated or custom permissions for members
-export const MemberPermissions = pgTable('member_permissions', {
-	id: uuid('id').primaryKey().defaultRandom(),
-	memberId: uuid('member_id').notNull().references(() => Members.id, { onDelete: 'cascade' }),
-	grantedById: uuid('granted_by_id').references(() => Members.id, { onDelete: 'set null' }), // who granted the permission
-	contextType: varchar('context_type', { length: 32 }).notNull(), // e.g., 'committee', 'project', 'global'
-	contextId: uuid('context_id'), // links to a specific committee/project if applicable
-	permission: permissionEnum('permission').notNull(),
-	active: boolean('active').notNull().default(true),
-	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
-	expiresAt: timestamp('expires_at', { withTimezone: true }), // optional expiration for temporary access
-}, (table) => [
-	index('member_permissions_idx_member').on(table.memberId),
-	index('member_permissions_idx_context').on(table.contextType, table.contextId),
-	unique('member_permission_unique').on(table.memberId, table.contextType, table.contextId, table.permission),
-]);
+export const MemberPermissions = pgTable(
+	'member_permissions',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		memberId: uuid('member_id')
+			.notNull()
+			.references(() => Members.id, { onDelete: 'cascade' }),
+		grantedById: uuid('granted_by_id').references(() => Members.id, { onDelete: 'set null' }), // who granted the permission
+		contextType: varchar('context_type', { length: 32 }).notNull(), // e.g., 'committee', 'project', 'global'
+		contextId: uuid('context_id'), // links to a specific committee/project if applicable
+		permission: permissionEnum('permission').notNull(),
+		active: boolean('active').notNull().default(true),
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+		expiresAt: timestamp('expires_at', { withTimezone: true }), // optional expiration for temporary access
+	},
+	(table) => [
+		index('member_permissions_idx_member').on(table.memberId),
+		index('member_permissions_idx_context').on(table.contextType, table.contextId),
+		unique('member_permission_unique').on(
+			table.memberId,
+			table.contextType,
+			table.contextId,
+			table.permission,
+		),
+	],
+);
 
 // Infer Types
 export type Member = typeof Members.$inferSelect;

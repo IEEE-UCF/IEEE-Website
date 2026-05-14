@@ -1,12 +1,6 @@
-export default function timeline() { 
-    return(
-        <div>
-
-            hi
-        </div>
-
-    );
-};
+export default function timeline() {
+	return <div>hi</div>;
+}
 // "use client";
 
 // import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
@@ -16,7 +10,7 @@ export default function timeline() {
 // import { useState, useEffect } from "react"
 
 // interface EventData {
-//   _id: string; 
+//   _id: string;
 //   committee: string;
 //   title: string;
 //   time: Date;
@@ -26,7 +20,7 @@ export default function timeline() {
 //   rsvp?: string;
 //   photos?: {
 //     type?: string;
-//     [key: string]: any; 
+//     [key: string]: any;
 //   };
 // }
 
@@ -110,8 +104,6 @@ export default function timeline() {
 
 //       }
 
-    
-
 //     });
 
 //       const transformedData: TimelineData[] = Object.keys(groupedEvents).map((month) => ({
@@ -121,16 +113,15 @@ export default function timeline() {
 //         eventDesc: groupedEvents[month].eventDesc,
 //         eventAddress: groupedEvents[month].eventAddress,
 //         eventCommittee: groupedEvents[month].eventCommittee
-          
+
 //       }));
 
 //       transformedData.sort((a, b) => {
 //             return monthOrder[a.month] - monthOrder[b.month];
 
 //       });
-    
-//       setTimelineData(transformedData);
 
+//       setTimelineData(transformedData);
 
 //   };
 //     return (
@@ -155,13 +146,11 @@ export default function timeline() {
 
 //             ))}
 
-
 //         </VerticalTimeline>
 //       </div>
-      
 
 //     );
 
 // }
 
-// export { Timeline }; 
+// export { Timeline };
