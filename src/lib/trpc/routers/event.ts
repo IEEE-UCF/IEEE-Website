@@ -207,7 +207,7 @@ export const eventRouter = createTRPCRouter({
 			const [member] = await db
 				.select()
 				.from(Members)
-				.where(eq(Members.discordID, input.discordId))
+				.where(eq(Members.discordId, input.discordId))
 				.limit(1);
 
 			if (!member) {

@@ -72,7 +72,7 @@ export const memberRouter = createTRPCRouter({
 					.insert(Members)
 					.values({
 						userId: ctx.session.user.id,
-						discordID: discordID,
+						discordId: discordID,
 						firstName: input.firstName,
 						middleName: input.middleName || null,
 						lastName: input.lastName,
