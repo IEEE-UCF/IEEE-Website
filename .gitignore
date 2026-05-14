@@ -46,3 +46,4 @@ package-lock.json
 bun.lock
 bun.lockb
 certificates
+pnpm-workspace.yaml
