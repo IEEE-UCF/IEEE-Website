@@ -14,7 +14,17 @@ import {
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
+export const eventHostTypeEnum = pgEnum('event_host_type_enum', [
+	'club',
+	'committee',
+	'project',
+	'member',
+]);
+
 export const genderEnum = pgEnum('gender_enum', ['M', 'F', 'NB', 'O', 'PNTS']);
+
+export const majorEnum = pgEnum('majorEnum', ['major_enum']);
+
 export const officerRoleEnum = pgEnum('officer_role_enum', [
 	'Executive Chair',
 	'Vice Chair',
@@ -30,6 +40,13 @@ export const officerRoleEnum = pgEnum('officer_role_enum', [
 	'Marketing Chair',
 	'Software Chair',
 ]);
+
+export const permissionEnum = pgEnum('permission_enum', [
+	'scan_attendance',
+	'view_statistics',
+	'manage_context',
+]);
+
 export const sponsorshipTierEnum = pgEnum('sponsorship_tier_enum', ['Bronze', 'Silver', 'Gold']);
 
 export const committees = pgTable(
@@ -217,11 +234,11 @@ export const members = pgTable(
 		administrator: boolean().default(false).notNull(),
 		biography: text(),
 		duesPaid: boolean('dues_paid').default(false).notNull(),
-		discordId: varchar({ length: 64 }).notNull(),
+		discordId: varchar('discord_id', { length: 64 }),
 		dateOfBirth: date('date_of_birth').notNull(),
 		personalEmail: varchar('personal_email', { length: 255 }).notNull(),
 		phoneNumber: varchar('phone_number', { length: 20 }),
-		major: varchar({ length: 255 }).notNull(),
+		major: majorEnum().notNull(),
 		gender: genderEnum().notNull(),
 		graduationYear: integer('graduation_year').notNull(),
 		resumeUrl: text('resume_url'),
@@ -237,13 +254,9 @@ export const members = pgTable(
 		active: boolean().default(true).notNull(),
 		userId: uuid('user_id'),
 		ucfEmail: varchar('ucf_email', { length: 255 }).notNull(),
+		portraitUrl: varchar('portrait_url', { length: 500 }),
 	},
 	(table) => [
-		index('members_idx_active_officer').using(
-			'btree',
-			table.officerStatus.asc().nullsLast().op('bool_ops'),
-			table.administrator.asc().nullsLast().op('bool_ops'),
-		),
 		index('members_idx_administrator').using(
 			'btree',
 			table.administrator.asc().nullsLast().op('bool_ops'),
@@ -271,7 +284,7 @@ export const members = pgTable(
 			table.graduationYear.asc().nullsLast().op('int4_ops'),
 		),
 		index('members_idx_id').using('btree', table.id.asc().nullsLast().op('uuid_ops')),
-		index('members_idx_major').using('btree', table.major.asc().nullsLast().op('text_ops')),
+		index('members_idx_major').using('btree', table.major.asc().nullsLast().op('enum_ops')),
 		index('members_idx_officer_role').using(
 			'btree',
 			table.officerRole.asc().nullsLast().op('enum_ops'),
@@ -297,45 +310,9 @@ export const members = pgTable(
 			foreignColumns: [users.id],
 			name: 'members_user_id_users_id_fk',
 		}).onDelete('cascade'),
-		unique('members_discordId_unique').on(table.discordId),
+		unique('members_discord_id_unique').on(table.discordId),
 		unique('members_personal_email_unique').on(table.personalEmail),
 		unique('members_ucf_email_unique').on(table.ucfEmail),
-	],
-);
-
-export const projects = pgTable(
-	'projects',
-	{
-		id: uuid().defaultRandom().primaryKey().notNull(),
-		title: varchar({ length: 255 }).notNull(),
-		overview: text().notNull(),
-		hardwareInfo: text('hardware_info'),
-		softwareInfo: text('software_info'),
-		skills: text(),
-		photoUrls: text('photo_urls'),
-		createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
-			.defaultNow()
-			.notNull(),
-		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
-			.defaultNow()
-			.notNull(),
-		slug: varchar({ length: 64 }),
-		discordRoleId: varchar('discord_role_id', { length: 64 }),
-		active: boolean().default(true).notNull(),
-	},
-	(table) => [
-		index('projects_idx_created_at').using(
-			'btree',
-			table.createdAt.asc().nullsLast().op('timestamptz_ops'),
-		),
-		index('projects_idx_id').using('btree', table.id.asc().nullsLast().op('uuid_ops')),
-		index('projects_idx_slug').using('btree', table.slug.asc().nullsLast().op('text_ops')),
-		index('projects_idx_title').using('btree', table.title.asc().nullsLast().op('text_ops')),
-		index('projects_idx_updated_at').using(
-			'btree',
-			table.updatedAt.asc().nullsLast().op('timestamptz_ops'),
-		),
-		unique('projects_slug_unique').on(table.slug),
 	],
 );
 
@@ -395,7 +372,7 @@ export const users = pgTable(
 		email: varchar({ length: 255 }).notNull(),
 		emailVerified: timestamp('email_verified', { withTimezone: true, mode: 'string' }),
 		image: text(),
-		discordId: varchar({ length: 64 }).notNull(),
+		discordId: varchar('discord_id', { length: 64 }),
 	},
 	(table) => [unique('users_email_unique').on(table.email)],
 );
@@ -437,6 +414,43 @@ export const sponsorships = pgTable(
 	],
 );
 
+export const projects = pgTable(
+	'projects',
+	{
+		id: uuid().defaultRandom().primaryKey().notNull(),
+		title: varchar({ length: 255 }).notNull(),
+		overview: text().notNull(),
+		hardwareInfo: text('hardware_info'),
+		softwareInfo: text('software_info'),
+		skills: text(),
+		photoUrls: text('photo_urls'),
+		createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+			.defaultNow()
+			.notNull(),
+		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
+			.defaultNow()
+			.notNull(),
+		slug: varchar({ length: 64 }),
+		discordRoleId: varchar('discord_role_id', { length: 64 }),
+		active: boolean().default(true).notNull(),
+		projectLead: text('project_lead'),
+	},
+	(table) => [
+		index('projects_idx_created_at').using(
+			'btree',
+			table.createdAt.asc().nullsLast().op('timestamptz_ops'),
+		),
+		index('projects_idx_id').using('btree', table.id.asc().nullsLast().op('uuid_ops')),
+		index('projects_idx_slug').using('btree', table.slug.asc().nullsLast().op('text_ops')),
+		index('projects_idx_title').using('btree', table.title.asc().nullsLast().op('text_ops')),
+		index('projects_idx_updated_at').using(
+			'btree',
+			table.updatedAt.asc().nullsLast().op('timestamptz_ops'),
+		),
+		unique('projects_slug_unique').on(table.slug),
+	],
+);
+
 export const accounts = pgTable(
 	'accounts',
 	{
@@ -459,5 +473,49 @@ export const accounts = pgTable(
 			foreignColumns: [users.id],
 			name: 'accounts_user_id_users_id_fk',
 		}).onDelete('cascade'),
+	],
+);
+
+export const memberPermissions = pgTable(
+	'member_permissions',
+	{
+		id: uuid().defaultRandom().primaryKey().notNull(),
+		memberId: uuid('member_id').notNull(),
+		grantedById: uuid('granted_by_id'),
+		contextType: varchar('context_type', { length: 32 }).notNull(),
+		contextId: uuid('context_id'),
+		permission: permissionEnum().notNull(),
+		active: boolean().default(true).notNull(),
+		createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+			.defaultNow()
+			.notNull(),
+		expiresAt: timestamp('expires_at', { withTimezone: true, mode: 'string' }),
+	},
+	(table) => [
+		index('member_permissions_idx_context').using(
+			'btree',
+			table.contextType.asc().nullsLast().op('uuid_ops'),
+			table.contextId.asc().nullsLast().op('uuid_ops'),
+		),
+		index('member_permissions_idx_member').using(
+			'btree',
+			table.memberId.asc().nullsLast().op('uuid_ops'),
+		),
+		foreignKey({
+			columns: [table.memberId],
+			foreignColumns: [members.id],
+			name: 'member_permissions_member_id_members_id_fk',
+		}).onDelete('cascade'),
+		foreignKey({
+			columns: [table.grantedById],
+			foreignColumns: [members.id],
+			name: 'member_permissions_granted_by_id_members_id_fk',
+		}).onDelete('set null'),
+		unique('member_permission_unique').on(
+			table.memberId,
+			table.contextType,
+			table.contextId,
+			table.permission,
+		),
 	],
 );

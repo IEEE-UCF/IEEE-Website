@@ -207,7 +207,7 @@ export const Users = pgTable("users", {
   	email: varchar("email", { length: 255 }).notNull().unique(),
   	emailVerified: timestamp("email_verified", { withTimezone: true }),
   	image: text("image"), // pull from discord
-  	discordId: varchar("discordId", { length: 64 }),
+  	discordId: varchar("discord_id", { length: 64 }),
 });
 
 export const Accounts = pgTable("accounts", {
@@ -243,7 +243,7 @@ export const Members = pgTable('members', {
 	officerStatus: boolean('officer_status').notNull().default(false),
 	biography: text('biography'),
 	duesPaid: boolean('dues_paid').notNull().default(false),
-	discordID: varchar('discordId', { length: 64 }).unique(),
+	discordId: varchar('discord_id', { length: 64 }).unique(),
 	dateOfBirth: date('date_of_birth').notNull(),
 	personalEmail: varchar('personal_email', { length: 255 }).notNull().unique(),
 	ucfEmail: varchar('ucf_email', { length: 255 }).notNull().unique(),
@@ -261,7 +261,7 @@ export const Members = pgTable('members', {
 	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
 }, (table) => [
 	index('members_idx_id').on(table.id),
-	index('members_idx_discordId').on(table.discordID),
+	index('members_idx_discordId').on(table.discordId),
 	index('members_idx_personal_email').on(table.personalEmail),
 	index('members_idx_ucf_email').on(table.ucfEmail),
 	index('members_idx_officer_status').on(table.officerStatus),
@@ -361,6 +361,7 @@ export const Projects = pgTable('projects', {
 	title: varchar('title', { length: 255 }).notNull(),
 	slug: varchar('slug', { length: 64 }).unique(), // URL-friendly identifier, smth like "software" committee or "solarcar" project
 	overview: text('overview').notNull(),
+	projectLead: text('project_lead'), // Temporary plain-text lead name until ProjectMembers join is sufficient
 	hardwareInfo: text('hardware_info'),
 	softwareInfo: text('software_info'),
 	skills: text('skills'), // Comma-separated list of skills (e.g. "Python, C++, Machine Learning")

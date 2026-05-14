@@ -9,31 +9,17 @@ import {
 
 import Image from 'next/image';
 
-import { useState, useEffect } from 'react';
-
-interface Award {
-	_id: string;
-	category: string;
-	event: string;
-	place: string;
-	team: {
-		person: string;
-	};
-}
+// NOTE: Awards are not yet in the PostgreSQL schema. Once an `awards` table and
+// tRPC router are added, replace the static list below with:
+//   const { data: awards = [] } = trpc.award.getAll.useQuery();
+const awards: { category: string; event: string; place?: string }[] = [
+	{ category: 'SoutheastCon 2025', event: 'Hardware Design Competition', place: '1st Place' },
+	{ category: 'SoutheastCon 2025', event: 'Hardware Competition', place: '2nd Place' },
+	{ category: 'SoutheastCon 2025', event: 'Networking Competition (Janani Nagaraj)', place: '1st Place' },
+	{ category: 'SoutheastCon 2025', event: 'Networking Competition (Rafael Puig)', place: '3rd Place' },
+];
 
 export default function AboutIEEE() {
-	const [awards, setAwards] = useState<Award[]>([]);
-
-	useEffect(() => {
-		fetchAwards();
-	}, []);
-
-	const fetchAwards = async () => {
-		const res = await fetch('/api/awards', { method: 'GET' });
-		const awards = await res.json();
-		setAwards(awards.data);
-	};
-
 	return (
 		<div className="">
 			<Accordion type="single" collapsible>
@@ -45,29 +31,21 @@ export default function AboutIEEE() {
 						{Object.entries(
 							awards.reduce(
 								(acc, award) => {
-									if (!acc[award.category]) {
-										acc[award.category] = [];
-									}
+									if (!acc[award.category]) acc[award.category] = [];
 									acc[award.category].push(award);
 									return acc;
 								},
-								{} as Record<string, Award[]>,
+								{} as Record<string, typeof awards>,
 							),
 						).map(([category, awardsInCategory], index) => (
 							<div key={index} className="mb-5">
 								<div className="text-[var(--ieee-bright-yellow)] text-2xl font-[subheading-font] mb-2">
 									{category}
 								</div>
-
 								{awardsInCategory.map((award, awardIndex) => (
-									<div
-										key={awardIndex}
-										className="text-white text-lg font-[body-font]"
-									>
+									<div key={awardIndex} className="text-white text-lg font-[body-font]">
 										{award.place ? (
-											<p>
-												{award.event} – {award.place}
-											</p>
+											<p>{award.event} – {award.place}</p>
 										) : (
 											<p>{award.event}</p>
 										)}
@@ -107,7 +85,6 @@ export default function AboutIEEE() {
 								width={2000}
 								height={2000}
 							/>
-
 							<Image
 								className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
 								src="/committees/workshop2.png"
@@ -145,7 +122,6 @@ export default function AboutIEEE() {
 								width={2000}
 								height={2000}
 							/>
-
 							<Image
 								className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
 								src="/projects/sechardware1.png"
@@ -161,8 +137,7 @@ export default function AboutIEEE() {
 							(Janani Nagaraj), and 3rd Place in the Networking Competition (Rafael
 							Puig). We are immensely proud of our chapter – not only for securing
 							these remarkable achievements, but also for the invaluable technical
-							expertise and personal growth they developed throughout the
-							competitions.
+							expertise and personal growth they developed throughout the competitions.
 						</div>
 					</AccordionContent>
 				</AccordionItem>
@@ -226,7 +201,6 @@ export default function AboutIEEE() {
 								width={2000}
 								height={2000}
 							/>
-
 							<Image
 								className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
 								src="/committees/social2.png"
@@ -243,7 +217,7 @@ export default function AboutIEEE() {
 					</AccordionTrigger>
 					<AccordionContent>
 						<div className="text-[var(--ieee-bright-yellow)] text-lg font-[subheading-italic-font] py-2">
-							Supporting members’ career advancement is critical for IEEE @ UCF.
+							Supporting members' career advancement is critical for IEEE @ UCF.
 						</div>
 						<div className="text-white text-lg font-[body-font] py-2">
 							The Professional Development Committee is committed to equipping members
@@ -257,15 +231,14 @@ export default function AboutIEEE() {
 						</div>
 						<div className="flex flex-row">
 							<Image
-								className="md:w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+								className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
 								src="/committees/prodev2.png"
 								alt="Pro Dev Photo"
 								width={2000}
 								height={2000}
 							/>
-
 							<Image
-								className="md:w-1/2 h-120 object- object-cover p-3 hover:scale-102 transition-transform"
+								className="md:w-1/2 h-120 object-cover p-3 hover:scale-102 transition-transform"
 								src="/committees/prodev1.png"
 								alt="Pro Dev Photo"
 								width={2000}
@@ -285,7 +258,7 @@ export default function AboutIEEE() {
 						</div>
 						<div className="flex flex-row">
 							<Image
-								className="w-full h-auto object- object-cover p-3 hover:scale-102 transition-transform"
+								className="w-full h-auto object-cover p-3 hover:scale-102 transition-transform"
 								src="/sponsors/network.png"
 								alt="About Us Photo"
 								width={2000}

@@ -10,6 +10,7 @@ import {
 	eventAttendees,
 	sessions,
 	accounts,
+	memberPermissions,
 } from './schema';
 
 export const committeesRelations = relations(committees, ({ one, many }) => ({
@@ -30,6 +31,12 @@ export const membersRelations = relations(members, ({ one, many }) => ({
 		references: [users.id],
 	}),
 	eventAttendees: many(eventAttendees),
+	memberPermissions_memberId: many(memberPermissions, {
+		relationName: 'memberPermissions_memberId_members_id',
+	}),
+	memberPermissions_grantedById: many(memberPermissions, {
+		relationName: 'memberPermissions_grantedById_members_id',
+	}),
 }));
 
 export const committeeMembersRelations = relations(committeeMembers, ({ one }) => ({
@@ -94,5 +101,18 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 	user: one(users, {
 		fields: [accounts.userId],
 		references: [users.id],
+	}),
+}));
+
+export const memberPermissionsRelations = relations(memberPermissions, ({ one }) => ({
+	member_memberId: one(members, {
+		fields: [memberPermissions.memberId],
+		references: [members.id],
+		relationName: 'memberPermissions_memberId_members_id',
+	}),
+	member_grantedById: one(members, {
+		fields: [memberPermissions.grantedById],
+		references: [members.id],
+		relationName: 'memberPermissions_grantedById_members_id',
 	}),
 }));

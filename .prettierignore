@@ -1,0 +1,19 @@
+# Build folders
+.next
+dist
+build
+out
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Drizzle metadata (auto-generated)
+drizzle/meta
+
+# Misc
+.env
+.env.*
+*.log
+coverage

@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 		const [member] = await db
 			.select()
 			.from(Members)
-			.where(eq(Members.discordID, discordId))
+			.where(eq(Members.discordId, discordId))
 			.limit(1);
 		if (!member) {
 			return NextResponse.json(

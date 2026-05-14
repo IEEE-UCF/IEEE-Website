@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
 						</Link>
 					</div>
 					<div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center text-xs md:text-base text-center md:text-left w-full">
-						© Copyright 2025 IEEE – All rights reserved. A public charity, IEEE is the
+						© Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the
 						world’s largest technical professional organization dedicated to advancing
 						technology for the benefit of humanity.
 					</div>

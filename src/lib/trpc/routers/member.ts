@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { db } from "@/lib/database/index";
+import { db } from "@/lib/database/client";
 import { Members } from "@/lib/database/schema";
 import { eq } from "drizzle-orm";
 import {
@@ -72,7 +72,7 @@ export const memberRouter = createTRPCRouter({
 					.insert(Members)
 					.values({
 						userId: ctx.session.user.id,
-						discordID: discordID,
+						discordId: discordID,
 						firstName: input.firstName,
 						middleName: input.middleName || null,
 						lastName: input.lastName,
