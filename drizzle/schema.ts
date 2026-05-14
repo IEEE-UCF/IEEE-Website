@@ -217,7 +217,7 @@ export const members = pgTable(
 		administrator: boolean().default(false).notNull(),
 		biography: text(),
 		duesPaid: boolean('dues_paid').default(false).notNull(),
-		discordId: varchar({ length: 64 }).notNull(),
+		discordId: varchar('discordId',{ length: 64 }).notNull(),
 		dateOfBirth: date('date_of_birth').notNull(),
 		personalEmail: varchar('personal_email', { length: 255 }).notNull(),
 		phoneNumber: varchar('phone_number', { length: 20 }),
@@ -395,7 +395,7 @@ export const users = pgTable(
 		email: varchar({ length: 255 }).notNull(),
 		emailVerified: timestamp('email_verified', { withTimezone: true, mode: 'string' }),
 		image: text(),
-		discordId: varchar({ length: 64 }).notNull(),
+		discordId: varchar('discordId',{ length: 64 }).notNull(),
 	},
 	(table) => [unique('users_email_unique').on(table.email)],
 );
