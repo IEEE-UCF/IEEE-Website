@@ -7,6 +7,7 @@ import {
 	protectedProcedure,
 	adminProcedure,
 	memberProcedure,
+	officerProcedure,
 	createTRPCRouter,
 	// publicProcedure
 } from "../trpc";
@@ -137,7 +138,7 @@ export const memberRouter = createTRPCRouter({
 		return members;
 	}),
 
-	getById: protectedProcedure
+	getById: officerProcedure
 		.input(z.object({ id: z.string().uuid() }))
 		.query(async ({ input }) => {
 			const [member] = await db
