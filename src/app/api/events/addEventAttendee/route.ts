@@ -45,9 +45,26 @@ import { db } from '@/lib/database/client';
 import { EventAttendees, Events, Members } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
 import { and, eq } from 'drizzle-orm';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function POST(request: Request) {
 	try {
+		const session = await getServerSession(authOptions);
+		if (!session) {
+			return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+		}
+
+		const [sessionMember] = await db
+			.select()
+			.from(Members)
+			.where(eq(Members.userId, session.user.id))
+			.limit(1);
+
+		if (!sessionMember || (!sessionMember.officerStatus && !sessionMember.administrator)) {
+			return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 });
+		}
+
 		const body = await request.json();
 		const { eventId, discordId } = body;
 
