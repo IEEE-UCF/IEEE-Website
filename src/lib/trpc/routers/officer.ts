@@ -15,7 +15,7 @@ const officerPublicFields = {
 	lastName: Members.lastName,
 	officerRole: Members.officerRole,
 	biography: Members.biography,
-	image: Members.image,
+	portraitUrl: Members.portraitUrl,
 	linkedinURL: Members.linkedinURL,
 	githubURL: Members.githubURL,
 	websiteURL: Members.websiteURL,
