@@ -8,8 +8,8 @@ import { publicProcedure, adminProcedure, createTRPCRouter } from '../trpc';
 const meetingTimeCreateSchema = z.object({
 	title: z.string().min(1).max(255),
 	dayOfWeek: z.number().int().min(0).max(6),
-	startTime: z.string().max(8),
-	endTime: z.string().max(8).optional(),
+	startTime: z.string().min(1).max(8),
+	endTime: z.string().min(1).max(8).optional(),
 	location: z.string().max(255).optional(),
 });
 
