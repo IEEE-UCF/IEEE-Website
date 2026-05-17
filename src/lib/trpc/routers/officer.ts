@@ -9,13 +9,25 @@ import {
 	createTRPCRouter,
 } from "../trpc";
 
+const officerPublicFields = {
+	id: Members.id,
+	firstName: Members.firstName,
+	lastName: Members.lastName,
+	officerRole: Members.officerRole,
+	biography: Members.biography,
+	portraitUrl: Members.portraitUrl,
+	linkedinURL: Members.linkedinURL,
+	githubURL: Members.githubURL,
+	websiteURL: Members.websiteURL,
+};
+
 export const officerRouter = createTRPCRouter({
 
 	// Get all current officers
 	getAll: publicProcedure.query(async () => {
 		try {
 			const officers = await db
-				.select()
+				.select(officerPublicFields)
 				.from(Members)
 				.where(eq(Members.officerStatus, true));
 			return officers;
@@ -32,12 +44,12 @@ export const officerRouter = createTRPCRouter({
 		.input(z.object({ id: z.string().uuid() }))
 		.query(async ({ input }) => {
 			const [officer] = await db
-				.select()
+				.select(officerPublicFields)
 				.from(Members)
 				.where(eq(Members.id, input.id))
 				.limit(1);
 
-			if (!officer?.officerStatus) {
+			if (!officer?.officerRole) {
 				throw new TRPCError({ code: "NOT_FOUND", message: "Officer not found" });
 			}
 

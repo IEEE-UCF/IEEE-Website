@@ -31,13 +31,32 @@
  *   - Generic error for unexpected server-side issues, including database errors.
  */
 import { db } from '@/lib/database/client';
-import { Events } from '@/lib/database/schema';
+import { Events, Members } from '@/lib/database/schema';
+import type { NewEvent } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { eq } from 'drizzle-orm';
 
 export async function POST(request: Request) {
 	try {
+		const session = await getServerSession(authOptions);
+		if (!session) {
+			return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+		}
+
+		const [member] = await db
+			.select()
+			.from(Members)
+			.where(eq(Members.userId, session.user.id))
+			.limit(1);
+
+		if (!member || (!member.officerStatus && !member.administrator)) {
+			return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 });
+		}
+
 		const body = await request.json();
-		const { title, location, description, startTime, endTime, committeeId, ...rest } = body;
+		const { title, location, description, startTime, endTime, committeeId, flyerUrl, rsvpLink, requiresDues, slug } = body;
 
 		// Validate required fields
 		if (!title || !location || !description || !startTime) {
@@ -47,14 +66,17 @@ export async function POST(request: Request) {
 			);
 		}
 
-		const values = {
-			...rest,
+		const values: NewEvent = {
 			title,
 			location,
 			description,
 			committeeId: committeeId || null,
 			startTime: new Date(startTime).toISOString(),
 			endTime: endTime ? new Date(endTime).toISOString() : null,
+			flyerUrl: flyerUrl ?? null,
+			rsvpLink: rsvpLink ?? null,
+			requiresDues: requiresDues ?? false,
+			slug: slug ?? null,
 		};
 
 		const newEvent = await db.insert(Events).values(values).returning();
