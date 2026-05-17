@@ -32,6 +32,7 @@
  */
 import { db } from '@/lib/database/client';
 import { Events, Members } from '@/lib/database/schema';
+import type { NewEvent } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
@@ -65,19 +66,18 @@ export async function POST(request: Request) {
 			);
 		}
 
-		const values: Record<string, unknown> = {
+		const values: NewEvent = {
 			title,
 			location,
 			description,
 			committeeId: committeeId || null,
 			startTime: new Date(startTime).toISOString(),
 			endTime: endTime ? new Date(endTime).toISOString() : null,
+			flyerUrl: flyerUrl ?? null,
+			rsvpLink: rsvpLink ?? null,
+			requiresDues: requiresDues ?? false,
+			slug: slug ?? null,
 		};
-
-		if (flyerUrl !== undefined) values.flyerUrl = flyerUrl;
-		if (rsvpLink !== undefined) values.rsvpLink = rsvpLink;
-		if (requiresDues !== undefined) values.requiresDues = requiresDues;
-		if (slug !== undefined) values.slug = slug;
 
 		const newEvent = await db.insert(Events).values(values).returning();
 		return NextResponse.json({ success: true, data: newEvent });
