@@ -1,23 +1,20 @@
-import { dbConnect } from '@/lib/mongodb';
+import { db } from '@/lib/database/client';
+import { MeetingTimes } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
-
-const uri = process.env.MONGODB_URI!;
-const client = new MongoClient(uri);
-const dbName = 'IEEE-Website';
+import { asc, eq } from 'drizzle-orm';
 
 export async function GET() {
-	await dbConnect();
-
-	await client.connect();
-	const db = client.db(dbName);
-
 	try {
-		const times = await db.collection('Times').find({}).toArray();
+		const times = await db
+			.select()
+			.from(MeetingTimes)
+			.where(eq(MeetingTimes.active, true))
+			.orderBy(asc(MeetingTimes.dayOfWeek), asc(MeetingTimes.startTime));
 		return NextResponse.json({ success: true, data: times });
-	} catch {
+	} catch (error) {
+		console.error(error);
 		return NextResponse.json(
-			{ success: false, error: 'Failed to fetch times' },
+			{ success: false, error: 'Failed to fetch meeting times' },
 			{ status: 500 },
 		);
 	}

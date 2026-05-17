@@ -1,21 +1,17 @@
-import { dbConnect } from '@/lib/mongodb';
+import { db } from '@/lib/database/client';
+import { Awards } from '@/lib/database/schema';
 import { NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
-
-const uri = process.env.MONGODB_URI!;
-const client = new MongoClient(uri);
-const dbName = 'IEEE-Website';
+import { eq } from 'drizzle-orm';
 
 export async function GET() {
-	await dbConnect();
-
-	await client.connect();
-	const db = client.db(dbName);
-
 	try {
-		const awards = await db.collection('Awards').find({}).toArray();
+		const awards = await db
+			.select()
+			.from(Awards)
+			.where(eq(Awards.active, true));
 		return NextResponse.json({ success: true, data: awards });
-	} catch {
+	} catch (error) {
+		console.error(error);
 		return NextResponse.json(
 			{ success: false, error: 'Failed to fetch awards' },
 			{ status: 500 },

@@ -412,6 +412,42 @@ export const Sponsorships = pgTable('sponsorships', {
 	index('sponsorships_idx_updated_at').on(table.updatedAt),
 ]);
 
+// Awards
+export const Awards = pgTable('awards', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	category: varchar('category', { length: 255 }).notNull(),
+	eventName: varchar('event_name', { length: 255 }).notNull(),
+	place: varchar('place', { length: 64 }).notNull(),
+	year: integer('year').notNull(),
+	projectId: uuid('project_id').references(() => Projects.id, { onDelete: 'set null' }),
+	memberId: uuid('member_id').references(() => Members.id, { onDelete: 'set null' }),
+	description: text('description'),
+	active: boolean('active').notNull().default(true),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
+}, (table) => [
+	index('awards_idx_id').on(table.id),
+	index('awards_idx_year').on(table.year),
+	index('awards_idx_project_id').on(table.projectId),
+	index('awards_idx_member_id').on(table.memberId),
+]);
+
+// MeetingTimes
+export const MeetingTimes = pgTable('meeting_times', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	title: varchar('title', { length: 255 }).notNull(),
+	dayOfWeek: integer('day_of_week').notNull(),
+	startTime: varchar('start_time', { length: 8 }).notNull(),
+	endTime: varchar('end_time', { length: 8 }),
+	location: varchar('location', { length: 255 }),
+	active: boolean('active').notNull().default(true),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
+}, (table) => [
+	index('meeting_times_idx_id').on(table.id),
+	index('meeting_times_idx_day_of_week').on(table.dayOfWeek),
+]);
+
 // ==== Relations ====
 
 export const UsersRelations = relations(Users, ({ one }) => ({
@@ -489,3 +525,7 @@ export type Sponsorship = typeof Sponsorships.$inferSelect;
 export type NewSponsorship = typeof Sponsorships.$inferInsert;
 export type MemberPermission = typeof MemberPermissions.$inferSelect;
 export type NewMemberPermission = typeof MemberPermissions.$inferInsert;
+export type Award = typeof Awards.$inferSelect;
+export type NewAward = typeof Awards.$inferInsert;
+export type MeetingTime = typeof MeetingTimes.$inferSelect;
+export type NewMeetingTime = typeof MeetingTimes.$inferInsert;
