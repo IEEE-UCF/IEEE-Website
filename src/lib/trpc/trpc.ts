@@ -96,36 +96,31 @@ export const protectedProcedure = t.procedure.use(timingMiddleware).use(({ ctx, 
 
 // determines if officer or if admin, helper stuff
 
-async function userIsOfficer(userId: string): Promise<boolean> {
-	const member = await db
-		.select({ officerStatus: Members.officerStatus })
+async function getMemberRoles(userId: string): Promise<{ officerStatus: boolean; administrator: boolean } | null> {
+	const [member] = await db
+		.select({ officerStatus: Members.officerStatus, administrator: Members.administrator })
 		.from(Members)
 		.where(eq(Members.userId, userId))
 		.limit(1);
 
-	return member.length > 0 && member[0]?.officerStatus === true;
+	return member ?? null;
 }
 
 async function userIsAdmin(userId: string): Promise<boolean> {
-	const member = await db
-		.select({ administrator: Members.administrator })
-		.from(Members)
-		.where(eq(Members.userId, userId))
-		.limit(1);
-
-	return member.length > 0 && member[0]?.administrator === true;
+	const roles = await getMemberRoles(userId);
+	return roles?.administrator === true;
 }
 
 /**
  * Officer procedure
  *
- * Requires user to be logged in AND have officerStatus = true
- * Use this for officer-only features.
+ * Requires user to be logged in AND have officerStatus = true OR administrator = true.
+ * Admins are granted officer-level access implicitly.
  */
 export const officerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
-	const isOfficer = await userIsOfficer(ctx.session.user.id);
+	const roles = await getMemberRoles(ctx.session.user.id);
 
-	if (!isOfficer) {
+	if (!roles?.officerStatus && !roles?.administrator) {
 		throw new TRPCError({
 			code: 'FORBIDDEN',
 			message: 'Officer status required',
