@@ -25,7 +25,7 @@
 import React from 'react';
 import { Scanner } from '@yudiel/react-qr-scanner';
 import { useMemberScanner } from '@/components/pg/memberqrcode-scan';
-import { type Event } from '@/lib/database/schema';
+import { trpc } from '@/lib/trpc/client';
 
 export default function ScanQRPage() {
 	// ============================================
@@ -47,67 +47,26 @@ export default function ScanQRPage() {
 		'idle',
 	);
 	const [apiError, setApiError] = React.useState<string | null>(null);
-
-	const [events, setEvents] = React.useState<Event[]>([]);
 	const [selectedEventId, setSelectedEventId] = React.useState<string>('');
-	const [eventsLoading, setEventsLoading] = React.useState<boolean>(true);
-	const [eventsError, setEventsError] = React.useState<string | null>(null);
 
-	React.useEffect(() => {
-		const fetchEvents = async () => {
-			try {
-				const response = await fetch('/api/events/getEvents');
-				const result = await response.json();
-				if (result.success) {
-					setEvents(result.data);
-				} else {
-					setEventsError(result.error || 'Failed to fetch events.');
-				}
-			} catch (error) {
-				setEventsError('An error occurred while fetching events.');
-				console.error('Error fetching events:', error);
-			} finally {
-				setEventsLoading(false);
-			}
-		};
+	const { data: eventsData, isLoading: eventsLoading, error: eventsError } = trpc.event.getAll.useQuery();
+	const events = eventsData ?? [];
 
-		fetchEvents();
-	}, []);
+	const addAttendee = trpc.event.addAttendee.useMutation({
+		onSuccess: () => setApiStatus('success'),
+		onError: (err) => {
+			setApiStatus('error');
+			setApiError(err.message || 'Failed to add attendee.');
+		},
+	});
 
 	React.useEffect(() => {
 		if (memberInfo && selectedEventId) {
-			const addAttendee = async () => {
-				setApiStatus('loading');
-				setApiError(null);
-				try {
-					const response = await fetch('/api/events/addEventAttendee', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							eventId: selectedEventId,
-							discordId: memberInfo.id,
-						}),
-					});
-
-					const result = await response.json();
-
-					if (result.success) {
-						setApiStatus('success');
-					} else {
-						setApiStatus('error');
-						setApiError(result.error || 'Failed to add attendee.');
-					}
-				} catch (error) {
-					setApiStatus('error');
-					setApiError('An error occurred while adding the attendee.');
-					console.error('Error adding event attendee:', error);
-				}
-			};
-
-			addAttendee();
+			setApiStatus('loading');
+			setApiError(null);
+			addAttendee.mutate({ eventId: selectedEventId, discordId: memberInfo.id });
 		}
+		// addAttendee is intentionally omitted from deps — its reference changes every render
 	}, [memberInfo, selectedEventId]);
 
 	// ============================================
@@ -127,7 +86,7 @@ export default function ScanQRPage() {
 					{eventsLoading ? (
 						<p className="text-center text-gray-500">Loading events...</p>
 					) : eventsError ? (
-						<p className="text-center text-red-500">{eventsError}</p>
+						<p className="text-center text-red-500">{eventsError.message}</p>
 					) : (
 						<div className="max-w-xs mx-auto">
 							<label
