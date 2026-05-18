@@ -8,11 +8,11 @@ import Image from 'next/image';
 // import { Github, Instagram, Linkedin, Youtube, Facebook } from 'lucide-react';
 
 // const socials: { title: string; href: string; icon: React.ReactNode }[] = [
-//     { title: "instagram", href: "https://www.instagram.com/ieeeucf/?hl=en", icon: <Instagram className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-//     { title: "linkedin", href: "https://www.linkedin.com/company/ieee-ucf/", icon: <Linkedin className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-//     { title: "youtube", href: "https://www.youtube.com/@ieeeucf2287", icon: <Youtube className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-//     { title: "facebook", href: "https://www.facebook.com/ieeeatucf/", icon: <Facebook className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
-//     { title: "github", href: "https://github.com/IEEE-UCF", icon: <Github className="w-5 h-5 text-white hover:text-[var(--ieee-bright-yellow)]" /> },
+//     { title: "instagram", href: "https://www.instagram.com/ieeeucf/?hl=en", icon: <Instagram className="w-5 h-5 text-white hover:text-ieee-bright-yellow" /> },
+//     { title: "linkedin", href: "https://www.linkedin.com/company/ieee-ucf/", icon: <Linkedin className="w-5 h-5 text-white hover:text-ieee-bright-yellow" /> },
+//     { title: "youtube", href: "https://www.youtube.com/@ieeeucf2287", icon: <Youtube className="w-5 h-5 text-white hover:text-ieee-bright-yellow" /> },
+//     { title: "facebook", href: "https://www.facebook.com/ieeeatucf/", icon: <Facebook className="w-5 h-5 text-white hover:text-ieee-bright-yellow" /> },
+//     { title: "github", href: "https://github.com/IEEE-UCF", icon: <Github className="w-5 h-5 text-white hover:text-ieee-bright-yellow" /> },
 
 // ];
 
@@ -35,21 +35,21 @@ const Footer: React.FC = () => {
 					<div className="flex flex-wrap justify-center md:justify-start gap-x-3 gap-y-2 items-center text-xs md:text-sm">
 						<Link
 							href={'/'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							HOME
 						</Link>
-						<span className="text-xl font-[body-font] hidden md:inline">|</span>
+						<span className="text-xl font-body hidden md:inline">|</span>
 						<Link
 							href={'/about'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							ABOUT
 						</Link>
-						<span className="text-xl font-[body-font] hidden md:inline">|</span>
+						<span className="text-xl font-body hidden md:inline">|</span>
 						<Link
 							href={'/connect'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							CONTACT
 						</Link>
@@ -57,35 +57,35 @@ const Footer: React.FC = () => {
 					<div className="flex flex-wrap justify-center md:justify-start gap-x-3 gap-y-2 items-center text-xs md:text-sm">
 						<Link
 							href={'https://www.ieee.org/accessibility_statement.html'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							ACCESSIBILITY
 						</Link>
-						<span className="text-xl font-[body-font] hidden md:inline">|</span>
+						<span className="text-xl font-body hidden md:inline">|</span>
 						<Link
 							href={'https://www.ieee.org/nondiscrimination'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							NONDISCRIMINATION POLICY
 						</Link>
-						<span className="text-xl font-[body-font] hidden md:inline">|</span>
+						<span className="text-xl font-body hidden md:inline">|</span>
 						<Link
 							href={'http://www.ieee-ethics-reporting.org'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							IEEE ETHICS REPORTING
 						</Link>
-						<span className="text-xl font-[body-font] hidden md:inline">|</span>
+						<span className="text-xl font-body hidden md:inline">|</span>
 						<Link
 							href={'https://privacy.ieee.org/policies'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							IEEE PRIVACY POLICY
 						</Link>
-						<span className="text-xl font-[body-font] hidden md:inline">|</span>
+						<span className="text-xl font-body hidden md:inline">|</span>
 						<Link
 							href={'https://www.ieee.org/site_terms_conditions.html'}
-							className="font-extralight text-white font-['Open Sans'] hover:text-[var(--ieee-bright-yellow)]"
+							className="font-extralight text-white font-body hover:text-ieee-bright-yellow"
 						>
 							TERMS & DISCLOSURES
 						</Link>

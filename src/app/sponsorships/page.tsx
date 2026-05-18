@@ -29,21 +29,21 @@ export default function SponsorshipsPage() {
 					<Navbar />
 				</div>
 
-				<div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2" />
+				<div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,var(--color-ieee-near-black)_5%,transparent_100%)] z-2" />
 
 				<div className="flex flex-row my-20 p-40 justify-center absolute z-3 w-screen">
 					<div className="flex flex-col items-center justify-center self-center text-center gap-y-5 float">
-						<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">
+						<div className="font-heading text-ieee-bright-yellow text-5xl sm:text-6xl">
 							SPONSORSHIPS
 						</div>
-						<div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">
+						<div className="font-body text-white text-xl lg:text-2xl w-3/4">
 							Without sponsors, nothing would be possible for IEEE @ UCF. To inquire
 							about supporting IEEE @ UCF, view the sponsorship package below or click
 							the button to send a direct email.
 						</div>
 						<div className="relative group cursor-pointer">
-							<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-							<div className="relative px-10 py-7 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
+							<div className="absolute -inset-1 bg-gradient-to-r from-ieee-bright-yellow to-ieee-bright-yellow rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+							<div className="relative flex items-top justify-start space-x-6 rounded-lg border border-ieee-dark-grey bg-ieee-near-black px-10 py-7 leading-none">
 								<div className="space-y-2 text-white font-bold text-2xl">
 									<MailTo email="ieee@ucf.edu" subject="Sponsorship Inquiry" body="Hello IEEE at UCF,">
 										INQUIRE ABOUT SPONSORING
@@ -67,7 +67,12 @@ export default function SponsorshipsPage() {
 
 			{/* Wave divider */}
 			<div className="relative -translate-y-20 w-full overflow-hidden leading-none">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-20">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 1200 120"
+					preserveAspectRatio="none"
+					className="w-full h-20"
+				>
 					<defs>
 						<radialGradient id="bg-gradient" cx="40%" cy="120%" r="125%">
 							<stop offset="50%" stopColor="#000000" />
@@ -83,7 +88,7 @@ export default function SponsorshipsPage() {
 			</div>
 
 			{/* Sponsors carousel */}
-			<div className="px-10 bg-black border-b border-white/10">
+			<div className="border-b border-ieee-dark-grey/60 bg-black px-10">
 				<SponsorsCarousel />
 			</div>
 

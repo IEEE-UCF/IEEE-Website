@@ -83,10 +83,12 @@ const TestPage = () => {
 	// ============================================
 
 	return (
-		<div className="min-h-screen bg-gray-100 py-8">
+		<div className="min-h-screen bg-ieee-black py-8 text-white">
 			<div className="max-w-4xl mx-auto px-4">
 				{/* ========== PAGE HEADER ========== */}
-				<h1 className="text-3xl font-bold text-center mb-8">QR Code Testing</h1>
+				<h1 className="mb-8 text-center text-3xl font-heading text-ieee-bright-yellow">
+					QR Code Testing
+				</h1>
 
 				{/* ========== QR CODE EXAMPLES GRID ========== */}
 				{/*
@@ -101,8 +103,8 @@ const TestPage = () => {
 						- Displays IEEE-UCF logo in the center
 						- Shows the encoded data below for reference
 					*/}
-					<div className="bg-white rounded-lg shadow-md p-6">
-						<h2 className="text-xl font-semibold mb-4">QR Code with IEEE-UCF Logo</h2>
+					<div className="rounded-lg border border-ieee-dark-grey bg-ieee-near-black p-6 shadow-md shadow-black/30">
+						<h2 className="mb-4 text-xl font-heading">QR Code with IEEE-UCF Logo</h2>
 
 						{/*
 							MemberQRCode Component
@@ -122,7 +124,7 @@ const TestPage = () => {
 						/>
 
 						{/* Display the raw data being encoded for debugging */}
-						<div className="mt-4 text-sm text-gray-600">
+						<div className="mt-4 text-sm text-ieee-light-grey">
 							<p>
 								<strong>Data:</strong> {memberInfoString}
 							</p>
@@ -136,8 +138,8 @@ const TestPage = () => {
 						- Demonstrates error handling
 						- Useful for testing edge cases
 					*/}
-					<div className="bg-white rounded-lg shadow-md p-6">
-						<h2 className="text-xl font-semibold mb-4">QR Code with Icon</h2>
+					<div className="rounded-lg border border-ieee-dark-grey bg-ieee-near-black p-6 shadow-md shadow-black/30">
+						<h2 className="mb-4 text-xl font-heading">QR Code with Icon</h2>
 
 						{/*
 							MemberQRCode Component with empty data
@@ -159,7 +161,7 @@ const TestPage = () => {
 						/>
 
 						{/* Indicates this is intentionally blank for testing */}
-						<div className="mt-4 text-sm text-gray-600">
+						<div className="mt-4 text-sm text-ieee-light-grey">
 							<p>
 								<strong>Blank</strong>
 							</p>

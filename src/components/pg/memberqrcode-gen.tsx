@@ -141,7 +141,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 	// Render the QR code image
 	return (
 		<Card>
-			<CardTitle className="text-lg text-white font-[subheading-font]">
+			<CardTitle className="text-lg text-white font-subheading">
 				{getFirstName()}&apos;s QR Code
 			</CardTitle>
 			{qrCodeUrl && (
@@ -152,7 +152,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 					data-testid="qr-code-image"
 				/>
 			)}
-			<p className="text-gray-300  mb-4">Scan to access member info</p>
+			<p className="text-ieee-light-grey  mb-4">Scan to access member info</p>
 		</Card>
 	);
 };

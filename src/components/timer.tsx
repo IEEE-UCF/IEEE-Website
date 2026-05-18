@@ -57,7 +57,9 @@ const Timer: React.FC = () => {
 		const target = new Date(gbmDate).getTime();
 		setTimeLeft(calcTimeLeft(target));
 		intervalRef.current = setInterval(() => setTimeLeft(calcTimeLeft(target)), 1000);
-		return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+		return () => {
+			if (intervalRef.current) clearInterval(intervalRef.current);
+		};
 	}, [gbmDate]);
 
 	const handleSave = () => {
@@ -87,14 +89,13 @@ const Timer: React.FC = () => {
 			/>
 
 			<div className="flex flex-col lg:flex-row flex-wrap justify-between items-center gap-8">
-
 				{/* ── Left: countdown ── */}
 				<div className="flex flex-col w-full lg:w-1/2 items-center justify-center text-center py-4">
 					<div className="p-4 w-full">
-						<h2 className="text-4xl text-white font-[subheading-font]">
+						<h2 className="text-4xl text-white font-subheading">
 							NEXT GENERAL BODY MEETING
 						</h2>
-						<p className="mt-2 text-2xl text-white font-[body-font]">
+						<p className="mt-2 text-2xl text-white font-body">
 							Join IEEE @ UCF for the upcoming GBM in Room TBD!
 						</p>
 
@@ -103,20 +104,26 @@ const Timer: React.FC = () => {
 							<div className="mt-4">
 								{!isEditing ? (
 									<div className="flex flex-wrap items-center justify-center gap-3">
-										<span className="text-sm text-gray-400 font-[body-font]">
+										<span className="text-sm text-ieee-light-grey font-body">
 											{new Date(gbmDate).toLocaleString('en-US', {
-												month: 'long', day: 'numeric', year: 'numeric',
-												hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+												month: 'long',
+												day: 'numeric',
+												year: 'numeric',
+												hour: 'numeric',
+												minute: '2-digit',
+												timeZoneName: 'short',
 											})}
 										</span>
 										<button
 											onClick={() => setIsEditing(true)}
-											className="text-xs font-[heading-font] px-3 py-1 rounded border border-[var(--ieee-bright-yellow)] text-[var(--ieee-bright-yellow)] hover:bg-[var(--ieee-bright-yellow)] hover:text-black transition-all cursor-pointer"
+											className="text-xs font-heading px-3 py-1 rounded border border-ieee-bright-yellow text-ieee-bright-yellow hover:bg-ieee-bright-yellow hover:text-black transition-all cursor-pointer"
 										>
 											EDIT DATE
 										</button>
 										{saveMsg && (
-											<span className="text-xs text-green-400 font-[body-font]">{saveMsg}</span>
+											<span className="text-xs text-green-400 font-body">
+												{saveMsg}
+											</span>
 										)}
 									</div>
 								) : (
@@ -125,18 +132,18 @@ const Timer: React.FC = () => {
 											type="datetime-local"
 											value={inputValue}
 											onChange={(e) => setInputValue(e.target.value)}
-											className="bg-black border border-white/30 text-white text-sm rounded px-3 py-2 font-[body-font] focus:outline-none focus:border-[var(--ieee-bright-yellow)]"
+											className="rounded-md border border-ieee-grey bg-ieee-dark-grey px-3 py-2 text-sm font-body text-white outline-none transition-[border-color,box-shadow] focus:border-ieee-bright-yellow focus:ring-2 focus:ring-ieee-bright-yellow/35"
 										/>
 										<div className="flex gap-2">
 											<button
 												onClick={handleSave}
-												className="text-xs font-[heading-font] px-3 py-2 rounded bg-[var(--ieee-bright-yellow)] text-black hover:opacity-90 transition-all cursor-pointer"
+												className="text-xs font-heading px-3 py-2 rounded bg-ieee-bright-yellow text-black hover:opacity-90 transition-all cursor-pointer"
 											>
 												SAVE
 											</button>
 											<button
 												onClick={handleCancel}
-												className="text-xs font-[heading-font] px-3 py-2 rounded border border-white/30 text-white hover:border-white transition-all cursor-pointer"
+												className="text-xs font-heading px-3 py-2 rounded border border-ieee-grey text-white hover:border-ieee-bright-yellow hover:text-ieee-bright-yellow transition-all cursor-pointer"
 											>
 												CANCEL
 											</button>
@@ -148,22 +155,30 @@ const Timer: React.FC = () => {
 					</div>
 
 					{/* Countdown digits — always shows numbers, freezes at 00 when past */}
-					<div className="p-3 m-3 rounded-sm border-1 backdrop-blur-lg w-full h-fit">
+					<div className="p-3 m-3 rounded-sm border border-ieee-dark-grey backdrop-blur-lg w-full h-fit">
 						<div className="flex justify-around items-center flex-row">
-							{([
-								{ value: timeLeft.days, label: 'DAYS' },
-								{ value: timeLeft.hours, label: 'HOURS' },
-								{ value: timeLeft.minutes, label: 'MINUTES' },
-								{ value: timeLeft.seconds, label: 'SECONDS' },
-							] as const).map((unit, i, arr) => (
+							{(
+								[
+									{ value: timeLeft.days, label: 'DAYS' },
+									{ value: timeLeft.hours, label: 'HOURS' },
+									{ value: timeLeft.minutes, label: 'MINUTES' },
+									{ value: timeLeft.seconds, label: 'SECONDS' },
+								] as const
+							).map((unit, i, arr) => (
 								<React.Fragment key={unit.label}>
 									<div className="text-white text-center">
-										<span className="font-[heading-font] text-5xl">{pad(unit.value)}</span>
+										<span className="font-heading text-5xl">
+											{pad(unit.value)}
+										</span>
 										<br />
-										<span className="text-sm text-white font-[body-font]">{unit.label}</span>
+										<span className="text-sm text-white font-body">
+											{unit.label}
+										</span>
 									</div>
 									{i < arr.length - 1 && (
-										<span className="font-[subheading-font] text-white text-3xl">:</span>
+										<span className="font-subheading text-white text-3xl">
+											:
+										</span>
 									)}
 								</React.Fragment>
 							))}
@@ -172,7 +187,7 @@ const Timer: React.FC = () => {
 				</div>
 
 				{/* ── Right: calendar ── */}
-				<div className="border-1 border-white w-full lg:w-5/12 rounded-sm px-2 py-4">
+				<div className="w-full lg:w-5/12 rounded-sm border border-ieee-dark-grey px-2 py-4">
 					<Calendar className="w-full h-[350px] sm:h-[400px] lg:h-[400px] opacity-87" />
 				</div>
 			</div>

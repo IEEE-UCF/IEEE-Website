@@ -67,20 +67,20 @@ export default function Home() {
 		<div>
 			<div className="flex flex-col max-w-screen overflow-x-hidden">
 				<div className="relative w-full">
-					<div className="flex flex-col w-full relative 2xl:h-[140vh] h-[165vh] lg:h-[150vh] items-center [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_40%,#FFC72C_100%)]">
+					<div className="flex flex-col w-full relative 2xl:h-[140vh] h-[165vh] lg:h-[150vh] items-center [background:radial-gradient(125%_125%_at_50%_10%,var(--color-ieee-near-black)_40%,var(--color-ieee-dark-yellow)_100%)]">
 						<div className="px-5 w-full">
 							<Navbar />
 
 							<div className="flex flex-row gap-x-[3vw] justify-center self-center flex-wrap md:my-30 lg:my-0 float">
 								<div className="flex flex-col items-start text-center xl:text-left justify-center self-center">
 									<div className="max-w-full my-8">
-										<div className="font-[display-font] text-[var(--ieee-bright-yellow)] text-7xl lg:text-8xl">
+										<div className="font-display text-ieee-bright-yellow text-7xl lg:text-8xl">
 											IEEE @ UCF
 										</div>
-										<div className="font-[subheading-font] text-white text-4xl lg:text-5xl">
+										<div className="font-subheading text-white text-4xl lg:text-5xl">
 											STUDENT CHAPTER
 										</div>
-										<div className="text-white font-[body-italic-font] text-sm md:text-xl lg:text-2xl my-3 flex flex-wrap w-fit">
+										<div className="text-white font-body-italic text-sm md:text-xl lg:text-2xl my-3 flex flex-wrap w-fit">
 											<div className="typewriter flex flex-wrap whitespace-normal break-words">
 												From circuits to embedded systems, we engineer the
 												future
@@ -89,13 +89,13 @@ export default function Home() {
 									</div>
 
 									<div className="relative group cursor-pointer self-center xl:self-start">
-										<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)]  blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+										<div className="absolute -inset-1 bg-gradient-to-r from-ieee-bright-yellow to-ieee-bright-yellow  blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
 
-										<div className="relative px-12 py-5 bg-[#0c0a09] ring-1 rounded-sm ring-gray-900/5 leading-none flex items-top justify-start space-x-6">
+										<div className="relative flex items-top justify-start space-x-6 rounded-sm border border-ieee-dark-grey bg-ieee-near-black px-12 py-5 leading-none">
 											<div className="space-y-2">
 												<Link href="/about">
-													<p className="text-white text-xl font-[body-italic-font]">
-                            LEARN MORE!
+													<p className="text-white text-xl font-body-italic">
+														LEARN MORE!
 													</p>
 												</Link>
 											</div>
@@ -133,7 +133,7 @@ export default function Home() {
 							<defs>
 								<radialGradient id="bg-gradient" cx="40%" cy="120%" r="125%">
 									<stop offset="50%" stopColor="#000000" />
-									<stop offset="100%" stopColor="#3d3110" />
+									<stop offset="100%" stopColor="var(--color-ieee-warm-dark)" />
 								</radialGradient>
 							</defs>
 
@@ -146,7 +146,7 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className="[background:radial-gradient(125%_125%_at_50%_10%,#3d3110_40%,#000000_100%)] -translate-y-20 ">
+				<div className="[background:radial-gradient(125%_125%_at_50%_10%,var(--color-ieee-warm-dark)_40%,#000000_100%)] -translate-y-20 ">
 					<div
 						ref={carouselRef}
 						className="relative z-10 -translate-y-1/2 flex justify-center w-full"
@@ -165,7 +165,7 @@ export default function Home() {
 										<div className="p-2">
 											<div className="cursor-grab group relative w-full overflow-hidden p-[3px] bg-transparent transition-transform hover:scale-102 rounded-sm">
 												<div
-													className="animated-border absolute inset-0 p-20 bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] transition-all duration-300 animate-spin -z-10 rounded-sm"
+													className="animated-border absolute inset-0 p-20 bg-[conic-gradient(var(--color-ieee-bright-yellow)_20deg,transparent_120deg)] transition-all duration-300 animate-spin -z-10 rounded-sm"
 													style={{ animationDuration: '6s' }}
 												/>
 												<Card className="relative z-10 p-0 rounded-sm border-none w-65 h-90 sm:w-70 sm:h-70 md:h-85 md:w-85 xl:w-90 xl:h-90 transition shadow-md overflow-hidden group">
@@ -179,7 +179,7 @@ export default function Home() {
 																priority
 															/>
 															<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-															<span className="absolute w-full h-fit bottom-0 left-1/2 -translate-x-1/2 p-2 text-white text-lg font-[body-font] bg-black/60 ">
+															<span className="absolute w-full h-fit bottom-0 left-1/2 -translate-x-1/2 p-2 text-white text-lg font-body bg-black/60 ">
 																{item.feature}
 															</span>
 														</div>
@@ -204,7 +204,7 @@ export default function Home() {
 						<defs>
 							<radialGradient id="bg-gradient2" cx="40%" cy="110%" r="125%">
 								<stop offset="50%" stopColor="#000000" />
-								<stop offset="100%" stopColor="#0d0a03" />
+								<stop offset="100%" stopColor="var(--color-ieee-near-black)" />
 							</radialGradient>
 						</defs>
 
@@ -216,8 +216,8 @@ export default function Home() {
 					</svg>
 				</div>
 
-				<div className="flex flex-col w-full p-5 bg-[#0d0a03] -mt-40">
-					<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl lg:text-6xl text-center my-5">
+				<div className="flex flex-col w-full p-5 bg-ieee-near-black -mt-40">
+					<div className="font-heading text-ieee-bright-yellow text-5xl lg:text-6xl text-center my-5">
 						UPCOMING EVENTS
 					</div>
 

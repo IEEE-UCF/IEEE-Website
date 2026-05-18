@@ -28,14 +28,14 @@ export default function EventsPage() {
 					<Navbar />
 				</div>
 
-				<div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r   inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,#0c0a09_5%,transparent_100%)] z-2"></div>
+				<div className="absolute top-0 left-0 w-full h-full animated-background bg-gradient-to-r   inset-0 items-center px-5 [background:radial-gradient(125%_125%_at_50%_10%,var(--color-ieee-near-black)_5%,transparent_100%)] z-2"></div>
 
 				<div className="flex flex-row my-30 p-40 px-10 md:px-20 lg:px-40 justify-center lg:justify-end absolute z-3 w-screen">
 					<div className="flex flex-col items-center lg:items-end justify-center lg:justify-end self-end text-center lg:text-right gap-y-5 float">
-						<div className="font-[heading-font] text-[var(--ieee-bright-yellow)] text-5xl sm:text-6xl">
+						<div className="font-heading text-ieee-bright-yellow text-5xl sm:text-6xl">
 							EVENTS
 						</div>
-						<div className="font-[body-font] text-white text-xl lg:text-2xl w-3/4">
+						<div className="font-body text-white text-xl lg:text-2xl w-3/4">
 							From technical workshops to career-building sessions to social
 							gatherings to community service opportunities, there is unlimited
 							opportunity to expand networks and grow skills in IEEE @ UCF.

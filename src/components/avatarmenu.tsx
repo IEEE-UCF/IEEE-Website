@@ -33,12 +33,12 @@ const AvatarMenu: React.FC<AvatarMenuProps> = ({ image }) => {
 					</NavigationMenuTrigger>
 
 					<NavigationMenuContent>
-						<div className="grid w-fit gap-4 bg-[var(--ieee-dark-yellow)] rounded-md ">
+						<div className="grid w-fit gap-4 bg-ieee-dark-yellow rounded-md ">
 							<div className="flex flex-col">
 								<NavigationMenuLink asChild>
 									<Link
 										href="/dashboard"
-										className="m-1 hover:bg-[var(--ieee-bright-yellow)] transition-all flex-row items-center gap-2 text-white font-[subheading-font]"
+										className="m-1 px-3 py-1.5 rounded-sm hover:bg-ieee-bright-yellow transition-all flex-row items-center gap-2 text-black font-subheading"
 									>
 										DASHBOARD
 									</Link>
@@ -47,7 +47,7 @@ const AvatarMenu: React.FC<AvatarMenuProps> = ({ image }) => {
 								<NavigationMenuLink asChild>
 									<Link
 										href="/settings"
-										className="m-1 hover:bg-[var(--ieee-bright-yellow)] transition-all flex-row items-center gap-2 text-white font-[subheading-font]"
+										className="m-1 px-3 py-1.5 rounded-sm hover:bg-ieee-bright-yellow transition-all flex-row items-center gap-2 text-black font-subheading"
 									>
 										SETTINGS
 									</Link>

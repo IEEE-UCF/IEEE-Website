@@ -17,8 +17,18 @@ interface Event {
 
 export default function EventSidebar() {
 	const monthNames = [
-		'January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December',
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
 	];
 	const currentMonthName = monthNames[new Date().getMonth()];
 	const [currentMonth] = useState(currentMonthName);
@@ -77,13 +87,14 @@ export default function EventSidebar() {
 		<div className="">
 			<div className="bg-black w-full h-fit flex flex-col px-10 items-center">
 				<div className="p-20 bg-black items-center lg:items-start text-center lg:text-left lg:place-self-start place-self-center">
-					<div className="font-[heading-font] text-white text-4xl lg:text-5xl lg:text-left text-center py-3">
+					<div className="font-heading text-white text-4xl lg:text-5xl lg:text-left text-center py-3">
 						UPCOMING EVENTS
 					</div>
-					<div className="font-[body-font] text-white text-xl lg:text-2xl lg:text-left text-center">
+					<div className="font-body text-white text-xl lg:text-2xl lg:text-left text-center">
 						Experience IEEE @ UCF&rsquo;s exciting lineup of events this
-						<span className="font-[subheading-font] text-[var(--ieee-bright-yellow)]">
-							{' '}{currentMonth}{' '}
+						<span className="font-subheading text-ieee-bright-yellow">
+							{' '}
+							{currentMonth}{' '}
 						</span>
 						and beyond. Click on each event to learn more.
 					</div>
@@ -96,8 +107,8 @@ export default function EventSidebar() {
 					>
 						{currentEvent ? (
 							<div className="relative group h-fit">
-								<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-50"></div>
-								<div className="relative h-full bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-sm leading-none flex items-top justify-start space-x-6">
+								<div className="absolute -inset-1 bg-gradient-to-r from-ieee-bright-yellow to-ieee-bright-yellow rounded-sm blur opacity-50"></div>
+								<div className="relative flex h-full items-top justify-start space-x-6 rounded-sm border border-ieee-dark-grey bg-ieee-near-black leading-none">
 									<div className="flex flex-row h-full rounded-sm p-10 gap-x-10 w-[70vw] xl:w-full">
 										<Image
 											className="object-cover rounded-sm w-[40vh] sm:w-[50vh] h-100vh"
@@ -144,8 +155,8 @@ export default function EventSidebar() {
 								>
 									<X size={24} />
 								</Button>
-								<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-sm blur opacity-50"></div>
-								<div className="relative h-full bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-sm leading-none flex items-top justify-start space-x-6">
+								<div className="absolute -inset-1 bg-gradient-to-r from-ieee-bright-yellow to-ieee-bright-yellow rounded-sm blur opacity-50"></div>
+								<div className="relative flex h-full items-top justify-start space-x-6 rounded-sm border border-ieee-dark-grey bg-ieee-near-black leading-none">
 									<div className="flex flex-col lg:flex-row h-full rounded-sm p-6 lg:p-10 gap-6 lg:gap-x-10">
 										<Image
 											className="object-cover rounded-sm w-full lg:w-[50vh] h-fit lg:h-100vh mt-15"
@@ -181,7 +192,9 @@ export default function EventSidebar() {
 					{/* Sidebar list — height locked to featured panel, scrollable */}
 					<div
 						className={`flex flex-col overflow-y-auto p-6 ${showEventOnMobile ? 'hidden lg:flex' : 'w-full lg:w-auto'}`}
-						style={featuredHeight ? { height: `${featuredHeight}px` } : { height: 'auto' }}
+						style={
+							featuredHeight ? { height: `${featuredHeight}px` } : { height: 'auto' }
+						}
 					>
 						{eventData.map((item, idx) => (
 							<div
@@ -191,27 +204,42 @@ export default function EventSidebar() {
 								<div
 									className="group relative w-full overflow-hidden rounded-sm p-[3px] bg-transparent cursor-pointer transition-transform hover:scale-102"
 									onMouseEnter={(e) => {
-										const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
+										const el =
+											e.currentTarget.querySelector<HTMLDivElement>(
+												'.animated-border',
+											);
 										if (el) el.style.animationPlayState = 'running';
 									}}
 									onMouseLeave={(e) => {
-										const el = e.currentTarget.querySelector<HTMLDivElement>('.animated-border');
+										const el =
+											e.currentTarget.querySelector<HTMLDivElement>(
+												'.animated-border',
+											);
 										if (el) el.style.animationPlayState = 'paused';
 									}}
 								>
 									<div
-										className="animated-border pointer-events-none absolute inset-0 z-0 rounded-sm bg-[conic-gradient(var(--ieee-bright-yellow)_20deg,transparent_120deg)] opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 animate-spin"
-										style={{ animationPlayState: 'paused', animationDuration: '6s' }}
+										className="animated-border pointer-events-none absolute inset-0 z-0 rounded-sm bg-[conic-gradient(var(--color-ieee-bright-yellow)_20deg,transparent_120deg)] opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 animate-spin"
+										style={{
+											animationPlayState: 'paused',
+											animationDuration: '6s',
+										}}
 									/>
 									<button
 										onClick={() => handleEventSelect(item)}
-										className="relative z-10 flex flex-row cursor-pointer bg-black rounded-sm w-full text-white hover:text-[var(--ieee-bright-yellow)]"
+										className="relative z-10 flex flex-row cursor-pointer bg-black rounded-sm w-full text-white hover:text-ieee-bright-yellow"
 									>
 										<div className="m-5 flex flex-col justify-center">
 											<div className="flex flex-col justify-between">
-												<div className="text-left font-bold text-lg">{item.eventName}</div>
-												<div className="flex text-left gap-x-2 text-md">{item.eventDate}</div>
-												<div className="flex text-left text-md">{item.eventAddress}</div>
+												<div className="text-left font-bold text-lg">
+													{item.eventName}
+												</div>
+												<div className="flex text-left gap-x-2 text-base">
+													{item.eventDate}
+												</div>
+												<div className="flex text-left text-base">
+													{item.eventAddress}
+												</div>
 											</div>
 										</div>
 									</button>

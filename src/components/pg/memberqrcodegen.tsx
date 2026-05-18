@@ -133,7 +133,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 					data-testid="qr-code-image"
 				/>
 			)}
-			<p className="text-sm text-gray-600 mt-2">Scan to access member info</p>
+			<p className="text-sm text-ieee-light-grey mt-2">Scan to access member info</p>
 		</div>
 	);
 };
