@@ -16,6 +16,7 @@ interface Officer {
 	year: string;
 	linkedin: string;
 	photo: string;
+	bio?: string;
 }
 
 
@@ -26,18 +27,20 @@ const OFFICERS: Officer[] = [
 		type: 'Executive',
 		role: 'President',
 		major: 'Electrical Engineering',
-		year: '3rd Year',
+		year: 'Junior',
 		linkedin: 'https://www.linkedin.com',
 		photo: '/iconography/ieeeucfsymbol.png',
+		bio: 'Matthew is a junior in Electrical Engineering at UCF with a strong focus on power electronics and analog systems. His interest in teaching emerged through his work as an Undergraduate Learning Assistant for Linear Circuits, where he developed a passion for service to others. This carried into his involvement with UCF\'s IEEE student branch, where he progressed from community service committee member to chair, and now serves as student branch president. In the coming year, he will be conducting research in Power Electronics and Radiation Effects. Outside the lab, Matthew spends his time hiking, cooking, working on cars, and staying active.',
 	},
 	{
 		name: 'Jonathan David',
 		type: 'Executive',
 		role: 'Vice President',
 		major: 'Electrical Engineering',
-		year: '2nd Year',
+		year: 'Junior',
 		linkedin: 'https://www.linkedin.com/in/jonathanmichaeldavid99/',
 		photo: '/officers/jonathan.png',
+		bio: 'Junior studying Electrical Engineering. I\'ve been involved with IEEE UCF since 2025, starting as a committee member on the Professional Development team before serving as Pro Dev Chair in 2025–2026, where I led event planning, workshop development, and member outreach. Now serving as Vice President, I\'m focused on helping make this one of the chapter\'s strongest years.',
 	},
 	{
 		name: 'Kevin Maa',
@@ -72,10 +75,11 @@ const OFFICERS: Officer[] = [
 		name: 'Jacob Beekman',
 		type: 'Chair',
 		role: 'Service Chair',
-		major: 'Engineering',
-		year: 'TBD',
+		major: 'Electrical Engineering',
+		year: 'Junior',
 		linkedin: 'https://www.linkedin.com',
 		photo: '/iconography/ieeeucfsymbol.png',
+		bio: 'Hi! My name is Jacob Beekman. I’m an electrical engineering student at UCF, and I’m the community service committee chair for the ‘26-‘27 school year. My hobbies are cooking, camping, and playing video games. I’m excited to be on the IEEE board for this year, and I’m looking forward to meeting new people, gaining new skills, and furthering my passion for electrical engineering!',
 	},
 	{
 		name: 'Kealan Frost',
@@ -90,10 +94,11 @@ const OFFICERS: Officer[] = [
 		name: 'Aldem Pido',
 		type: 'Chair',
 		role: 'Project Chair',
-		major: 'Engineering',
-		year: 'TBD',
+		major: 'Electrical Engineering',
+		year: 'Senior',
 		linkedin: 'https://www.linkedin.com',
 		photo: '/iconography/ieeeucfsymbol.png',
+		bio: 'EE Senior. I love making things, building and programming 10 different projects from hexapod robots to arcade machines. I\'ve interned at UCF STTC as an Embedded Engineer and Lockheed as a Systems Engineer. I\'m looking for full-time offers in either Hardware or Embedded after I graduate May 27.',
 	},
 	{
 		name: 'Logan Martin',
@@ -105,13 +110,14 @@ const OFFICERS: Officer[] = [
 		photo: '/iconography/ieeeucfsymbol.png',
 	},
 	{
-		name: 'Charles Diestro',
+		name: 'Charles Robert Diestro',
 		type: 'Chair',
 		role: 'Social Chair',
-		major: 'Engineering',
-		year: 'TBD',
+		major: 'Computer Engineering',
+		year: '3rd Year',
 		linkedin: 'https://www.linkedin.com',
 		photo: '/iconography/ieeeucfsymbol.png',
+		bio: 'Charles Robert Diestro is a third-year computer engineering student with a few certifications specializing in Autodesk software applications and CompTIA. Along with this, he uses the materials he has to design and create various projects that suit his own curiosity (personal projects, side projects, and hardware adjustments). In the software field he’s familiar with the languages of Python, C, Java, JavaScript, HTML, CSS, and a little bit of SQL. In the hardware field he’s dabbled in soldering, PC personalization, and plans to partake in more subjects like Raspberry Pi. With the remaining time he has at UCF, he plans to be more involved in IEEE projects to further expand his knowledge on what it means to be an experienced individual in the world of engineers.',
 	},
 	{
 		name: 'Yousef Awad',
@@ -126,10 +132,11 @@ const OFFICERS: Officer[] = [
 		name: 'James Gutierrez-Pinho',
 		type: 'Chair',
 		role: 'Pro Dev Chair',
-		major: 'Engineering',
-		year: 'TBD',
+		major: 'Electrical Engineering',
+		year: 'Senior',
 		linkedin: 'https://www.linkedin.com',
 		photo: '/iconography/ieeeucfsymbol.png',
+		bio: 'Hello everyone! My name is James Gutierrez-Pinho, and I am your IEEE Professional Development Chair. I am a rising senior in Electrical Engineering with interests in semiconductor characterization and IC design. Throughout the Fall and Spring semesters, we will be hosting a variety of professional development workshops featuring organizations and companies such as NASA, AMD, and the Georgia Tech Research Corporation.\n\nI look forward to engaging with our student body and helping students prepare for job interviews, strengthen their resumes, and connect with projects, opportunities, and IEEE resources through our mentorship program.',
 	},
 	{
 		name: 'Peyton Barnes',
