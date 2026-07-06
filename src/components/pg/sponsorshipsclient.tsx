@@ -70,7 +70,7 @@ export const SponsorsCarousel: React.FC = () => (
 // ---------------------------------------------------------------------------
 // PDF Viewer — desktop: iframe via PDF.js; mobile: download/open card
 // ---------------------------------------------------------------------------
-const PDF_PATH = '/sponsors/IEEE Sponsorship Packet 2025-2026.pdf';
+const PDF_PATH = '/sponsors/IEEE_UCF_Sponsorship_Packet_2026_to_2027.pdf';
 
 // Reusable glowing button shell
 const GlowButton: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -108,7 +108,7 @@ export const PDFViewer: React.FC = () => {
 					<a href={PDF_PATH} target="_blank" rel="noopener noreferrer" className="flex-1">
 						<GlowButton><span className="text-white font-[heading-font] text-sm">OPEN PDF</span></GlowButton>
 					</a>
-					<a href={PDF_PATH} download="IEEE-UCF-Sponsorship-Packet-2025-2026.pdf" className="flex-1">
+					<a href={PDF_PATH} download="IEEE-UCF-Sponsorship-Packet-2026-2027.pdf" className="flex-1">
 						<GlowButton><span className="text-white font-[heading-font] text-sm">DOWNLOAD</span></GlowButton>
 					</a>
 				</div>
@@ -125,7 +125,7 @@ export const PDFViewer: React.FC = () => {
 				height="700px"
 			/>
 			<div className="my-10 flex flex-row flex-wrap items-center gap-x-5 lg:gap-x-10">
-				<a href={PDF_PATH} download="IEEE-UCF-Sponsorship-Packet-2025-2026.pdf">
+				<a href={PDF_PATH} download="IEEE-UCF-Sponsorship-Packet-2026-2027.pdf">
 					<GlowButton><span className="text-white font-bold text-sm">DOWNLOAD</span></GlowButton>
 				</a>
 				<a href={PDF_PATH} target="_blank" rel="noopener noreferrer">
