@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Metadata } from 'next';
 
 const pageTitle = 'Connect | IEEE UCF';
-const pageDescription = 'ieee.ucf@gmail.com | ieee@ucf.edu';
+const pageDescription = 'ieee@ucf.edu';
 
 export const metadata: Metadata = {
 	title: pageTitle,
@@ -80,7 +80,7 @@ export default function ConnectPage() {
 							FOLLOW OUR SOCIALS
 						</div>
 						<div className="flex flex-col lg:flex-row font-bold text-white text-xl lg:text-2xl items-center gap-x-5 font-['Open Sans'] flex-wrap">
-							ieee.ucf@gmail.com | ieee@ucf.edu
+							ieee@ucf.edu
 						</div>
 
 						<Link
