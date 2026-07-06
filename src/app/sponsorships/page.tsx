@@ -45,7 +45,7 @@ export default function SponsorshipsPage() {
 							<div className="absolute -inset-1 bg-gradient-to-r from-[var(--ieee-bright-yellow)] to-[var(--ieee-bright-yellow)] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
 							<div className="relative px-10 py-7 bg-[#0c0a09] ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
 								<div className="space-y-2 text-white font-bold text-2xl">
-									<MailTo email="ieee.ucf@gmail.com" subject="Sponsorship Inquiry" body="Hello IEEE at UCF,">
+									<MailTo email="ieee@ucf.edu" subject="Sponsorship Inquiry" body="Hello IEEE at UCF,">
 										INQUIRE ABOUT SPONSORING
 									</MailTo>
 								</div>
