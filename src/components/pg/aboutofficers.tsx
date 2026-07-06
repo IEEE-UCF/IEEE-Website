@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface Officer {
 	name: string;
-	type: 'Executive' | 'Chair' | 'Advisor';
+	type: 'Executive' | 'Chair';
 	role: string;
 	major: string;
 	year: string;
@@ -147,23 +147,11 @@ const OFFICERS: Officer[] = [
 		linkedin: 'https://www.linkedin.com/in/peytonlynnbarnes/',
 		photo: '/officers/peyton.png',
 	},
-
-	// Advisors
-	{
-		name: 'Suboh Suboh',
-		type: 'Advisor',
-		role: 'Club Advisor',
-		major: 'UCF Faculty',
-		year: 'Advisor',
-		linkedin: 'https://www.linkedin.com',
-		photo: '/iconography/ieeeucfsymbol.png',
-	},
 ];
 
 export default function AboutOfficers() {
 	const executiveRef = useRef<HTMLDivElement | null>(null);
 	const chairRef = useRef<HTMLDivElement | null>(null);
-	const advisorRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		const animateRows = (containerRef: React.RefObject<HTMLDivElement | null>) => {
@@ -189,7 +177,6 @@ export default function AboutOfficers() {
 
 		animateRows(executiveRef);
 		animateRows(chairRef);
-		animateRows(advisorRef);
 	}, []);
 
 	const groupOfficers = (officersList: Officer[], perRow = 4) => {
@@ -234,7 +221,6 @@ export default function AboutOfficers() {
 
 	const executives = OFFICERS.filter((o) => o.type === 'Executive');
 	const chairs = OFFICERS.filter((o) => o.type === 'Chair');
-	const advisors = OFFICERS.filter((o) => o.type === 'Advisor');
 
 	return (
 		<div className="flex flex-col items-center justify-center p-10 w-full gap-10">
@@ -255,17 +241,6 @@ export default function AboutOfficers() {
 					{renderRows(chairs)}
 				</div>
 			</div>
-
-			{advisors.length > 0 && (
-				<div>
-					<div className="text-center text-white font-[heading-font] text-3xl my-5">
-						CLUB ADVISOR
-					</div>
-					<div ref={advisorRef} className="flex flex-col w-full gap-4">
-						{renderRows(advisors)}
-					</div>
-				</div>
-			)}
 		</div>
 	);
 }
