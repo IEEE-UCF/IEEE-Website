@@ -47,7 +47,7 @@ const OFFICERS: Officer[] = [
 		type: 'Executive',
 		role: 'Treasurer',
 		major: 'Information Technology',
-		year: 'TBD',
+		year: '3rd Year',
 		linkedin: 'https://www.linkedin.com/in/kevinmaa/',
 		photo: '/iconography/ieeeucfsymbol.png',
 	},
