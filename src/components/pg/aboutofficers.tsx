@@ -49,7 +49,7 @@ const OFFICERS: Officer[] = [
 		major: 'Information Technology',
 		year: '3rd Year',
 		linkedin: 'https://www.linkedin.com/in/kevinmaa/',
-		photo: '/iconography/ieeeucfsymbol.png',
+		photo: '/officers/kevin.jpg',
 	},
 	{
 		name: 'Tino Hernandez',
@@ -58,7 +58,7 @@ const OFFICERS: Officer[] = [
 		major: 'Electrical & Computer Engineering',
 		year: '3rd Year',
 		linkedin: 'https://www.linkedin.com/in/tino-hernandez-ee/',
-		photo: '/iconography/ieeeucfsymbol.png',
+		photo: '/officers/tino.jpg',
 	},
 
 	// Chairs
@@ -69,7 +69,7 @@ const OFFICERS: Officer[] = [
 		major: 'Computer Engineering',
 		year: '3rd Year',
 		linkedin: 'https://www.linkedin.com',
-		photo: '/iconography/ieeeucfsymbol.png',
+		photo: '/officers/dawn.jpg',
 	},
 	{
 		name: 'Jacob Beekman',
@@ -107,7 +107,7 @@ const OFFICERS: Officer[] = [
 		major: 'Electrical Engineering',
 		year: '3rd Year',
 		linkedin: 'https://www.linkedin.com/in/logan-martin-173385287/',
-		photo: '/iconography/ieeeucfsymbol.png',
+		photo: '/officers/logan.jpg',
 	},
 	{
 		name: 'Charles Robert Diestro',
