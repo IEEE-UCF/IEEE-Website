@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface Officer {
 	name: string;
-	type: 'Executive' | 'Chair';
+	type: 'Executive' | 'Chair' | 'Advisor';
 	role: string;
 	major: string;
 	year: string;
@@ -22,129 +22,141 @@ interface Officer {
 const OFFICERS: Officer[] = [
 	// Executive Board
 	{
-		name: 'Matias Guillen',
-		type: 'Executive',
-		role: 'Chair',
-		major: 'Electrical Engineering',
-		year: '3rd Year',
-		linkedin: 'http://www.linkedin.com/in/matias-gabriel-guillen',
-		photo: '/officers/matias.png',
-	},
-	{
-		name: 'Peyton Barnes',
-		type: 'Executive',
-		role: 'Vice Chair',
-		major: 'Computer Engineering',
-		year: '3rd Year',
-		linkedin: 'https://www.linkedin.com/in/peytonlynnbarnes/',
-		photo: '/officers/peyton.png',
-	},
-	{
-		name: 'Sydney Hayes',
-		type: 'Executive',
-		role: 'Secretary',
-		major: 'Electrical Engineering',
-		year: '3rd Year',
-		linkedin: 'https://www.linkedin.com/in/sydneyelizabethhayes/',
-		photo: '/officers/sydney.png',
-	},
-	{
-		name: 'Yousef Awad',
-		type: 'Executive',
-		role: 'Treasurer',
-		major: 'Computer Engineering',
-		year: '3rd Year',
-		linkedin: 'https://www.linkedin.com/in/yousefalaaawad/',
-		photo: '/officers/yousef.png',
-	},
-
-	// Chairs
-	{
-		name: 'Eren Siegman',
-		type: 'Chair',
-		role: 'Project Chair',
-		major: 'Math',
-		year: '3rd Year',
-		linkedin: 'https://www.linkedin.com/in/eren-siegman',
-		photo: '/officers/eren.png',
-	},
-	{
-		name: 'Kealan Frost',
-		type: 'Chair',
-		role: 'Workshop Chair',
-		major: 'Electrical Engineering',
-		year: '4th Year',
-		linkedin: 'https://www.linkedin.com/in/kealanfrost',
-		photo: '/officers/kealan.png',
-	},
-	{
-		name: 'Alex Evison',
-		type: 'Chair',
-		role: 'Conference Chair',
-		major: 'Electrical Engineering',
-		year: '4th Year',
-		linkedin: 'https://www.linkedin.com/in/alexander-evison/',
-		photo: '/officers/alex.png',
-	},
-	{
-		name: 'Rachel Ostrow',
-		type: 'Chair',
-		role: 'Outreach Chair',
-		major: 'Optics',
-		year: '2nd Year',
-		linkedin: 'https://www.linkedin.com/in/rachel-ostrow-006b2a32a/',
-		photo: '/officers/rachel.png',
-	},
-	{
 		name: 'Matthew Giannacco',
-		type: 'Chair',
-		role: 'Service Chair',
+		type: 'Executive',
+		role: 'President',
 		major: 'Electrical Engineering',
 		year: '3rd Year',
-		linkedin: 'http://www.linkedin.com/in/francesca-fmp',
-		photo: '/officers/rachel.png',
-	},
-	{
-		name: 'Adrian James',
-		type: 'Chair',
-		role: 'Social Chair',
-		major: 'Electrical Engineering',
-		year: '2nd Year',
-		linkedin: 'https://www.linkedin.com/in/adrian-james-/',
-		photo: '/officers/adrian.png',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
 	},
 	{
 		name: 'Jonathan David',
-		type: 'Chair',
-		role: 'Professional Development Chair',
+		type: 'Executive',
+		role: 'Vice President',
 		major: 'Electrical Engineering',
 		year: '2nd Year',
 		linkedin: 'https://www.linkedin.com/in/jonathanmichaeldavid99/',
 		photo: '/officers/jonathan.png',
 	},
 	{
-		name: 'Ryan Liu',
-		type: 'Chair',
-		role: 'Marketing Chair',
-		major: 'Electrical Engineering',
-		year: '2nd Year',
-		linkedin: 'http://www.linkedin.com/in/ryan-liurl',
-		photo: '/officers/ryan.png',
+		name: 'Kevin Maa',
+		type: 'Executive',
+		role: 'Treasurer',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
 	},
 	{
-		name: 'Kai Sprunger',
+		name: 'Tino Hernandez',
+		type: 'Executive',
+		role: 'Secretary',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+
+	// Chairs
+	{
+		name: 'Dawn Balaschak',
 		type: 'Chair',
 		role: 'Software Chair',
 		major: 'Computer Science',
-		year: '2nd Year',
-		linkedin: 'https://www.linkedin.com/in/kaisprunger/',
-		photo: '/officers/kai.png',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+	{
+		name: 'Jacob Beekman',
+		type: 'Chair',
+		role: 'Service Chair',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+	{
+		name: 'Kealan Frost',
+		type: 'Chair',
+		role: 'Outreach Chair',
+		major: 'Electrical Engineering',
+		year: '4th Year',
+		linkedin: 'https://www.linkedin.com/in/kealanfrost',
+		photo: '/officers/kealan.png',
+	},
+	{
+		name: 'Aldem Pido',
+		type: 'Chair',
+		role: 'Project Chair',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+	{
+		name: 'Logan Martin',
+		type: 'Chair',
+		role: 'Workshop Chair',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+	{
+		name: 'Charles Diestro',
+		type: 'Chair',
+		role: 'Social Chair',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+	{
+		name: 'Yousef Awad',
+		type: 'Chair',
+		role: 'Conference Chair',
+		major: 'Computer Engineering',
+		year: '3rd Year',
+		linkedin: 'https://www.linkedin.com/in/yousefalaaawad/',
+		photo: '/officers/yousef.png',
+	},
+	{
+		name: 'James Gutierrez-Pinho',
+		type: 'Chair',
+		role: 'Pro Dev Chair',
+		major: 'Engineering',
+		year: 'TBD',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
+	},
+	{
+		name: 'Peyton Barnes',
+		type: 'Chair',
+		role: 'Marketing Chair',
+		major: 'Computer Engineering',
+		year: '3rd Year',
+		linkedin: 'https://www.linkedin.com/in/peytonlynnbarnes/',
+		photo: '/officers/peyton.png',
+	},
+
+	// Advisors
+	{
+		name: 'Suboh Suboh',
+		type: 'Advisor',
+		role: 'Club Advisor',
+		major: 'UCF Faculty',
+		year: 'Advisor',
+		linkedin: 'https://www.linkedin.com',
+		photo: '/iconography/ieeeucfsymbol.png',
 	},
 ];
 
 export default function AboutOfficers() {
 	const executiveRef = useRef<HTMLDivElement | null>(null);
 	const chairRef = useRef<HTMLDivElement | null>(null);
+	const advisorRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		const animateRows = (containerRef: React.RefObject<HTMLDivElement | null>) => {
@@ -170,6 +182,7 @@ export default function AboutOfficers() {
 
 		animateRows(executiveRef);
 		animateRows(chairRef);
+		animateRows(advisorRef);
 	}, []);
 
 	const groupOfficers = (officersList: Officer[], perRow = 4) => {
@@ -214,6 +227,7 @@ export default function AboutOfficers() {
 
 	const executives = OFFICERS.filter((o) => o.type === 'Executive');
 	const chairs = OFFICERS.filter((o) => o.type === 'Chair');
+	const advisors = OFFICERS.filter((o) => o.type === 'Advisor');
 
 	return (
 		<div className="flex flex-col items-center justify-center p-10 w-full gap-10">
@@ -234,6 +248,17 @@ export default function AboutOfficers() {
 					{renderRows(chairs)}
 				</div>
 			</div>
+
+			{advisors.length > 0 && (
+				<div>
+					<div className="text-center text-white font-[heading-font] text-3xl my-5">
+						CLUB ADVISOR
+					</div>
+					<div ref={advisorRef} className="flex flex-col w-full gap-4">
+						{renderRows(advisors)}
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
