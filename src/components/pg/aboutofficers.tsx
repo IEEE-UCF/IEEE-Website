@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -149,6 +149,24 @@ const OFFICERS: Officer[] = [
 	},
 ];
 
+const OfficerImage = ({ src, alt }: { src: string; alt: string }) => {
+	const [imgSrc, setImgSrc] = useState(src);
+
+	useEffect(() => {
+		setImgSrc(src);
+	}, [src]);
+
+	return (
+		<Image
+			src={imgSrc}
+			alt={alt}
+			fill
+			className="object-cover"
+			onError={() => setImgSrc('/iconography/ieeeucfsymbol.png')}
+		/>
+	);
+};
+
 export default function AboutOfficers() {
 	const executiveRef = useRef<HTMLDivElement | null>(null);
 	const chairRef = useRef<HTMLDivElement | null>(null);
@@ -192,11 +210,9 @@ export default function AboutOfficers() {
 			key={index}
 			className="w-70 h-110 m-2 relative rounded-sm border-1 border-white overflow-hidden shadow-lg transition-transform hover:scale-102"
 		>
-			<Image
+			<OfficerImage
 				src={officer.photo}
 				alt={officer.name}
-				fill
-				className="object-cover"
 			/>
 			<div className="absolute inset-0 hover:bg-black/0 transition-colors bg-black/40 flex flex-col justify-end p-4 text-white">
 				<span className="text-xl font-[heading-font]">{officer.name.toUpperCase()}</span>
