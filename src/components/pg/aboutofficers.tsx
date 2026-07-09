@@ -68,8 +68,8 @@ const OFFICERS: Officer[] = [
 		role: 'Software Chair',
 		major: 'Computer Engineering',
 		year: '3rd Year',
-		linkedin: 'https://www.linkedin.com',
-		photo: '/officers/dawn.jpg',
+		linkedin: 'https://www.linkedin.com/in/dawnbalaschak',
+		photo: '/officers/dawn.png',
 	},
 	{
 		name: 'Jacob Beekman',
