@@ -1,8 +1,16 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { db } from "@/lib/database/client";
-import { Members } from "@/lib/database/schema";
-import { eq } from "drizzle-orm";
+import {
+	Members,
+	Users,
+	Committees,
+	CommitteeMembers,
+	MemberPermissions,
+	majorEnums,
+	officerRoleEnum,
+} from "@/lib/database/schema";
+import { and, eq, inArray } from "drizzle-orm";
 import {
 	protectedProcedure,
 	adminProcedure,
@@ -11,8 +19,8 @@ import {
 	createTRPCRouter,
 	// publicProcedure
 } from "../trpc";
-
-import { majorEnums } from "@/lib/database/schema";
+import { CAPABILITY_KEYS, isCapability, isOfficerDelegable } from "@/lib/permissions";
+import { getOfficerGrantableCapabilities } from "@/lib/settings";
 
 // Validation schemas
 const memberRegistrationSchema = z.object({
@@ -137,6 +145,219 @@ export const memberRouter = createTRPCRouter({
 		const members = await db.select().from(Members);
 		return members;
 	}),
+
+	/**
+	 * Rich member list for the members-management screen:
+	 * status flags, résumé indicator, committees, and linked Discord account.
+	 * Officers may view it (they can only act on delegated capabilities — see setPermission).
+	 */
+	listForAdmin: officerProcedure.query(async () => {
+		const rows = await db
+			.select({
+				id: Members.id,
+				userId: Members.userId,
+				firstName: Members.firstName,
+				middleName: Members.middleName,
+				lastName: Members.lastName,
+				personalEmail: Members.personalEmail,
+				ucfEmail: Members.ucfEmail,
+				major: Members.major,
+				graduationYear: Members.graduationYear,
+				administrator: Members.administrator,
+				officerStatus: Members.officerStatus,
+				officerRole: Members.officerRole,
+				duesPaid: Members.duesPaid,
+				active: Members.active,
+				memberDiscordId: Members.discordId,
+				resumeUploadedAt: Members.resumeUploadedAt,
+				hasResume: Members.resumeKey,
+				resumeUrl: Members.resumeURL,
+				createdAt: Members.createdAt,
+				userName: Users.name,
+				userEmail: Users.email,
+				userDiscordId: Users.discordId,
+			})
+			.from(Members)
+			.leftJoin(Users, eq(Members.userId, Users.id))
+			.orderBy(Members.lastName, Members.firstName);
+
+		const memberIds = rows.map((r) => r.id);
+
+		// inArray([]) is a safe no-match in drizzle, so no length guard needed.
+		const committeeLinks = await db
+			.select({
+				memberId: CommitteeMembers.memberId,
+				committeeId: CommitteeMembers.committeeId,
+				isChair: CommitteeMembers.isChair,
+				title: Committees.title,
+				slug: Committees.slug,
+			})
+			.from(CommitteeMembers)
+			.innerJoin(Committees, eq(CommitteeMembers.committeeId, Committees.id))
+			.where(inArray(CommitteeMembers.memberId, memberIds));
+
+		const byMember = new Map<string, typeof committeeLinks>();
+		for (const link of committeeLinks) {
+			const list = byMember.get(link.memberId) ?? [];
+			list.push(link);
+			byMember.set(link.memberId, list);
+		}
+
+		const permRows = await db
+			.select({ memberId: MemberPermissions.memberId, permission: MemberPermissions.permission })
+			.from(MemberPermissions)
+			.where(and(inArray(MemberPermissions.memberId, memberIds), eq(MemberPermissions.active, true)));
+		const permsByMember = new Map<string, string[]>();
+		for (const p of permRows) {
+			const list = permsByMember.get(p.memberId) ?? [];
+			if (!list.includes(p.permission)) list.push(p.permission);
+			permsByMember.set(p.memberId, list);
+		}
+
+		return rows.map((r) => ({
+			...r,
+			hasResume: Boolean(r.hasResume),
+			discordLinked: Boolean(r.userDiscordId || r.memberDiscordId),
+			discordId: r.userDiscordId ?? r.memberDiscordId ?? null,
+			committees: (byMember.get(r.id) ?? []).map((c) => ({
+				id: c.committeeId,
+				title: c.title,
+				slug: c.slug,
+				isChair: c.isChair,
+			})),
+			permissions: permsByMember.get(r.id) ?? [],
+		}));
+	}),
+
+	/**
+	 * Grant / revoke a granular capability (global scope).
+	 *
+	 * Admins may grant any capability to anyone. Officers may only grant/revoke a
+	 * capability that an admin has delegated (settings.officerGrantableCapabilities,
+	 * always a subset of OFFICER_DELEGABLE_CAPABILITIES) and only to plain members
+	 * — never to other officers or admins.
+	 */
+	setPermission: officerProcedure
+		.input(
+			z.object({
+				memberId: z.string().uuid(),
+				permission: z.string().max(64),
+				granted: z.boolean(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			if (!isCapability(input.permission)) {
+				throw new TRPCError({
+					code: "BAD_REQUEST",
+					message: `Unknown capability. Valid: ${CAPABILITY_KEYS.join(", ")}`,
+				});
+			}
+
+			const [target] = await db
+				.select({
+					id: Members.id,
+					administrator: Members.administrator,
+					officerStatus: Members.officerStatus,
+				})
+				.from(Members)
+				.where(eq(Members.id, input.memberId))
+				.limit(1);
+			if (!target) throw new TRPCError({ code: "NOT_FOUND", message: "Member not found" });
+
+			// Officer (non-admin) delegation checks.
+			if (!ctx.roles.administrator) {
+				const allowed = await getOfficerGrantableCapabilities();
+				if (!isOfficerDelegable(input.permission) || !allowed.includes(input.permission)) {
+					throw new TRPCError({
+						code: "FORBIDDEN",
+						message: "Officers aren't allowed to grant this capability.",
+					});
+				}
+				if (target.administrator || target.officerStatus) {
+					throw new TRPCError({
+						code: "FORBIDDEN",
+						message: "Officers can only change capabilities for regular members.",
+					});
+				}
+			}
+
+			// Clear any existing global rows for this capability, then re-add if granting.
+			await db
+				.delete(MemberPermissions)
+				.where(
+					and(
+						eq(MemberPermissions.memberId, input.memberId),
+						eq(MemberPermissions.permission, input.permission),
+						eq(MemberPermissions.contextType, "global"),
+					),
+				);
+
+			if (input.granted) {
+				const [grantedByMember] = await db
+					.select({ id: Members.id })
+					.from(Members)
+					.where(eq(Members.userId, ctx.session.user.id))
+					.limit(1);
+				await db.insert(MemberPermissions).values({
+					memberId: input.memberId,
+					grantedById: grantedByMember?.id ?? null,
+					contextType: "global",
+					contextId: null,
+					permission: input.permission,
+					active: true,
+				});
+			}
+
+			return { success: true, permission: input.permission, granted: input.granted };
+		}),
+
+	/** Grant / revoke administrator. Cannot remove your own admin (lockout guard). */
+	setAdmin: adminProcedure
+		.input(z.object({ id: z.string().uuid(), value: z.boolean() }))
+		.mutation(async ({ ctx, input }) => {
+			const [self] = await db
+				.select({ id: Members.id })
+				.from(Members)
+				.where(eq(Members.userId, ctx.session.user.id))
+				.limit(1);
+			if (self?.id === input.id && input.value === false) {
+				throw new TRPCError({
+					code: "BAD_REQUEST",
+					message: "You can't remove your own administrator access.",
+				});
+			}
+
+			const [updated] = await db
+				.update(Members)
+				.set({ administrator: input.value, updatedAt: new Date() })
+				.where(eq(Members.id, input.id))
+				.returning();
+			if (!updated) throw new TRPCError({ code: "NOT_FOUND", message: "Member not found" });
+			return { success: true, member: updated };
+		}),
+
+	/** Set officer status and (optionally) role in one call. Clearing status clears the role. */
+	setOfficer: adminProcedure
+		.input(
+			z.object({
+				id: z.string().uuid(),
+				officerStatus: z.boolean(),
+				officerRole: z.enum(officerRoleEnum.enumValues).nullish(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			const [updated] = await db
+				.update(Members)
+				.set({
+					officerStatus: input.officerStatus,
+					officerRole: input.officerStatus ? (input.officerRole ?? null) : null,
+					updatedAt: new Date(),
+				})
+				.where(eq(Members.id, input.id))
+				.returning();
+			if (!updated) throw new TRPCError({ code: "NOT_FOUND", message: "Member not found" });
+			return { success: true, member: updated };
+		}),
 
 	getById: officerProcedure
 		.input(z.object({ id: z.string().uuid() }))

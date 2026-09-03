@@ -1,13 +1,34 @@
 {
-	"version": "7",
-	"dialect": "postgresql",
-	"entries": [
-		{
-			"idx": 0,
-			"version": "7",
-			"when": 1762386143733,
-			"tag": "0000_jazzy_exodus",
-			"breakpoints": true
-		}
-	]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1788372205876,
+      "tag": "0000_init",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788378376394,
+      "tag": "0001_event_photos_private_default",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788402439440,
+      "tag": "0002_granular_permissions",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788460662142,
+      "tag": "0003_app_settings",
+      "breakpoints": true
+    }
+  ]
 }

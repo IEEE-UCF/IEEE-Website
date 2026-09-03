@@ -10,6 +10,7 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { ResumeUpload } from "@/components/settings/ResumeUpload";
 
 // Middleware at /settings guarantees a valid session — no useEffect redirect needed.
 
@@ -234,6 +235,9 @@ export default function SettingsPage() {
 											</Field>
 										</FieldGroup>
 									</div>
+
+									{/* Résumé (rendered only when the audience gate allows it) */}
+									<ResumeUpload />
 
 									{/* Save / Cancel */}
 									<div className="flex gap-4 mt-8 w-full md:w-1/2 self-center">

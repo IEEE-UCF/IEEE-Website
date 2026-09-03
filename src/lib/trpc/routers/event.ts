@@ -1,10 +1,17 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { db } from '@/lib/database/client';
-import { Events, EventAttendees, Members } from '@/lib/database/schema';
-import { eq, asc, and } from 'drizzle-orm';
-import { publicProcedure, adminProcedure, officerProcedure, createTRPCRouter } from '../trpc';
+import { Events, EventAttendees, EventPhotos, Members } from '@/lib/database/schema';
+import { eq, asc, desc, and, sql } from 'drizzle-orm';
+import { publicProcedure, capabilityProcedure, createTRPCRouter } from '../trpc';
 import { DateTime } from 'luxon';
+import { finalizeUpload, UploadError } from '@/lib/storage/finalize';
+import { getStorage } from '@/lib/storage';
+import { newPhotoKeys, sanitizeFilename } from '@/lib/storage/keys';
+
+const manageEvents = capabilityProcedure('manage_events');
+const scanAttendance = capabilityProcedure('scan_attendance');
+const managePhotos = capabilityProcedure('manage_event_photos');
 
 // Helper to convert a Postgres timestamptz string to an Eastern time display string.
 //
@@ -116,7 +123,7 @@ export const eventRouter = createTRPCRouter({
 			};
 		}),
 
-	create: adminProcedure
+	create: manageEvents
 		.input(eventCreateSchema)
 		.mutation(async ({ input }) => {
 			try {
@@ -145,7 +152,7 @@ export const eventRouter = createTRPCRouter({
 			}
 		}),
 
-	update: adminProcedure
+	update: manageEvents
 		.input(z.object({ id: z.string().uuid(), data: eventUpdateSchema }))
 		.mutation(async ({ input }) => {
 			const [updated] = await db
@@ -161,7 +168,7 @@ export const eventRouter = createTRPCRouter({
 			return { success: true, event: updated };
 		}),
 
-	delete: adminProcedure
+	delete: manageEvents
 		.input(z.object({ id: z.string().uuid() }))
 		.mutation(async ({ input }) => {
 			const [deleted] = await db
@@ -181,7 +188,7 @@ export const eventRouter = createTRPCRouter({
 	 * Requires officer or admin privileges (scanner is officer-facing).
 	 * Validates: event active, member active, no duplicate, dues if required.
 	 */
-	addAttendee: officerProcedure
+	addAttendee: scanAttendance
 		.input(
 			z.object({
 				eventId: z.string().uuid(),
@@ -247,5 +254,176 @@ export const eventRouter = createTRPCRouter({
 				.returning();
 
 			return { success: true, attendee: newAttendee };
+		}),
+
+	// ---- Event photos ----
+
+	/** Public event feed: only photos explicitly marked public (and approved). */
+	listPhotos: publicProcedure
+		.input(z.object({ eventId: z.string().uuid() }))
+		.query(async ({ input }) => {
+			return db
+				.select({
+					id: EventPhotos.id,
+					webUrl: EventPhotos.webUrl,
+					caption: EventPhotos.caption,
+					tags: EventPhotos.tags,
+					featured: EventPhotos.featured,
+					width: EventPhotos.width,
+					height: EventPhotos.height,
+					takenAt: EventPhotos.takenAt,
+					createdAt: EventPhotos.createdAt,
+				})
+				.from(EventPhotos)
+				.where(
+					and(
+						eq(EventPhotos.eventId, input.eventId),
+						eq(EventPhotos.approved, true),
+						eq(EventPhotos.visibility, 'public'),
+					),
+				)
+				.orderBy(desc(EventPhotos.featured), desc(EventPhotos.createdAt));
+		}),
+
+	/** Internal grid: every photo for an event. Officers + admins. */
+	adminListPhotos: managePhotos
+		.input(z.object({ eventId: z.string().uuid() }))
+		.query(async ({ input }) => {
+			return db
+				.select()
+				.from(EventPhotos)
+				.where(eq(EventPhotos.eventId, input.eventId))
+				.orderBy(desc(EventPhotos.createdAt));
+		}),
+
+	/** Keyword / tag / event lookup across photos. Officers + admins. */
+	searchPhotos: managePhotos
+		.input(
+			z.object({
+				q: z.string().max(200).optional(),
+				tag: z.string().max(40).optional(),
+				eventId: z.string().uuid().optional(),
+				limit: z.number().int().min(1).max(100).default(50),
+			}),
+		)
+		.query(async ({ input }) => {
+			const clauses = [];
+			if (input.eventId) clauses.push(eq(EventPhotos.eventId, input.eventId));
+			if (input.tag) clauses.push(sql`${input.tag.toLowerCase()} = ANY(${EventPhotos.tags})`);
+			if (input.q) {
+				clauses.push(
+					sql`to_tsvector('english', ${EventPhotos.searchText}) @@ websearch_to_tsquery('english', ${input.q})`,
+				);
+			}
+			return db
+				.select()
+				.from(EventPhotos)
+				.where(clauses.length ? and(...clauses) : undefined)
+				.orderBy(desc(EventPhotos.createdAt))
+				.limit(input.limit);
+		}),
+
+	/** Called by the admin UI after each photo's bytes have landed in storage. */
+	confirmPhoto: managePhotos
+		.input(
+			z.object({
+				eventId: z.string().uuid(),
+				photoId: z.string().uuid(),
+				filename: z.string().max(255).optional(),
+				width: z.number().int().positive().optional(),
+				height: z.number().int().positive().optional(),
+				takenAt: z.string().datetime().optional(),
+				caption: z.string().max(2000).optional(),
+				tags: z.array(z.string().max(40)).max(20).optional(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			const keys = newPhotoKeys(input.eventId, input.photoId);
+			try {
+				return await finalizeUpload({
+					kind: 'event-photo',
+					key: keys.webKey,
+					userId: ctx.session.user.id,
+					eventId: input.eventId,
+					photoId: input.photoId,
+					filename: sanitizeFilename(input.filename),
+					width: input.width ?? null,
+					height: input.height ?? null,
+					takenAt: input.takenAt ?? null,
+					caption: input.caption ?? null,
+					tags: input.tags ?? [],
+				});
+			} catch (err) {
+				if (err instanceof UploadError) {
+					throw new TRPCError({
+						code: err.code === 'NOT_FOUND' ? 'NOT_FOUND' : 'BAD_REQUEST',
+						message: err.message,
+					});
+				}
+				throw new TRPCError({
+					code: 'INTERNAL_SERVER_ERROR',
+					message: err instanceof Error ? err.message : 'Failed to finalize photo',
+				});
+			}
+		}),
+
+	updatePhoto: managePhotos
+		.input(
+			z.object({
+				id: z.string().uuid(),
+				caption: z.string().max(2000).nullish(),
+				tags: z.array(z.string().max(40)).max(20).optional(),
+				featured: z.boolean().optional(),
+				visibility: z.enum(['public', 'members', 'private']).optional(),
+				approved: z.boolean().optional(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			const [current] = await db
+				.select()
+				.from(EventPhotos)
+				.where(eq(EventPhotos.id, input.id))
+				.limit(1);
+			if (!current) throw new TRPCError({ code: 'NOT_FOUND', message: 'Photo not found' });
+
+			const caption = input.caption === undefined ? current.caption : input.caption;
+			const tags = input.tags ?? current.tags;
+			const searchText = [caption ?? '', tags.join(' '), current.sourceFilename ?? '']
+				.join(' ')
+				.trim();
+
+			const [updated] = await db
+				.update(EventPhotos)
+				.set({
+					caption: caption ?? null,
+					tags,
+					featured: input.featured ?? current.featured,
+					visibility: input.visibility ?? current.visibility,
+					approved: input.approved ?? current.approved,
+					searchText,
+				})
+				.where(eq(EventPhotos.id, input.id))
+				.returning();
+
+			return { success: true, photo: updated };
+		}),
+
+	deletePhoto: managePhotos
+		.input(z.object({ id: z.string().uuid() }))
+		.mutation(async ({ input }) => {
+			const [photo] = await db
+				.select()
+				.from(EventPhotos)
+				.where(eq(EventPhotos.id, input.id))
+				.limit(1);
+			if (!photo) throw new TRPCError({ code: 'NOT_FOUND', message: 'Photo not found' });
+
+			const storage = await getStorage();
+			for (const key of [photo.webKey, photo.thumbKey, photo.originalKey]) {
+				if (!key) continue;
+				await storage.delete({ key, bucket: 'private' }).catch(() => undefined);
+			}
+			await db.delete(EventPhotos).where(eq(EventPhotos.id, input.id));
+			return { success: true };
 		}),
 });

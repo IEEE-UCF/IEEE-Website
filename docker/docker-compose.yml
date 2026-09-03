@@ -1,0 +1,66 @@
+# Local offline stack for developing the IEEE UCF site without any cloud services.
+#   - Postgres   → stands in for the Neon database   (DB_PROVIDER=local)
+#   - MinIO      → stands in for Vercel Blob          (STORAGE_PROVIDER=local)
+#
+# Data is bind-mounted into ./data/** so it is visible on the host and trivial to
+# reset: `docker compose down && rm -rf data`. See README.md.
+
+name: ieee-local
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: ieee-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ieee-website
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d ieee-website']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio
+    container_name: ieee-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - '9000:9000' # S3 API
+      - '9001:9001' # web console → http://localhost:9001
+    volumes:
+      - ./data/minio:/data
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # One-shot: create the two buckets and make the public one anonymously readable.
+  # Safe to re-run — `mc mb -p` ignores existing buckets.
+  minio-init:
+    image: minio/mc
+    container_name: ieee-minio-init
+    depends_on:
+      minio:
+        condition: service_started
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        until mc alias set local http://minio:9000 minioadmin minioadmin; do
+          echo 'waiting for minio...'; sleep 1;
+        done
+        mc mb -p local/media-public local/resumes-private
+        mc anonymous set download local/media-public
+        echo 'minio buckets ready'
+    restart: 'no'

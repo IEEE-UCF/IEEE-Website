@@ -1,17 +1,36 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { hasStaffCapability } from '@/lib/permissions';
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
-	// Uses the standard routes that should require a logged in user
+	// Routes that just require a logged-in user
 	const protectedRoutes = ['/dashboard', '/settings', '/scan-qr'];
 	const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-	// Admin routes protected by admin permissions
-	// So far set to do /admin and /test
+	// Capability-gated routes: reachable by admins, officers, or a member holding the
+	// named granular permission. Checked before the admin routes (more specific).
+	const capabilityRoutes: { prefix: string; capability: string }[] = [
+		{ prefix: '/admin/photos', capability: 'manage_event_photos' },
+		{ prefix: '/admin/resumes', capability: 'review_resumes' },
+	];
+	const capabilityRoute = capabilityRoutes.find((r) => pathname.startsWith(r.prefix));
+
+	// /staff hub — reachable by admins, officers, or anyone with ≥1 granted capability.
+	const isStaffRoute = pathname.startsWith('/staff');
+
+	// Reachable by admins OR officers (no single capability gates it). Officers get a
+	// read-only view + can toggle admin-delegated capabilities for regular members.
+	const officerAdminRoutes = ['/admin/members'];
+	const isOfficerAdminRoute = officerAdminRoutes.some((route) => pathname.startsWith(route));
+
+	// Admin-only routes (everything else under /admin, plus /test)
 	const adminRoutes = ['/admin', '/test'];
-	const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+	const isAdminRoute =
+		!capabilityRoute &&
+		!isOfficerAdminRoute &&
+		adminRoutes.some((route) => pathname.startsWith(route));
 
 	const sessionCookie =
 		request.cookies.get('next-auth.session-token') ||
@@ -22,35 +41,51 @@ export async function middleware(request: NextRequest) {
 		return NextResponse.redirect(signInUrl);
 	}
 
-	if (isAdminRoute) {
+	if (capabilityRoute || isAdminRoute || isStaffRoute || isOfficerAdminRoute) {
+		// Not signed in → send to sign-in and come back here afterwards.
+		const signIn = new URL('/auth/signin', request.url);
+		signIn.searchParams.set('callbackUrl', pathname);
+		// Signed in but not authorised → their own dashboard, not the marketing home.
+		const noAccess = new URL('/dashboard', request.url);
+
 		if (!sessionCookie) {
-			const homeUrl = new URL('/', request.url);
-			return NextResponse.redirect(homeUrl);
+			return NextResponse.redirect(signIn);
 		}
 
 		try {
 			const sessionUrl = new URL('/api/auth/session', request.url);
 			const response = await fetch(sessionUrl, {
-				headers: {
-					cookie: request.headers.get('cookie') || '',
-				},
+				headers: { cookie: request.headers.get('cookie') || '' },
 			});
 
 			if (!response.ok) {
-				const homeUrl = new URL('/', request.url);
-				return NextResponse.redirect(homeUrl);
+				return NextResponse.redirect(signIn);
 			}
 
 			const session = await response.json();
+			const user = session?.user;
+			if (!user) {
+				return NextResponse.redirect(signIn);
+			}
 
-			if (Object.keys(session).length === 0 || !session.user?.administrator) {
-				const homeUrl = new URL('/', request.url);
-				return NextResponse.redirect(homeUrl);
+			const perms: string[] = Array.isArray(user.permissions) ? user.permissions : [];
+			let allowed: boolean;
+			if (capabilityRoute) {
+				allowed = Boolean(user.administrator || user.officerStatus || perms.includes(capabilityRoute.capability));
+			} else if (isStaffRoute) {
+				allowed = Boolean(user.administrator || user.officerStatus || hasStaffCapability(perms));
+			} else if (isOfficerAdminRoute) {
+				allowed = Boolean(user.administrator || user.officerStatus);
+			} else {
+				allowed = Boolean(user.administrator);
+			}
+
+			if (!allowed) {
+				return NextResponse.redirect(noAccess);
 			}
 		} catch (error) {
 			console.error('Middleware error:', error);
-			const homeUrl = new URL('/', request.url);
-			return NextResponse.redirect(homeUrl);
+			return NextResponse.redirect(noAccess);
 		}
 	}
 

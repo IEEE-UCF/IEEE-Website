@@ -85,6 +85,15 @@ const Navbar: React.FC = () => {
 						</Link>
 					))}
 
+					{auth?.hasStaffAccess && (
+						<Link
+							href="/staff"
+							className="font-[body-font] lg:px-5 md:px-3 sm:px-1.5 text-sm items-center inline-flex text-white hover:text-[var(--ieee-dark-yellow)] transition"
+						>
+							Staff
+						</Link>
+					)}
+
 					{auth?.isAdmin && (
 						<div className="flex items-center gap-3 border-l border-gray-700 pl-4 ml-2">
 							<span className="text-xs font-[heading-font] tracking-[0.2em] text-[var(--ieee-dark-yellow)]">
@@ -218,6 +227,28 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 						))}
 					</div>
 				</div>
+
+				{auth?.hasStaffAccess && (
+					<div className="flex flex-col ml-6 p-5">
+						<div className="text-[var(--ieee-dark-yellow)] font-[heading-font] text-xl">
+							STAFF
+						</div>
+						<Link
+							href="/staff"
+							onClick={toggleMenu}
+							className="hover:text-[var(--ieee-bright-yellow)] font-[subheading-font] text-white inline-flex h-10 w-full items-center text-md transition-colors gap-3"
+						>
+							<Image
+								className="object-cover h-7 w-7"
+								src="/iconography/navbardashboard.png"
+								alt=""
+								width={2000}
+								height={2000}
+							/>
+							Staff Tools
+						</Link>
+					</div>
+				)}
 
 				{auth?.isAdmin && (
 					<div className="flex flex-col ml-6 p-5">
