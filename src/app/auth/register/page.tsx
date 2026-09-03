@@ -93,7 +93,10 @@ export default function RegisterPage() {
 			console.error("Registration error:", err);
 			setIsSubmitting(false);
 		}
-	}, []);
+		// Deps matter: an empty array here would freeze `session` at its first-render
+		// value (null, while useSession is still loading) and every submit would fail
+		// the `!session?.user` guard above.
+	}, [session, completeRegistration]);
 
 
 	return (

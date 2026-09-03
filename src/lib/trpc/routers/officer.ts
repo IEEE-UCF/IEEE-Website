@@ -2,12 +2,15 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { db } from "@/lib/database/client";
 import { Members } from "@/lib/database/schema";
-import { eq } from "drizzle-orm";
+import { eq, isNotNull, desc } from "drizzle-orm";
 import {
 	publicProcedure,
 	adminProcedure,
+	capabilityProcedure,
 	createTRPCRouter,
 } from "../trpc";
+
+const reviewResumes = capabilityProcedure("review_resumes");
 
 const officerPublicFields = {
 	id: Members.id,
@@ -89,6 +92,26 @@ export const officerRouter = createTRPCRouter({
 
 			return { success: true, officer: updated };
 		}),
+
+	// Resume dashboard: all members, with resume status. Officer/admin only.
+	listResumes: reviewResumes.query(async () => {
+		const rows = await db
+			.select({
+				memberId: Members.id,
+				firstName: Members.firstName,
+				lastName: Members.lastName,
+				major: Members.major,
+				graduationYear: Members.graduationYear,
+				resumeFileName: Members.resumeFileName,
+				resumeUploadedAt: Members.resumeUploadedAt,
+				resumeUrl: Members.resumeURL,
+				resumeOnedrivePath: Members.resumeOnedrivePath,
+				hasResume: isNotNull(Members.resumeKey),
+			})
+			.from(Members)
+			.orderBy(desc(Members.resumeUploadedAt), Members.lastName);
+		return rows;
+	}),
 
 	// Remove officer status (admin only)
 	demote: adminProcedure

@@ -7,8 +7,9 @@ import { getServerSession } from 'next-auth';
 import type { Session } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/database/client';
-import { Members } from '@/lib/database/schema';
-import { eq } from 'drizzle-orm';
+import { Members, MemberPermissions } from '@/lib/database/schema';
+import { and, eq, gt, isNull, or } from 'drizzle-orm';
+import { hasCapability, type Capability } from '@/lib/permissions';
 /**
  * Isomorphic Session getter for API requests
  */
@@ -96,14 +97,43 @@ export const protectedProcedure = t.procedure.use(timingMiddleware).use(({ ctx, 
 
 // determines if officer or if admin, helper stuff
 
-async function getMemberRoles(userId: string): Promise<{ officerStatus: boolean; administrator: boolean } | null> {
+interface MemberRoles {
+	memberId: string;
+	officerStatus: boolean;
+	administrator: boolean;
+	permissions: string[];
+}
+
+async function getMemberRoles(userId: string): Promise<MemberRoles | null> {
 	const [member] = await db
-		.select({ officerStatus: Members.officerStatus, administrator: Members.administrator })
+		.select({
+			id: Members.id,
+			officerStatus: Members.officerStatus,
+			administrator: Members.administrator,
+		})
 		.from(Members)
 		.where(eq(Members.userId, userId))
 		.limit(1);
 
-	return member ?? null;
+	if (!member) return null;
+
+	const grants = await db
+		.select({ permission: MemberPermissions.permission })
+		.from(MemberPermissions)
+		.where(
+			and(
+				eq(MemberPermissions.memberId, member.id),
+				eq(MemberPermissions.active, true),
+				or(isNull(MemberPermissions.expiresAt), gt(MemberPermissions.expiresAt, new Date())),
+			),
+		);
+
+	return {
+		memberId: member.id,
+		officerStatus: member.officerStatus,
+		administrator: member.administrator,
+		permissions: [...new Set(grants.map((g) => g.permission))],
+	};
 }
 
 async function userIsAdmin(userId: string): Promise<boolean> {
@@ -120,7 +150,7 @@ async function userIsAdmin(userId: string): Promise<boolean> {
 export const officerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
 	const roles = await getMemberRoles(ctx.session.user.id);
 
-	if (!roles?.officerStatus && !roles?.administrator) {
+	if (!roles || (!roles.officerStatus && !roles.administrator)) {
 		throw new TRPCError({
 			code: 'FORBIDDEN',
 			message: 'Officer status required',
@@ -130,9 +160,29 @@ export const officerProcedure = protectedProcedure.use(async ({ ctx, next }) => 
 	return next({
 		ctx: {
 			session: ctx.session,
+			roles,
 		},
 	});
 });
+
+/**
+ * Capability procedure factory.
+ *
+ * Passes if the caller is an admin, an officer, OR holds the named granular
+ * capability (an active member_permissions row). See src/lib/permissions.ts.
+ */
+export function capabilityProcedure(cap: Capability) {
+	return protectedProcedure.use(async ({ ctx, next }) => {
+		const roles = await getMemberRoles(ctx.session.user.id);
+		if (!hasCapability(roles, cap)) {
+			throw new TRPCError({
+				code: 'FORBIDDEN',
+				message: `Missing permission: ${cap}`,
+			});
+		}
+		return next({ ctx: { session: ctx.session } });
+	});
+}
 
 /**
  * Admin procedure

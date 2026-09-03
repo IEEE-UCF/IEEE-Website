@@ -12,6 +12,7 @@ declare module 'next-auth' {
 			officerStatus: boolean;
 			officerRole?: string | null;
 			administrator: boolean;
+			permissions: string[];
 		};
 	}
 

@@ -2,9 +2,9 @@ import { NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { db } from '@/lib/database/client';
-import { Accounts, Users, Sessions, Members } from '@/lib/database/schema';
+import { Accounts, Users, Sessions, Members, MemberPermissions } from '@/lib/database/schema';
 import type { DiscordProfile } from 'next-auth/providers/discord';
-import { eq } from 'drizzle-orm';
+import { and, eq, isNull, or, gt } from 'drizzle-orm';
 
 export const authOptions: NextAuthOptions = {
 	adapter: DrizzleAdapter(db, {
@@ -57,6 +57,22 @@ export const authOptions: NextAuthOptions = {
 					.where(eq(Members.userId, user.id))
 					.limit(1);
 
+				// granular capability grants (active, not expired)
+				let permissions: string[] = [];
+				if (member) {
+					const rows = await db
+						.select({ permission: MemberPermissions.permission })
+						.from(MemberPermissions)
+						.where(
+							and(
+								eq(MemberPermissions.memberId, member.id),
+								eq(MemberPermissions.active, true),
+								or(isNull(MemberPermissions.expiresAt), gt(MemberPermissions.expiresAt, new Date())),
+							),
+						);
+					permissions = [...new Set(rows.map((r) => r.permission))];
+				}
+
 				return {
 					...session,
 					user: {
@@ -67,6 +83,7 @@ export const authOptions: NextAuthOptions = {
 						officerStatus: member?.officerStatus || false,
 						officerRole: member?.officerRole || null,
 						administrator: member?.administrator || false,
+						permissions,
 					},
 				};
 			} catch (error) {

@@ -1,7 +1,8 @@
 import { db } from '@/lib/database/client';
-import { Members, Users } from '@/lib/database/schema';
-import { eq } from 'drizzle-orm';
+import { Members, Users, MemberPermissions } from '@/lib/database/schema';
+import { and, eq } from 'drizzle-orm';
 import { publicProcedure, createTRPCRouter } from '../trpc';
+import { hasStaffCapability } from '@/lib/permissions';
 
 export const authRouter = createTRPCRouter({
 	// current session
@@ -79,6 +80,8 @@ export const authRouter = createTRPCRouter({
 				isAdmin: false,
 				hasPaidDues: false,
 				officerRole: null,
+				permissions: [] as string[],
+				hasStaffAccess: false,
 				user: null,
 				member: null,
 				discordAvatar: null,
@@ -97,18 +100,34 @@ export const authRouter = createTRPCRouter({
 			.where(eq(Members.userId, ctx.session.user.id))
 			.limit(1);
 
+		let permissions: string[] = [];
+		if (member) {
+			const grants = await db
+				.select({ permission: MemberPermissions.permission })
+				.from(MemberPermissions)
+				.where(and(eq(MemberPermissions.memberId, member.id), eq(MemberPermissions.active, true)));
+			permissions = [...new Set(grants.map((g) => g.permission))];
+		}
+
 		let discordAvatar = userWithDiscord?.image || null;
 		if (!discordAvatar && userWithDiscord?.discordId) {
 			discordAvatar = `https://cdn.discordapp.com/embed/avatars/${parseInt(userWithDiscord.discordId) % 5}.png`;
 		}
 
+		const isOfficer = member?.officerStatus || false;
+		const isAdmin = member?.administrator || false;
+
 		return {
 			isAuthenticated: true,
 			isMember: !!member,
-			isOfficer: member?.officerStatus || false,
-			isAdmin: member?.administrator || false,
+			isOfficer,
+			isAdmin,
 			hasPaidDues: member?.duesPaid || false,
 			officerRole: member?.officerRole || null,
+			permissions,
+			// Can this person reach /staff? admin, officer, or any *staff* capability
+			// (a member-facing grant like `upload_resume` does not count).
+			hasStaffAccess: isAdmin || isOfficer || hasStaffCapability(permissions),
 			user: ctx.session.user,
 			member: member || null,
 			profile: ctx.session?.user.discordId,

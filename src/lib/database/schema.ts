@@ -171,12 +171,8 @@ export const officerRoleEnum = pgEnum('officer_role_enum', [
 	'Software Chair',
 ]);
 
-// Permission Types: scan_attendance, view_statistics, manage_context
-export const permissionEnum = pgEnum('permission_enum', [
-	'scan_attendance',
-	'view_statistics',
-	'manage_context',
-]);
+// Granular capability grants live in member_permissions.permission as a plain string.
+// The vocabulary is defined in code — see src/lib/permissions.ts (CAPABILITIES).
 
 // Gender: Male (M), Female (F), Non-Binary (NB), Other (O), Prefer Not to Say (PNTS)
 export const genderEnum = pgEnum('gender_enum', [
@@ -196,6 +192,13 @@ export const eventHostTypeEnum = pgEnum('event_host_type_enum', [
 	'committee',
 	'project',
 	'member',
+]);
+
+// Visibility for uploaded event photos
+export const photoVisibilityEnum = pgEnum('photo_visibility_enum', [
+	'public',
+	'members',
+	'private',
 ]);
 
 // ==== Schemas ====
@@ -252,7 +255,11 @@ export const Members = pgTable('members', {
 	gender: genderEnum('gender').notNull(),
 	graduationYear: integer('graduation_year').notNull(),
 	portraitUrl: varchar('portrait_url', { length: 500 }),
-	resumeURL: text('resume_url'),
+	resumeURL: text('resume_url'), // app-facing retrieval path: /api/files/resume/{memberId}
+	resumeKey: varchar('resume_key', { length: 512 }), // storage key (e.g. resumes/{userId}.pdf)
+	resumeFileName: varchar('resume_file_name', { length: 255 }), // sanitized original filename, display only
+	resumeUploadedAt: timestamp('resume_uploaded_at', { withTimezone: true }),
+	resumeOnedrivePath: text('resume_onedrive_path'), // set by the archive job
 	linkedinURL: text('linkedin_url'),
 	githubURL: text('github_url'),
 	websiteURL: text('website_url'),
@@ -432,6 +439,13 @@ export const Awards = pgTable('awards', {
 	index('awards_idx_member_id').on(table.memberId),
 ]);
 
+// AppSettings — generic key/value config an admin edits in-app (feature flags etc.).
+export const AppSettings = pgTable('app_settings', {
+	key: varchar('key', { length: 64 }).primaryKey(),
+	value: text('value').notNull(), // JSON-encoded
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
+});
+
 // MeetingTimes
 export const MeetingTimes = pgTable('meeting_times', {
 	id: uuid('id').primaryKey().defaultRandom(),
@@ -487,9 +501,9 @@ export const MemberPermissions = pgTable(
 			.notNull()
 			.references(() => Members.id, { onDelete: 'cascade' }),
 		grantedById: uuid('granted_by_id').references(() => Members.id, { onDelete: 'set null' }), // who granted the permission
-		contextType: varchar('context_type', { length: 32 }).notNull(), // e.g., 'committee', 'project', 'global'
+		contextType: varchar('context_type', { length: 32 }).notNull().default('global'), // 'global' | 'committee' | 'project'
 		contextId: uuid('context_id'), // links to a specific committee/project if applicable
-		permission: permissionEnum('permission').notNull(),
+		permission: varchar('permission', { length: 64 }).notNull(), // capability key — see src/lib/permissions.ts
 		active: boolean('active').notNull().default(true),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 		expiresAt: timestamp('expires_at', { withTimezone: true }), // optional expiration for temporary access
@@ -505,6 +519,73 @@ export const MemberPermissions = pgTable(
 		),
 	],
 );
+
+// EventPhotos: photos uploaded for an event (admin-uploaded in v1).
+// The row id doubles as the storage filename stem: {id}.jpg / {id}_thumb.jpg / {id}_orig.jpg
+export const EventPhotos = pgTable('event_photos', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	eventId: uuid('event_id').notNull().references(() => Events.id, { onDelete: 'cascade' }),
+	uploadedByUserId: uuid('uploaded_by_user_id').references(() => Users.id, { onDelete: 'set null' }),
+
+	// bytes / location
+	webKey: varchar('web_key', { length: 512 }).notNull(),
+	thumbKey: varchar('thumb_key', { length: 512 }),
+	originalKey: varchar('original_key', { length: 512 }), // null once archived + deleted from live store
+	webUrl: text('web_url').notNull(), // public URL used by the gallery
+	onedrivePath: text('onedrive_path'), // set by the archive job
+	contentType: varchar('content_type', { length: 100 }).notNull(),
+	sizeBytes: integer('size_bytes').notNull(),
+	width: integer('width'),
+	height: integer('height'),
+	checksumSha256: varchar('checksum_sha256', { length: 64 }),
+	archivedAt: timestamp('archived_at', { withTimezone: true }),
+	originalDeletedAt: timestamp('original_deleted_at', { withTimezone: true }),
+
+	// provenance
+	sourceFilename: varchar('source_filename', { length: 255 }),
+
+	// classification / lookup
+	caption: text('caption'),
+	tags: text('tags').array().notNull().default(sql`'{}'::text[]`),
+	takenAt: timestamp('taken_at', { withTimezone: true }), // from EXIF, before re-encode strips it
+	featured: boolean('featured').notNull().default(false),
+	// All uploads land private (officers/admins only). A photo becomes visible in the
+	// public event feed only when explicitly set to 'public'.
+	visibility: photoVisibilityEnum('visibility').notNull().default('private'),
+	approved: boolean('approved').notNull().default(true), // officer uploads trusted; stays for phase-2 attendee uploads
+	searchText: text('search_text').notNull().default(''), // caption + tags + filename, populated by the app
+
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => [
+	index('event_photos_idx_event_id').on(table.eventId),
+	index('event_photos_idx_uploaded_by').on(table.uploadedByUserId),
+	index('event_photos_idx_approved').on(table.approved),
+	index('event_photos_idx_featured').on(table.featured),
+	index('event_photos_idx_created_at').on(table.createdAt),
+	index('event_photos_idx_taken_at').on(table.takenAt),
+	index('event_photos_idx_search').using('gin', sql`to_tsvector('english', ${table.searchText})`),
+]);
+
+// UploadEvents: lightweight per-user, per-kind log for rate-limit cooldown checks (no Redis).
+export const UploadEvents = pgTable('upload_events', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	userId: uuid('user_id').notNull().references(() => Users.id, { onDelete: 'cascade' }),
+	kind: varchar('kind', { length: 32 }).notNull(), // 'resume' | 'event-photo'
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (table) => [
+	index('upload_events_idx_user_kind_created').on(table.userId, table.kind, table.createdAt),
+]);
+
+export const EventPhotosRelations = relations(EventPhotos, ({ one }) => ({
+	event: one(Events, {
+		fields: [EventPhotos.eventId],
+		references: [Events.id],
+	}),
+	uploadedBy: one(Users, {
+		fields: [EventPhotos.uploadedByUserId],
+		references: [Users.id],
+	}),
+}));
 
 // Infer Types
 export type Member = typeof Members.$inferSelect;
@@ -529,3 +610,9 @@ export type Award = typeof Awards.$inferSelect;
 export type NewAward = typeof Awards.$inferInsert;
 export type MeetingTime = typeof MeetingTimes.$inferSelect;
 export type NewMeetingTime = typeof MeetingTimes.$inferInsert;
+export type EventPhoto = typeof EventPhotos.$inferSelect;
+export type NewEventPhoto = typeof EventPhotos.$inferInsert;
+export type AppSetting = typeof AppSettings.$inferSelect;
+export type NewAppSetting = typeof AppSettings.$inferInsert;
+export type UploadEvent = typeof UploadEvents.$inferSelect;
+export type NewUploadEvent = typeof UploadEvents.$inferInsert;
