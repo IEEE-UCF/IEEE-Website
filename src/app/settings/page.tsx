@@ -10,7 +10,7 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ResumeUpload } from "@/components/settings/ResumeUpload";
+import { MemberResumeForm } from "@/components/settings/MemberResumeForm";
 
 // Middleware at /settings guarantees a valid session — no useEffect redirect needed.
 
@@ -236,9 +236,6 @@ export default function SettingsPage() {
 										</FieldGroup>
 									</div>
 
-									{/* Résumé (rendered only when the audience gate allows it) */}
-									<ResumeUpload />
-
 									{/* Save / Cancel */}
 									<div className="flex gap-4 mt-8 w-full md:w-1/2 self-center">
 										<Button
@@ -257,20 +254,23 @@ export default function SettingsPage() {
 										</Button>
 									</div>
 
-									{/* Sign Out */}
-									<div className="mt-16 pt-8 border-t border-white/10 flex justify-center">
-										<Button
-											type="button"
-											onClick={handleSignOut}
-											className="w-full md:w-1/3 bg-red-600 hover:bg-red-700 text-white hover:scale-102 transition-all cursor-pointer py-6 text-md font-[heading-font]"
-										>
-											SIGN OUT
-										</Button>
-									</div>
-
 								</FieldSet>
 							</FieldGroup>
 						</form>
+
+						{/* Dedicated Member Resume Database Form (In its own file) */}
+						<MemberResumeForm />
+
+						{/* Sign Out */}
+						<div className="mt-16 pt-8 border-t border-white/10 flex justify-center">
+							<Button
+								type="button"
+								onClick={handleSignOut}
+								className="w-full md:w-1/3 bg-red-600 hover:bg-red-700 text-white hover:scale-102 transition-all cursor-pointer py-6 text-md font-[heading-font]"
+							>
+								SIGN OUT
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
