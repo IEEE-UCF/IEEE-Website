@@ -95,7 +95,7 @@ export function ResumeUpload() {
 						disabled={busy}
 						className="rounded bg-[var(--ieee-dark-yellow)] px-4 py-2 text-black disabled:opacity-50"
 					>
-						{busy ? 'Uploading…' : 'Upload résumé (PDF)'}
+						{busy ? 'Uploading…' : 'Upload resume (PDF)'}
 					</button>
 					<span className="text-sm text-white/60">PDF, up to {MAX_MB} MB</span>
 				</div>
