@@ -129,11 +129,11 @@ export function StaffHub() {
 				)}
 
 				{can('review_resumes') && (
-					<Panel title="Résumés" cap="review_resumes">
+					<Panel title="Resumes" cap="review_resumes">
 						<p className="mb-3 text-sm text-gray-400">
-							Browse member résumés with inline preview and filters.
+							Browse member resumes with inline preview and filters.
 						</p>
-						<LinkCard href="/admin/resumes" label="Open résumé review" />
+						<LinkCard href="/admin/resumes" label="Open resume review" />
 					</Panel>
 				)}
 
@@ -141,7 +141,7 @@ export function StaffHub() {
 					<Panel title="Members">
 						<p className="mb-3 text-sm text-gray-400">
 							{isAdmin
-								? 'Roster, roles, capabilities, and résumé / committee status.'
+								? 'Roster, roles, capabilities, and resume / committee status.'
 								: 'Roster & status. Toggle admin-delegated capabilities for regular members.'}
 						</p>
 						<LinkCard href="/admin/members" label="Open members" />
@@ -151,7 +151,7 @@ export function StaffHub() {
 				{isAdmin && (
 					<Panel title="Admin">
 						<p className="mb-3 text-sm text-gray-400">
-							The full admin dashboard — events, photos, résumés, and site settings.
+							The full admin dashboard — events, photos, resumes, and site settings.
 						</p>
 						<LinkCard href="/admin/dashboard" label="Admin dashboard" />
 					</Panel>

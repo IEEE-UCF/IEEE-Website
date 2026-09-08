@@ -11,7 +11,7 @@ export default function AdminResumesPage() {
 			</div>
 			<main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
 				<h1 className="mb-6 text-3xl font-[heading-font] text-[var(--ieee-dark-yellow)]">
-					RÉSUMÉS
+					RESUMES
 				</h1>
 				<ResumeDashboard />
 			</main>

@@ -207,7 +207,7 @@ export function MembersManager() {
 								<th className="px-3 py-2">Officer</th>
 								<th className="px-3 py-2">Capabilities</th>
 								<th className="px-3 py-2">Dues</th>
-								<th className="px-3 py-2">Résumé</th>
+								<th className="px-3 py-2">Resume</th>
 								<th className="px-3 py-2">Committees</th>
 								<th className="px-3 py-2">Discord</th>
 							</tr>

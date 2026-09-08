@@ -16,10 +16,10 @@ export const CAPABILITIES = {
 	scan_attendance: { label: 'Scan event check-in', staff: true },
 	manage_events: { label: 'Create & edit events', staff: true },
 	manage_event_photos: { label: 'Upload & manage event photos', staff: true },
-	review_resumes: { label: 'View résumés', staff: true },
-	// Résumé-upload rollout — Phase 2: grant to a pilot cohort while the env audience
+	review_resumes: { label: 'View resumes', staff: true },
+	// Resume-upload rollout — Phase 2: grant to a pilot cohort while the env audience
 	// stays at "officers". Phase 3 = flip RESUME_UPLOAD_AUDIENCE to "members".
-	upload_resume: { label: 'Upload a résumé (pilot)', staff: false },
+	upload_resume: { label: 'Upload a resume (pilot)', staff: false },
 } as const;
 
 export type Capability = keyof typeof CAPABILITIES;

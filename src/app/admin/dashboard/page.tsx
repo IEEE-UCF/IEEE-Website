@@ -8,7 +8,7 @@ import { QREventScanner } from '@/components/admin/qr_event_scanner';
 const ADMIN_TOOLS = [
 	{ href: '/admin/members', title: 'Members', desc: 'Grant admin / officer status & roles' },
 	{ href: '/admin/photos', title: 'Event Photos', desc: 'Upload & manage photos per event' },
-	{ href: '/admin/resumes', title: 'Résumés', desc: 'Browse member résumés' },
+	{ href: '/admin/resumes', title: 'Resumes', desc: 'Browse member resumes' },
 ];
 
 export default function Dashboard() {

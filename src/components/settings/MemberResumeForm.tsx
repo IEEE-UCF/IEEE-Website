@@ -7,18 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel } from "@/components/ui/field";
 import {
-	Briefcase,
-	GraduationCap,
-	FolderGit2,
-	Users,
-	Award,
 	Plus,
 	Trash2,
 	Check,
 	AlertCircle,
 	ExternalLink,
-	Sparkles,
-	Tag,
 } from "lucide-react";
 
 interface SocialLinkItem {
@@ -159,7 +152,7 @@ export function MemberResumeForm() {
 		const skill = (skillToAdd || skillInput).trim();
 		if (!skill) return;
 		if (skills.length >= 50) {
-			setErrorMsg("Maximum of 50 skills reached (Data.md limit).");
+			setErrorMsg("Maximum of 50 skills reached.");
 			return;
 		}
 		if (skill.length > 50) {
@@ -204,7 +197,7 @@ export function MemberResumeForm() {
 	// --- Work Experience Handlers ---
 	const handleAddWorkExperience = () => {
 		if (workExperiences.length >= 10) {
-			setErrorMsg("Maximum of 10 work experiences allowed (Data.md limit).");
+			setErrorMsg("Maximum of 10 work experiences allowed.");
 			return;
 		}
 		setWorkExperiences([
@@ -366,23 +359,13 @@ export function MemberResumeForm() {
 	return (
 		<div className="mt-12 border-t border-white/20 pt-10 text-white">
 			{/* Section Title */}
-			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-				<div>
-					<div className="flex items-center gap-3">
-						<Sparkles className="w-7 h-7 text-[var(--ieee-dark-yellow)]" />
-						<h2 className="text-3xl font-[heading-font] text-[var(--ieee-dark-yellow)]">
-							MEMBER RESUME DATABASE PROFILE
-						</h2>
-					</div>
-					<p className="text-sm text-white/70 mt-1 max-w-2xl">
-						This portfolio information feeds directly into the UCF IEEE Member Resume Database for verified recruiters and corporate sponsors.
-					</p>
-				</div>
-				<div className="flex items-center gap-2">
-					<span className="text-xs px-2.5 py-1 rounded bg-[var(--ieee-dark-yellow)]/20 text-[var(--ieee-dark-yellow)] font-mono border border-[var(--ieee-dark-yellow)]/40">
-						Data.md Verified
-					</span>
-				</div>
+			<div className="mb-8">
+				<h2 className="text-3xl font-[heading-font] text-[var(--ieee-dark-yellow)]">
+					MEMBER RESUME DATABASE PROFILE
+				</h2>
+				<p className="text-sm text-white/70 mt-1 max-w-2xl">
+					This portfolio information feeds directly into the UCF IEEE Member Resume Database for verified recruiters and corporate sponsors.
+				</p>
 			</div>
 
 			{/* Resume PDF Upload (Integrated) */}
@@ -407,8 +390,7 @@ export function MemberResumeForm() {
 
 				{/* 1. Career Search Status */}
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
-					<h3 className="text-xl font-[heading-font] text-white mb-2 flex items-center gap-2">
-						<Briefcase className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+					<h3 className="text-xl font-[heading-font] text-white mb-2">
 						CAREER SEARCH STATUS
 					</h3>
 					<p className="text-xs text-white/60 mb-4">Indicate your current employment / internship search objective.</p>
@@ -430,11 +412,10 @@ export function MemberResumeForm() {
 					</div>
 				</div>
 
-				{/* 2. Skills (Up to 50, Data.md constraint) */}
+				{/* 2. Skills (Up to 50) */}
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
 					<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-						<h3 className="text-xl font-[heading-font] text-white flex items-center gap-2">
-							<Tag className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+						<h3 className="text-xl font-[heading-font] text-white">
 							TECHNICAL SKILLS & TOOLS
 						</h3>
 						<span className="text-xs text-white/60">
@@ -514,8 +495,7 @@ export function MemberResumeForm() {
 				{/* 3. Education Entries */}
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
 					<div className="flex items-center justify-between mb-4">
-						<h3 className="text-xl font-[heading-font] text-white flex items-center gap-2">
-							<GraduationCap className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+						<h3 className="text-xl font-[heading-font] text-white">
 							EDUCATION
 						</h3>
 						<Button
@@ -687,8 +667,7 @@ export function MemberResumeForm() {
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
 					<div className="flex items-center justify-between mb-4">
 						<div>
-							<h3 className="text-xl font-[heading-font] text-white flex items-center gap-2">
-								<Briefcase className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+							<h3 className="text-xl font-[heading-font] text-white">
 								WORK EXPERIENCE
 							</h3>
 							<p className="text-xs text-white/60">Internships, research assistantships, and professional roles (Up to 10 entries).</p>
@@ -824,8 +803,7 @@ export function MemberResumeForm() {
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
 					<div className="flex items-center justify-between mb-4">
 						<div>
-							<h3 className="text-xl font-[heading-font] text-white flex items-center gap-2">
-								<FolderGit2 className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+							<h3 className="text-xl font-[heading-font] text-white">
 								TECHNICAL PROJECTS
 							</h3>
 							<p className="text-xs text-white/60">Hardware, software, robotics, and capstone engineering projects.</p>
@@ -986,8 +964,7 @@ export function MemberResumeForm() {
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
 					<div className="flex items-center justify-between mb-4">
 						<div>
-							<h3 className="text-xl font-[heading-font] text-white flex items-center gap-2">
-								<Users className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+							<h3 className="text-xl font-[heading-font] text-white">
 								STUDENT CHAPTERS & CLUBS
 							</h3>
 							<p className="text-xs text-white/60">Collegiate organizations (IEEE, ACM, Hack@UCF, AIAA, etc.).</p>
@@ -1122,8 +1099,7 @@ export function MemberResumeForm() {
 				<div className="p-6 rounded-lg bg-white/5 border border-white/10">
 					<div className="flex items-center justify-between mb-4">
 						<div>
-							<h3 className="text-xl font-[heading-font] text-white flex items-center gap-2">
-								<Award className="w-5 h-5 text-[var(--ieee-dark-yellow)]" />
+							<h3 className="text-xl font-[heading-font] text-white">
 								CERTIFICATIONS & CREDENTIALS
 							</h3>
 							<p className="text-xs text-white/60">Professional certificates, industry licenses, and cloud certifications.</p>

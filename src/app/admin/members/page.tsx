@@ -13,7 +13,7 @@ export default function AdminMembersPage() {
 			<main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">
 				<h1 className="mb-2 text-3xl font-[heading-font] text-[var(--ieee-dark-yellow)]">MEMBERS</h1>
 				<p className="mb-6 text-sm text-gray-400">
-					View the member roster with role, capability, résumé, and committee status. Admins can
+					View the member roster with role, capability, resume, and committee status. Admins can
 					grant or revoke <strong>administrator</strong> / <strong>officer</strong> status and any
 					capability; officers can toggle admin-delegated capabilities for regular members.
 				</p>
