@@ -35,7 +35,7 @@ export function ResumeDashboard() {
 							checked={onlyWithResume}
 							onChange={(e) => setOnlyWithResume(e.target.checked)}
 						/>
-						only members with a resume
+						only members with a résumé
 					</label>
 				</div>
 
@@ -49,7 +49,7 @@ export function ResumeDashboard() {
 									<th className="px-3 py-2">Name</th>
 									<th className="px-3 py-2">Major</th>
 									<th className="px-3 py-2">Grad</th>
-									<th className="px-3 py-2">Resume</th>
+									<th className="px-3 py-2">Résumé</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -105,9 +105,9 @@ export function ResumeDashboard() {
 
 			<div className="rounded-lg border border-gray-800 bg-gray-900/50 p-2">
 				{preview ? (
-					<iframe title="resume preview" src={preview} className="h-[70vh] w-full rounded" />
+					<iframe title="résumé preview" src={preview} className="h-[70vh] w-full rounded" />
 				) : (
-					<p className="p-6 text-sm text-gray-500">Select “preview” to view a resume here.</p>
+					<p className="p-6 text-sm text-gray-500">Select “preview” to view a résumé here.</p>
 				)}
 			</div>
 		</div>
