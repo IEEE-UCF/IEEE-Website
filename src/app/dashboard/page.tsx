@@ -4,7 +4,7 @@ import { EventList } from "@/components/dashboard/event-list";
 import { Member_QR_Code } from "@/components/dashboard/member-qr-code";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function Dashboard() {
 	return (
@@ -40,55 +40,27 @@ export default function Dashboard() {
 						</Card>
 					</div>
 
-					{/* Resume Database Showcase Card */}
-					<Card className="rounded-xl border border-zinc-800 bg-gradient-to-br from-zinc-900/90 via-zinc-900/50 to-zinc-950 p-6 shadow-xl relative overflow-hidden group">
-						<div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-
-						<div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-							<div className="flex items-start gap-4">
-								<div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
-									<FileText size={24} />
-								</div>
-								<div>
-									<div className="flex items-center gap-2 mb-1">
-										<h2 className="text-xl font-bold text-white tracking-tight">
-											Member Resume Database
-										</h2>
-										<span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center gap-1">
-											<Sparkles size={11} />
-											Recruiter Network
-										</span>
-									</div>
-									<p className="text-sm text-zinc-400 max-w-2xl leading-relaxed">
-										Build and publish your technical portfolio, skills, project highlights, and resume PDF to appear in the dedicated IEEE UCF candidate directory for corporate sponsors.
-									</p>
-									<div className="flex flex-wrap items-center gap-4 mt-3 text-xs text-zinc-400">
-										<span className="flex items-center gap-1.5">
-											<CheckCircle2 size={13} className="text-amber-500" />
-											1-to-1 Profile Sync
-										</span>
-										<span className="flex items-center gap-1.5">
-											<CheckCircle2 size={13} className="text-amber-500" />
-											Skills & Project Repeaters
-										</span>
-										<span className="flex items-center gap-1.5">
-											<CheckCircle2 size={13} className="text-amber-500" />
-											PDF Resume Dropzone
-										</span>
-									</div>
-								</div>
-							</div>
-
-							<Button
-								asChild
-								className="bg-amber-500 hover:bg-amber-400 text-black font-semibold shrink-0 px-5 shadow-lg shadow-amber-500/10 cursor-pointer"
-							>
-								<Link href="/dashboard/resume" className="flex items-center gap-2">
-									<span>Manage Resume Profile</span>
-									<ArrowRight size={16} />
-								</Link>
-							</Button>
+					{/* Resume Database Card */}
+					<Card className="rounded-xl border border-gray-800 bg-[var(--ieee-black)] p-4 shadow-lg shadow-black/40 lg:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+						<div>
+							<h2 className="text-lg font-semibold text-gray-100">
+								Add your resume to the resume database
+							</h2>
+							<p className="text-xs text-gray-400 mt-1">
+								Share your portfolio, skills, and resume PDF with IEEE UCF sponsors and recruiters.
+							</p>
 						</div>
+
+						<Button
+							asChild
+							variant="outline"
+							className="border-gray-700 bg-gray-900/60 text-gray-200 hover:bg-gray-800 hover:text-white shrink-0 cursor-pointer"
+						>
+							<Link href="/dashboard/resume" className="flex items-center gap-2">
+								<span>Add Resume</span>
+								<ArrowRight size={14} />
+							</Link>
+						</Button>
 					</Card>
 				</div>
 			</main>
