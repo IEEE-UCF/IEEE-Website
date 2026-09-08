@@ -1,4 +1,4 @@
-import { pgTable, uuid, foreignKey, varchar, boolean, date, integer, text, timestamp, pgEnum, index, unique } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, foreignKey, varchar, boolean, date, integer, text, timestamp, pgEnum, index, unique, jsonb } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm/sql/sql';
 import { relations } from "drizzle-orm";
 
@@ -281,6 +281,35 @@ export const Members = pgTable('members', {
 	index('members_idx_created_at').on(table.createdAt),
 	index('members_idx_updated_at').on(table.updatedAt),
 	index('members_idx_full_name').on(table.firstName, table.lastName),
+]);
+
+// Resumes: 1-to-1 extended resume/portfolio profile matching Data.md
+export const Resumes = pgTable('resumes', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	memberId: uuid('member_id')
+		.notNull()
+		.unique()
+		.references(() => Members.id, { onDelete: 'cascade' }),
+	status: varchar('status', { length: 50 }).notNull().default('Seeking Internship'),
+	socialLinks: jsonb('social_links').notNull().default(sql`'[]'::jsonb`),
+	education: jsonb('education').notNull().default(sql`'[]'::jsonb`),
+	skills: jsonb('skills').notNull().default(sql`'[]'::jsonb`),
+	workExperiences: jsonb('work_experiences').notNull().default(sql`'[]'::jsonb`),
+	projects: jsonb('projects').notNull().default(sql`'[]'::jsonb`),
+	clubs: jsonb('clubs').notNull().default(sql`'[]'::jsonb`),
+	certifications: jsonb('certifications').notNull().default(sql`'[]'::jsonb`),
+	resumeURL: text('resume_url'),
+	resumeKey: varchar('resume_key', { length: 512 }),
+	resumeFileName: varchar('resume_file_name', { length: 255 }),
+	resumeUploadedAt: timestamp('resume_uploaded_at', { withTimezone: true }),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow().$onUpdate(() => sql`now()`),
+}, (table) => [
+	index('resumes_idx_id').on(table.id),
+	index('resumes_idx_member_id').on(table.memberId),
+	index('resumes_idx_status').on(table.status),
+	index('resumes_idx_created_at').on(table.createdAt),
+	index('resumes_idx_updated_at').on(table.updatedAt),
 ]);
 
 // Committees
@@ -587,9 +616,25 @@ export const EventPhotosRelations = relations(EventPhotos, ({ one }) => ({
 	}),
 }));
 
+export const ResumesRelations = relations(Resumes, ({ one }) => ({
+	member: one(Members, {
+		fields: [Resumes.memberId],
+		references: [Members.id],
+	}),
+}));
+
+export const MembersResumeRelations = relations(Members, ({ one }) => ({
+	resume: one(Resumes, {
+		fields: [Members.id],
+		references: [Resumes.memberId],
+	}),
+}));
+
 // Infer Types
 export type Member = typeof Members.$inferSelect;
 export type NewMember = typeof Members.$inferInsert;
+export type Resume = typeof Resumes.$inferSelect;
+export type NewResume = typeof Resumes.$inferInsert;
 export type Event = typeof Events.$inferSelect;
 export type NewEvent = typeof Events.$inferInsert;
 export type EventAttendee = typeof EventAttendees.$inferSelect;

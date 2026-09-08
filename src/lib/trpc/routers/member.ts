@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/database/client";
 import {
 	Members,
+	Resumes,
 	Users,
 	Committees,
 	CommitteeMembers,
@@ -48,6 +49,71 @@ const memberUpdateSchema = z.object({
 	linkedinURL: z.string().url().optional(),
 	githubURL: z.string().url().optional(),
 	websiteURL: z.string().url().optional(),
+});
+
+// Resume schemas strictly adhering to Data.md
+export const resumeSocialLinkSchema = z.object({
+	platformName: z.string().min(1).max(100),
+	profileUrl: z.string().url("Must be a valid URL"),
+});
+
+export const resumeEducationSchema = z.object({
+	schoolName: z.string().min(1).max(100),
+	degreeType: z.string().min(1).max(100),
+	major: z.string().min(1).max(100),
+	gpa: z.number().min(0).max(10).optional(),
+	gpaScale: z.number().min(0).max(10).optional(),
+	startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must be YYYY-MM-DD"),
+	endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "End date must be YYYY-MM-DD").optional().or(z.literal("")),
+	isCurrent: z.boolean().default(false),
+	description: z.string().max(500).optional().or(z.literal("")),
+});
+
+export const resumeWorkExperienceSchema = z.object({
+	companyName: z.string().min(1).max(100),
+	jobTitle: z.string().min(1).max(100),
+	startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must be YYYY-MM-DD"),
+	endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "End date must be YYYY-MM-DD").optional().or(z.literal("")),
+	isCurrentJob: z.boolean().default(false),
+	description: z.string().max(1000),
+});
+
+export const resumeProjectSchema = z.object({
+	projectName: z.string().min(1).max(100),
+	description: z.string().max(1000),
+	startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must be YYYY-MM-DD"),
+	endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "End date must be YYYY-MM-DD").optional().or(z.literal("")),
+	isOngoing: z.boolean().default(false),
+	projectLinks: z.array(z.string().url("Must be a valid URL")).default([]),
+});
+
+export const resumeClubSchema = z.object({
+	clubName: z.string().min(1).max(100),
+	role: z.string().min(1).max(100),
+	startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must be YYYY-MM-DD"),
+	endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "End date must be YYYY-MM-DD").optional().or(z.literal("")),
+	isActive: z.boolean().default(false),
+	description: z.string().max(500),
+});
+
+export const resumeCertificationSchema = z.object({
+	certificationName: z.string().min(1).max(100),
+	issuer: z.string().min(1).max(100),
+	issueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Issue date must be YYYY-MM-DD"),
+	expirationDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Expiration date must be YYYY-MM-DD").optional().or(z.literal("")),
+	credentialId: z.string().max(100).optional().or(z.literal("")),
+	credentialUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+});
+
+export const resumeProfileUpdateSchema = z.object({
+	status: z.enum(["Seeking Internship", "Seeking Full-time", "Employed"]).default("Seeking Internship"),
+	socialLinks: z.array(resumeSocialLinkSchema).max(5).default([]),
+	education: z.array(resumeEducationSchema).default([]),
+	skills: z.array(z.string().max(50)).max(50).default([]),
+	workExperiences: z.array(resumeWorkExperienceSchema).max(10).default([]),
+	projects: z.array(resumeProjectSchema).default([]),
+	clubs: z.array(resumeClubSchema).default([]),
+	certifications: z.array(resumeCertificationSchema).default([]),
 });
 
 // create all these damn routers
@@ -391,4 +457,79 @@ export const memberRouter = createTRPCRouter({
 
 		return member;
 	}),
+
+	getMyResumeProfile: memberProcedure.query(async ({ ctx }) => {
+		const [member] = await db
+			.select()
+			.from(Members)
+			.where(eq(Members.userId, ctx.session.user.id))
+			.limit(1);
+
+		if (!member) {
+			throw new TRPCError({
+				code: "NOT_FOUND",
+				message: "No member profile found",
+			});
+		}
+
+		const [resume] = await db
+			.select()
+			.from(Resumes)
+			.where(eq(Resumes.memberId, member.id))
+			.limit(1);
+
+		return {
+			member,
+			resume: resume ?? null,
+		};
+	}),
+
+	updateMyResumeProfile: memberProcedure
+		.input(resumeProfileUpdateSchema)
+		.mutation(async ({ ctx, input }) => {
+			const [member] = await db
+				.select()
+				.from(Members)
+				.where(eq(Members.userId, ctx.session.user.id))
+				.limit(1);
+
+			if (!member) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "No member profile found",
+				});
+			}
+
+			const [upserted] = await db
+				.insert(Resumes)
+				.values({
+					memberId: member.id,
+					status: input.status,
+					socialLinks: input.socialLinks,
+					education: input.education,
+					skills: input.skills,
+					workExperiences: input.workExperiences,
+					projects: input.projects,
+					clubs: input.clubs,
+					certifications: input.certifications,
+					updatedAt: new Date(),
+				})
+				.onConflictDoUpdate({
+					target: Resumes.memberId,
+					set: {
+						status: input.status,
+						socialLinks: input.socialLinks,
+						education: input.education,
+						skills: input.skills,
+						workExperiences: input.workExperiences,
+						projects: input.projects,
+						clubs: input.clubs,
+						certifications: input.certifications,
+						updatedAt: new Date(),
+					},
+				})
+				.returning();
+
+			return { success: true, resume: upserted };
+		}),
 });
